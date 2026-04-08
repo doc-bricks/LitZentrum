@@ -7,11 +7,12 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QListWidgetItem,
     QPushButton, QTextEdit, QSpinBox, QLabel, QDialog, QDialogButtonBox,
-    QLineEdit, QComboBox, QCheckBox, QApplication
+    QLineEdit, QComboBox, QCheckBox, QApplication, QSplitter
 )
 
 from core import LitSource, SourceManager
 from formats import LiQuote, Quote
+from ..widgets.latex_preview import LatexPreviewWidget, contains_latex
 
 
 class QuotesTab(QWidget):
@@ -203,12 +204,37 @@ class QuoteDialog(QDialog):
         page_layout.addStretch()
         layout.addLayout(page_layout)
         
-        # Zitat-Text
-        layout.addWidget(QLabel("Zitat:"))
+        # Zitat-Text mit LaTeX-Preview
+        layout.addWidget(QLabel("Zitat (LaTeX-Formeln mit $..$ oder $$..$$):"))
+
         self.text_edit = QTextEdit()
-        self.text_edit.setPlaceholderText("Zitat eingeben...")
-        layout.addWidget(self.text_edit)
-        
+        self.text_edit.setPlaceholderText("Zitat eingeben... LaTeX-Formeln werden automatisch gerendert.")
+
+        # LaTeX-Preview
+        self._latex_preview = LatexPreviewWidget()
+        self._latex_preview.setVisible(False)
+
+        self._preview_label = QLabel("Formel-Vorschau:")
+        self._preview_label.setStyleSheet("color: #555; font-size: 11px; margin-top: 4px;")
+        self._preview_label.setVisible(False)
+
+        splitter = QSplitter(Qt.Orientation.Vertical)
+        splitter.addWidget(self.text_edit)
+
+        preview_container = QWidget()
+        preview_layout = QVBoxLayout(preview_container)
+        preview_layout.setContentsMargins(0, 0, 0, 0)
+        preview_layout.addWidget(self._preview_label)
+        preview_layout.addWidget(self._latex_preview)
+        splitter.addWidget(preview_container)
+
+        splitter.setStretchFactor(0, 2)
+        splitter.setStretchFactor(1, 1)
+        layout.addWidget(splitter)
+
+        # Live-Preview bei Textaenderung
+        self.text_edit.textChanged.connect(self._on_text_changed)
+
         # Kommentar
         layout.addWidget(QLabel("Kommentar:"))
         self.comment_edit = QTextEdit()
@@ -233,18 +259,31 @@ class QuoteDialog(QDialog):
         buttons.rejected.connect(self.reject)
         layout.addWidget(buttons)
     
+    def _on_text_changed(self):
+        """Aktualisiert LaTeX-Preview bei Textaenderung."""
+        text = self.text_edit.toPlainText()
+        has_latex = contains_latex(text)
+
+        self._preview_label.setVisible(has_latex)
+        self._latex_preview.setVisible(has_latex)
+
+        if has_latex:
+            self._latex_preview.update_content(text)
+
     def _load_quote(self):
-        """Lädt bestehendes Zitat"""
+        """Laedt bestehendes Zitat"""
         if self.quote:
             self.text_edit.setText(self.quote.text)
-            
+
             type_map = {"direct": 0, "indirect": 1, "paraphrase": 2}
             self.type_combo.setCurrentIndex(type_map.get(self.quote.type, 0))
-            
+
             self.page_spin.setValue(self.quote.page or 0)
             self.page_end_spin.setValue(self.quote.page_end or 0)
             self.comment_edit.setText(self.quote.comment or "")
             self.tags_input.setText(", ".join(self.quote.tags))
+            # Trigger LaTeX-Preview fuer bestehende Zitate
+            self._on_text_changed()
     
     def get_data(self) -> dict:
         """Gibt die Eingabedaten zurück"""

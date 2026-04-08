@@ -7,11 +7,12 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QListWidgetItem,
     QPushButton, QTextEdit, QSpinBox, QLabel, QDialog, QDialogButtonBox,
-    QLineEdit, QMessageBox
+    QLineEdit, QMessageBox, QSplitter
 )
 
 from core import LitSource, SourceManager
 from formats import LiNote, Note
+from ..widgets.latex_preview import LatexPreviewWidget, contains_latex
 
 
 class NotesTab(QWidget):
@@ -146,12 +147,38 @@ class NoteDialog(QDialog):
         tags_layout.addWidget(self.tags_input)
         layout.addLayout(tags_layout)
         
-        # Inhalt
-        layout.addWidget(QLabel("Notiz:"))
+        # Inhalt + LaTeX-Preview (Splitter)
+        layout.addWidget(QLabel("Notiz (LaTeX-Formeln mit $..$ oder $$..$$):"))
+
         self.content_edit = QTextEdit()
-        self.content_edit.setPlaceholderText("Notiz eingeben...")
-        layout.addWidget(self.content_edit)
-        
+        self.content_edit.setPlaceholderText("Notiz eingeben... LaTeX-Formeln: $E=mc^2$ oder $$\\int f(x) dx$$")
+
+        # LaTeX-Preview (erscheint automatisch wenn Formeln erkannt werden)
+        self._latex_preview = LatexPreviewWidget()
+        self._latex_preview.setVisible(False)
+
+        self._preview_label = QLabel("Formel-Vorschau:")
+        self._preview_label.setStyleSheet("color: #555; font-size: 11px; margin-top: 4px;")
+        self._preview_label.setVisible(False)
+
+        # Splitter: Editor oben, Preview unten
+        splitter = QSplitter(Qt.Orientation.Vertical)
+        splitter.addWidget(self.content_edit)
+
+        preview_container = QWidget()
+        preview_layout = QVBoxLayout(preview_container)
+        preview_layout.setContentsMargins(0, 0, 0, 0)
+        preview_layout.addWidget(self._preview_label)
+        preview_layout.addWidget(self._latex_preview)
+        splitter.addWidget(preview_container)
+
+        splitter.setStretchFactor(0, 2)
+        splitter.setStretchFactor(1, 1)
+        layout.addWidget(splitter)
+
+        # Live-Preview bei Textaenderung
+        self.content_edit.textChanged.connect(self._on_text_changed)
+
         # Buttons
         buttons = QDialogButtonBox(
             QDialogButtonBox.StandardButton.Save |
@@ -161,13 +188,26 @@ class NoteDialog(QDialog):
         buttons.rejected.connect(self.reject)
         layout.addWidget(buttons)
     
+    def _on_text_changed(self):
+        """Aktualisiert LaTeX-Preview bei Textaenderung."""
+        text = self.content_edit.toPlainText()
+        has_latex = contains_latex(text)
+
+        self._preview_label.setVisible(has_latex)
+        self._latex_preview.setVisible(has_latex)
+
+        if has_latex:
+            self._latex_preview.update_content(text)
+
     def _load_note(self):
-        """Lädt bestehende Notiz"""
+        """Laedt bestehende Notiz"""
         if self.note:
             self.content_edit.setText(self.note.content)
             self.page_spin.setValue(self.note.page or 0)
             self.tags_input.setText(", ".join(self.note.tags))
-    
+            # Trigger LaTeX-Preview fuer bestehende Notizen
+            self._on_text_changed()
+
     def get_data(self):
         """Gibt die Eingabedaten zurück"""
         content = self.content_edit.toPlainText()
