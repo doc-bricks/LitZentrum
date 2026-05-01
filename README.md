@@ -17,7 +17,7 @@ Eine Desktop-Anwendung zur Verwaltung akademischer Literatur mit lokalem Speiche
 
 ## Screenshots
 
-![Hauptfenster](screenshots/main.png)
+![Hauptfenster](README/screenshots/main.png)
 
 ## Installation
 
@@ -158,7 +158,7 @@ A desktop application for managing academic literature with a local storage form
 
 ### Screenshots
 
-![Main Window](screenshots/main.png)
+![Main Window](README/screenshots/main.png)
 
 ### Installation
 
