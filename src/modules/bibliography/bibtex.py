@@ -96,6 +96,8 @@ class BibTeXGenerator:
         path = Path(path)
         if not path.suffix:
             path = path.with_suffix(".bib")
+
+        path.parent.mkdir(parents=True, exist_ok=True)
         
         with open(path, 'w', encoding='utf-8') as f:
             f.write(content)

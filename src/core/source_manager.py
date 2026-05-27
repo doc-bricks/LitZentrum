@@ -85,8 +85,8 @@ class SourceManager:
         
         # Ordnername generieren
         folder_name = self._generate_folder_name(meta)
-        source_path = self.sources_path / folder_name
-        source_path.mkdir(parents=True, exist_ok=True)
+        source_path = self._get_unique_source_path(folder_name)
+        source_path.mkdir(parents=True, exist_ok=False)
         
         # PDF kopieren
         if pdf_path and Path(pdf_path).exists():
@@ -198,6 +198,19 @@ class SourceManager:
         title = title.replace(" ", "_")
         
         return f"{author}{year}_{title}"
+
+    def _get_unique_source_path(self, folder_name: str) -> Path:
+        """Returns a non-existing source path, suffixing duplicates with _2, _3, ..."""
+        base_path = self.sources_path / folder_name
+        if not base_path.exists():
+            return base_path
+
+        counter = 2
+        while True:
+            candidate = self.sources_path / f"{folder_name}_{counter}"
+            if not candidate.exists():
+                return candidate
+            counter += 1
     
     def search_sources(self, query: str) -> List[LitSource]:
         """Searches sources by title, author, or tags (case-insensitive)."""

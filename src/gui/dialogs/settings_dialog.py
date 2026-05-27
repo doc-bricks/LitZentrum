@@ -237,7 +237,7 @@ class SettingsDialog(QDialog):
             self.backup_path_input.setText(path)
     
     def _fetch_ollama_models(self) -> list[str] | None:
-        """Ruft verfuegbare Modelle von Ollama ab.
+        """Ruft verfügbare Modelle von Ollama ab.
 
         Returns:
             Liste der Modellnamen oder None bei Verbindungsfehler.
@@ -257,7 +257,7 @@ class SettingsDialog(QDialog):
         return None
 
     def _populate_model_combo(self, model_names: list[str]):
-        """Befuellt die Modell-ComboBox mit den verfuegbaren Modellen.
+        """Befüllt die Modell-ComboBox mit den verfügbaren Modellen.
 
         Args:
             model_names: Liste der Ollama-Modellnamen.
@@ -265,14 +265,14 @@ class SettingsDialog(QDialog):
         current = self.ai_model_combo.currentText()
         self.ai_model_combo.clear()
         self.ai_model_combo.addItems(model_names)
-        # Vorherige Auswahl beibehalten, falls noch verfuegbar
+        # Vorherige Auswahl beibehalten, falls noch verfügbar
         if current in model_names:
             self.ai_model_combo.setCurrentText(current)
         elif model_names:
             self.ai_model_combo.setCurrentIndex(0)
 
     def _refresh_ai_models(self):
-        """Laedt verfuegbare Modelle von Ollama und befuellt die ComboBox."""
+        """Lädt verfügbare Modelle von Ollama und befüllt die ComboBox."""
         from PySide6.QtWidgets import QMessageBox
 
         model_names = self._fetch_ollama_models()
@@ -285,7 +285,7 @@ class SettingsDialog(QDialog):
         else:
             QMessageBox.warning(
                 self, "Fehler",
-                "Keine Modelle gefunden.\n\nStellen Sie sicher, dass Ollama laeuft."
+                "Keine Modelle gefunden.\n\nStellen Sie sicher, dass Ollama läuft."
             )
 
     def _test_ai_connection(self):
@@ -297,7 +297,7 @@ class SettingsDialog(QDialog):
             self._populate_model_combo(model_names)
             QMessageBox.information(
                 self, "Erfolg",
-                f"Verbindung erfolgreich!\n\nVerfuegbare Modelle:\n" +
+                f"Verbindung erfolgreich!\n\nVerfügbare Modelle:\n" +
                 "\n".join(model_names[:10])
             )
         else:
@@ -307,6 +307,6 @@ class SettingsDialog(QDialog):
                 response = requests.get(f"{url}/api/tags", timeout=5)
                 QMessageBox.warning(self, "Fehler", f"Server antwortet mit: {response.status_code}")
             except requests.exceptions.ConnectionError:
-                QMessageBox.warning(self, "Fehler", "Keine Verbindung zu Ollama.\n\nStellen Sie sicher, dass Ollama laeuft.")
+                QMessageBox.warning(self, "Fehler", "Keine Verbindung zu Ollama.\n\nStellen Sie sicher, dass Ollama läuft.")
             except (requests.exceptions.Timeout, OSError) as e:
                 QMessageBox.warning(self, "Fehler", f"Fehler: {e}")
