@@ -14,7 +14,7 @@ from PySide6.QtWidgets import (
 )
 
 from core import (
-    ProjectManager, SourceManager, LitProject, LitSource,
+    ProjectManager, SourceManager, LitProject, LitSource, LibraryExporter,
     EventBus, EventType, get_event_bus, get_settings
 )
 from .panels.project_tree import ProjectTreePanel
@@ -145,6 +145,10 @@ class MainWindow(QMainWindow):
         export_bib = QAction("Bibliografie &exportieren...", self)
         export_bib.triggered.connect(self._on_export_bibliography)
         extras_menu.addAction(export_bib)
+
+        export_library = QAction("Bibliothek für &Companion exportieren...", self)
+        export_library.triggered.connect(self._on_export_library)
+        extras_menu.addAction(export_library)
         
         extras_menu.addSeparator()
         
@@ -382,6 +386,33 @@ class MainWindow(QMainWindow):
             metas = [src.meta for src in sources]
             generator.save_bibliography(metas, Path(path))
             self._show_status(f"Bibliografie exportiert: {Path(path).name} ({len(metas)} Einträge)")
+        except Exception as exc:
+            QMessageBox.critical(self, "Export-Fehler", f"Export fehlgeschlagen:\n{exc}")
+
+    def _on_export_library(self):
+        """Export the current project as a portable read-only JSON bundle."""
+        project = self.project_manager.current_project
+        if not project or not self.source_manager:
+            QMessageBox.warning(self, "Hinweis", "Bitte zuerst ein Projekt öffnen.")
+            return
+
+        default_name = f"{project.path.name}-library-v1.json"
+        path, _ = QFileDialog.getSaveFileName(
+            self,
+            "Bibliothek exportieren",
+            str(project.path / default_name),
+            "JSON-Dateien (*.json);;Alle Dateien (*)",
+        )
+        if not path:
+            return
+
+        try:
+            exporter = LibraryExporter(self.project_manager, self.source_manager)
+            output_path = exporter.export_project(project, Path(path))
+            source_count = len(self.source_manager.get_all_sources())
+            self._show_status(
+                f"Bibliothek exportiert: {output_path.name} ({source_count} Quellen)"
+            )
         except Exception as exc:
             QMessageBox.critical(self, "Export-Fehler", f"Export fehlgeschlagen:\n{exc}")
     

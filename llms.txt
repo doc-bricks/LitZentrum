@@ -1,0 +1,18 @@
+# LitZentrum
+
+Canonical repository: https://github.com/doc-bricks/LitZentrum
+
+LitZentrum is a local-first PySide6 desktop application for academic literature management. It stores projects as UTF-8 JSON files in user-owned folders and supports source metadata, notes, quotes, tasks, summaries, PDF workflows, BibTeX export and optional local Ollama-assisted features.
+
+Important files:
+- `README.md`: English project overview.
+- `README_de.md`: German project overview.
+- `EXPORTFORMAT.md`: Human-readable description of `litzentrum-library-v1.json`.
+- `schemas/litzentrum-library-v1.schema.json`: JSON schema for the read-only companion export.
+- `src/core/library_export.py`: Export implementation.
+- `tests/test_library_export.py`: Regression tests for UTF-8, relative paths, missing PDFs and empty projects.
+
+Privacy and scope:
+- The default companion export does not embed PDF files.
+- The default companion export does not include absolute local paths.
+- The app is designed for local use and user-controlled exports, not server-side library hosting.

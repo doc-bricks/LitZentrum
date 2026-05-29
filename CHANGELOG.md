@@ -9,9 +9,14 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 - Smoke-Tests für Core-Module (tests/test_smoke.py, 10 Tests: EventType, SearchResult, ExportOptions, ImportResult, PDFSelection, Statistics)
 - Ollama-Modellauswahl: ComboBox wird automatisch mit verfügbaren Modellen befüllt (_fetch_ollama_models, _populate_model_combo)
 - "Modelle laden" Button neben "Verbindung testen" im Einstellungen-Dialog
+- Read-only-Desktop-Export `litzentrum-library-v1.json` mit JSON-Schema, GUI-Aktion und Regressionstests für UTF-8, relative Pfade, fehlende PDFs und leere Projekte
+- English-first `README.md`, separate `README_de.md` und `llms.txt` für maschinenlesbaren Projektkontext
 
 ### Geändert / Changed
 - Verbindungstest aktualisiert ComboBox automatisch bei Erfolg (Ollama)
+- Portierungsstatus aktualisiert: Exportformat für den Web/PWA-Companion ist jetzt implementiert
+- Community-Workflows auf aktuelle Actions-Versionen und Input-Namen aktualisiert
+- Lokale `*-library-v1.json`-Exportdateien werden ignoriert
 
 ### Behoben / Fixed
 - Bare except in settings_manager.py, project_tree.py, ollama_queue.py, bibtex.py, extractor.py, sync/__init__.py durch spezifische Exceptions ersetzt

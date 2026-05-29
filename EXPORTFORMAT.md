@@ -1,10 +1,10 @@
 # Exportformat LitZentrum
 
-Stand: 2026-05-27
+Stand: 2026-05-29
 
 ## Ziel
 
-`litzentrum-library-v1.json` ist das geplante Austauschformat zwischen der Desktop-Vollversion und einem Web/PWA-Companion. Es soll Bibliotheken mobil lesbar machen, ohne PDF-Dateien oder lokale absolute Pfade in eine Webumgebung zu übertragen.
+`litzentrum-library-v1.json` ist das implementierte Austauschformat zwischen der Desktop-Vollversion und einem Web/PWA-Companion. Es soll Bibliotheken mobil lesbar machen, ohne PDF-Dateien oder lokale absolute Pfade in eine Webumgebung zu übertragen.
 
 ## Grundregeln
 
@@ -34,6 +34,8 @@ Stand: 2026-05-27
     {
       "id": "project-001",
       "name": "Masterarbeit",
+      "project_notes": [],
+      "project_tasks": [],
       "sources": [
         {
           "id": "source-001",
@@ -48,8 +50,9 @@ Stand: 2026-05-27
               "role": "source_pdf",
               "name": "source.pdf",
               "relative_path": "Quellen/Smith2023_AI/source.pdf",
-              "sha256": null,
-              "included": false
+              "sha256": "…optional…",
+              "included": false,
+              "exists": true
             }
           ]
         }
@@ -65,5 +68,4 @@ Stand: 2026-05-27
 
 ## Datenschutz und Grenzen
 
-Der Standardexport ist ein Lesebündel. Er enthält Metadaten, Notizen, Zitate, Aufgaben und Zusammenfassungen, aber keine PDF-Dateien und keinen vollständigen extrahierten PDF-Text. Für spätere Schreib- oder Sync-Funktionen ist ein separates Roundtrip-Format nötig.
-
+Der Standardexport ist ein Lesebündel. Er enthält Metadaten, projektweite Notizen und Aufgaben, quellenbezogene Notizen, Zitate, Aufgaben, Zusammenfassungen sowie BibTeX, aber keine PDF-Dateien und keinen vollständigen extrahierten PDF-Text. Für spätere Schreib- oder Sync-Funktionen ist ein separates Roundtrip-Format nötig.

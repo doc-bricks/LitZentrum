@@ -1,290 +1,125 @@
 # LitZentrum
 
-**Ordnerbasierte Literaturverwaltung**
+[Deutsch](README_de.md)
 
-Eine Desktop-Anwendung zur Verwaltung akademischer Literatur mit lokalem Speicherformat, PDF-Integration und optionaler KI-Unterstuetzung.
+**Local-first literature management for academic writing.**
+
+LitZentrum is a desktop application for managing academic literature in plain project folders. It combines local JSON-based storage, PDF handling, notes, quotes, tasks, summaries, BibTeX export and optional local AI support through Ollama.
 
 ## Features
 
-- 📚 **Ordnerbasiertes System**: Jede Quelle in ihrem eigenen Ordner
-- 📄 **PDF-Integration**: Volltextsuche, Textextraktion
-- 📝 **Notizen & Zitate**: Seitenverweise, Tags, Kategorien
-- ✅ **Aufgabenverwaltung**: Pro Quelle und projektweit
-- 📋 **Zusammenfassungen**: Manuell oder KI-generiert
-- 📚 **Bibliographie**: BibTeX-Export, mehrere Zitierstile
-- 🤖 **KI-Integration**: Lokale Verarbeitung mit Ollama (optional)
-- 🔄 **Git-Integration**: Projektversionierung
+- Folder-based library structure: each source lives in its own directory.
+- PDF integration: import, preview, text extraction and full-text workflows.
+- Notes and quotes: page references, tags and categories.
+- Task management: project-wide and per-source tasks.
+- Summaries: manual or optionally AI-assisted.
+- Bibliography: BibTeX export and multiple citation styles.
+- Companion export: `litzentrum-library-v1.json` for read-only Web/PWA readers without embedded PDF binaries.
+- Optional AI integration: local processing with Ollama.
+- Git-friendly project layout for versioned research work.
 
 ## Screenshots
 
-![Hauptfenster](README/screenshots/main.png)
+![Main window](README/screenshots/main.png)
 
 ## Installation
 
 ```bash
-# Repository klonen
+git clone https://github.com/doc-bricks/LitZentrum.git
 cd LitZentrum
-
-# Abhaengigkeiten installieren
 pip install -r requirements.txt
-
-# Starten
 python src/main.py
 ```
 
-## Abhaengigkeiten
+## Requirements
 
 - Python 3.10+
 - PySide6
-- PyMuPDF (fitz)
+- PyMuPDF
 - bibtexparser
 - jsonschema
-- requests (fuer Ollama)
+- requests, only for optional Ollama integration
 
-## Projektstruktur
+## Project Structure
 
-```
+```text
 LitZentrum/
-├── src/
-│   ├── main.py                 # Einstiegspunkt
-│   ├── core/                   # Kernlogik
-│   │   ├── project_manager.py  # Projektverwaltung
-│   │   ├── source_manager.py   # Quellenverwaltung
-│   │   ├── event_bus.py        # Eventsystem
-│   │   └── settings_manager.py # Einstellungen
-│   ├── formats/                # Dateiformate
-│   │   ├── limeta.py          # Metadaten
-│   │   ├── linote.py          # Notizen
-│   │   ├── liquote.py         # Zitate
-│   │   ├── litask.py          # Aufgaben
-│   │   └── lisum.py           # Zusammenfassungen
-│   ├── gui/                    # Benutzeroberflaeche
-│   │   ├── main_window.py
-│   │   ├── panels/
-│   │   ├── tabs/
-│   │   └── dialogs/
-│   └── modules/                # Erweiterungen
-│       ├── bibliography/       # BibTeX & Stile
-│       ├── pdf_workshop/       # PDF-Verarbeitung
-│       ├── ai/                 # Ollama-Integration
-│       └── sync/               # Git & Backup
-├── schemas/                    # JSON-Schemas
-├── tests/                      # Unit-Tests
-└── resources/                  # Icons etc.
++-- src/
+|   +-- main.py                 # Entry point
+|   +-- core/                   # Project, source and export logic
+|   +-- formats/                # .li* JSON file formats
+|   +-- gui/                    # PySide6 user interface
+|   +-- modules/                # Bibliography, PDF, AI and sync modules
++-- schemas/                    # JSON schemas
++-- tests/                      # Regression tests
++-- resources/                  # Icons and static assets
 ```
 
-## Dateiformate
+## File Formats
 
-Alle Daten werden als JSON gespeichert:
-
-| Format | Beschreibung |
-|--------|-------------|
-| `.liproj` | Projektkonfiguration |
-| `.limeta` | Quellenmetadaten |
-| `.linote` | Notizen |
-| `.liquote` | Zitate |
-| `.litask` | Aufgaben |
-| `.lisum` | Zusammenfassungen |
-
-## Projektlayout
-
-```
-MeinProjekt/
-├── projekt_config.liproj
-├── projekt_tasks.litask
-├── projekt_notes.linote
-├── Quellen/
-│   ├── Smith2023_Understanding_AI/
-│   │   ├── meta.limeta
-│   │   ├── notes.linote
-│   │   ├── quotes.liquote
-│   │   ├── tasks.litask
-│   │   ├── summaries.lisum
-│   │   └── source.pdf
-│   └── Doe2024_Machine_Learning/
-│       └── ...
-```
-
-## Zitierstile
-
-- APA (7. Ausgabe)
-- MLA (9. Ausgabe)
-- Chicago
-- DIN 1505-2
-- Harvard
-
-## KI-Integration (Optional)
-
-Fuer lokale KI-Features wird Ollama verwendet:
-
-```bash
-# Ollama installieren (https://ollama.ai)
-ollama run mistral
-```
-
-Features:
-- Automatische Zusammenfassungen
-- Zitatextraktion
-- Metadatenerkennung
-
-## Lizenz
-
-AGPL v3 - Siehe [LICENSE](LICENSE)
-
-Dieses Projekt verwendet PySide6 (LGPL) und PyMuPDF (AGPL).
-
-## Version
-
-1.0.0 (Januar 2026)
-
----
-
-## English
-
-**Folder-Based Literature Management**
-
-A desktop application for managing academic literature with a local storage format, PDF integration, and optional AI support.
-
-### Features
-
-- 📚 **Folder-Based System**: Each source in its own folder
-- 📄 **PDF Integration**: Full-text search, text extraction
-- 📝 **Notes & Quotes**: Page references, tags, categories
-- ✅ **Task Management**: Per-source and project-wide tasks
-- 📋 **Summaries**: Manual or AI-generated
-- 📚 **Bibliography**: BibTeX export, multiple citation styles
-- 🤖 **AI Integration**: Local processing with Ollama (optional)
-- 🔄 **Git Integration**: Project versioning
-
-### Screenshots
-
-![Main Window](README/screenshots/main.png)
-
-### Installation
-
-```bash
-# Clone the repository
-cd LitZentrum
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Start
-python src/main.py
-```
-
-### Dependencies
-
-- Python 3.10+
-- PySide6
-- PyMuPDF (fitz)
-- bibtexparser
-- jsonschema
-- requests (for Ollama)
-
-### Project Structure
-
-```
-LitZentrum/
-├── src/
-│   ├── main.py                 # Entry point
-│   ├── core/                   # Core logic
-│   │   ├── project_manager.py  # Project management
-│   │   ├── source_manager.py   # Source management
-│   │   ├── event_bus.py        # Event system
-│   │   └── settings_manager.py # Settings
-│   ├── formats/                # File formats
-│   │   ├── limeta.py          # Metadata
-│   │   ├── linote.py          # Notes
-│   │   ├── liquote.py         # Quotes
-│   │   ├── litask.py          # Tasks
-│   │   └── lisum.py           # Summaries
-│   ├── gui/                    # User interface
-│   │   ├── main_window.py
-│   │   ├── panels/
-│   │   ├── tabs/
-│   │   └── dialogs/
-│   └── modules/                # Extensions
-│       ├── bibliography/       # BibTeX & styles
-│       ├── pdf_workshop/       # PDF processing
-│       ├── ai/                 # Ollama integration
-│       └── sync/               # Git & backup
-├── schemas/                    # JSON schemas
-├── tests/                      # Unit tests
-└── resources/                  # Icons etc.
-```
-
-### File Formats
-
-All data is stored as JSON:
+All project data is stored as UTF-8 JSON:
 
 | Format | Description |
-|--------|-------------|
+|---|---|
 | `.liproj` | Project configuration |
 | `.limeta` | Source metadata |
 | `.linote` | Notes |
 | `.liquote` | Quotes |
 | `.litask` | Tasks |
 | `.lisum` | Summaries |
+| `litzentrum-library-v1.json` | Read-only companion export bundle |
 
-### Project Layout
+The companion export contains projects, sources, metadata, notes, quotes, tasks, summaries and BibTeX. It does not include PDF files, PDF binary data or absolute local paths.
 
-```
+## Project Layout
+
+```text
 MyProject/
-├── projekt_config.liproj
-├── projekt_tasks.litask
-├── projekt_notes.linote
-├── Quellen/
-│   ├── Smith2023_Understanding_AI/
-│   │   ├── meta.limeta
-│   │   ├── notes.linote
-│   │   ├── quotes.liquote
-│   │   ├── tasks.litask
-│   │   ├── summaries.lisum
-│   │   └── source.pdf
-│   └── Doe2024_Machine_Learning/
-│       └── ...
++-- projekt_config.liproj
++-- projekt_tasks.litask
++-- projekt_notes.linote
++-- Quellen/
+|   +-- Smith2023_Understanding_AI/
+|   |   +-- meta.limeta
+|   |   +-- notes.linote
+|   |   +-- quotes.liquote
+|   |   +-- tasks.litask
+|   |   +-- summaries.lisum
+|   |   +-- source.pdf
+|   +-- Doe2024_Machine_Learning/
+|       +-- ...
 ```
 
-### Citation Styles
+## Citation Styles
 
-- APA (7th Edition)
-- MLA (9th Edition)
+- APA 7
+- MLA 9
 - Chicago
 - DIN 1505-2
 - Harvard
 
-### AI Integration (Optional)
+## Optional AI Integration
 
-For local AI features, Ollama is used:
+LitZentrum can use a local Ollama installation for optional AI-assisted summaries, quote extraction and metadata support.
 
 ```bash
-# Install Ollama (https://ollama.ai)
 ollama run mistral
 ```
 
-Features:
-- Automatic summaries
-- Quote extraction
-- Metadata detection
+## Development
 
-### License
+```bash
+pip install -r requirements.txt
+python -m pytest -q
+python -m py_compile src/main.py
+```
 
-AGPL v3 - See [LICENSE](LICENSE)
+## License
+
+AGPL v3. See [LICENSE](LICENSE).
 
 This project uses PySide6 (LGPL) and PyMuPDF (AGPL).
 
-### Version
+## Liability
 
-1.0.0 (January 2026)
-
----
-
-## Haftung / Liability
-
-Dieses Projekt ist eine **unentgeltliche Open-Source-Schenkung** im Sinne der §§ 516 ff. BGB. Die Haftung des Urhebers ist gemäß **§ 521 BGB** auf **Vorsatz und grobe Fahrlässigkeit** beschränkt. Ergänzend gelten die Haftungsausschlüsse aus GPL-3.0 / MIT / Apache-2.0 §§ 15–16 (je nach gewählter Lizenz).
-
-Nutzung auf eigenes Risiko. Keine Wartungszusage, keine Verfügbarkeitsgarantie, keine Gewähr für Fehlerfreiheit oder Eignung für einen bestimmten Zweck.
-
-This project is an unpaid open-source donation. Liability is limited to intent and gross negligence (§ 521 German Civil Code). Use at your own risk. No warranty, no maintenance guarantee, no fitness-for-purpose assumed.
-
+This project is an unpaid open-source donation. Liability is limited to intent and gross negligence under Section 521 of the German Civil Code. Use at your own risk. No warranty, maintenance guarantee or fitness-for-purpose is assumed.

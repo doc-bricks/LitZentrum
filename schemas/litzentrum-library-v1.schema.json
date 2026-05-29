@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LitZentrum Library Export v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "schema_version",
+    "app",
+    "exported_at",
+    "capabilities",
+    "projects",
+    "bibliography"
+  ],
+  "properties": {
+    "schema": {
+      "const": "litzentrum-library"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "app": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": {"type": "string"},
+        "version": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "exported_at": {
+      "type": "string"
+    },
+    "capabilities": {
+      "type": "object",
+      "required": [
+        "contains_pdf_files",
+        "contains_pdf_text",
+        "read_only_companion"
+      ],
+      "properties": {
+        "contains_pdf_files": {"type": "boolean"},
+        "contains_pdf_text": {"type": "boolean"},
+        "read_only_companion": {"type": "boolean"}
+      },
+      "additionalProperties": true
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "citation_style",
+          "language",
+          "sources_folder",
+          "project_notes",
+          "project_tasks",
+          "sources"
+        ],
+        "properties": {
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "description": {"type": ["string", "null"]},
+          "citation_style": {"type": "string"},
+          "language": {"type": "string"},
+          "sources_folder": {"type": "string"},
+          "project_notes": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/note"}
+          },
+          "project_tasks": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/task"}
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "folder_name",
+                "metadata",
+                "notes",
+                "quotes",
+                "tasks",
+                "summaries",
+                "files"
+              ],
+              "properties": {
+                "id": {"type": "string"},
+                "folder_name": {"type": "string"},
+                "metadata": {
+                  "type": "object"
+                },
+                "notes": {
+                  "type": "array",
+                  "items": {"$ref": "#/$defs/note"}
+                },
+                "quotes": {
+                  "type": "array",
+                  "items": {"$ref": "#/$defs/quote"}
+                },
+                "tasks": {
+                  "type": "array",
+                  "items": {"$ref": "#/$defs/task"}
+                },
+                "summaries": {
+                  "type": "array",
+                  "items": {"$ref": "#/$defs/summary"}
+                },
+                "files": {
+                  "type": "array",
+                  "items": {"$ref": "#/$defs/file"}
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "bibliography": {
+      "type": "object",
+      "required": ["bibtex", "styles"],
+      "properties": {
+        "bibtex": {"type": "string"},
+        "styles": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "note": {
+      "type": "object",
+      "required": ["id", "content", "created_at"],
+      "properties": {
+        "id": {"type": "string"},
+        "content": {"type": "string"},
+        "page": {"type": ["integer", "null"]},
+        "tags": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "created_at": {"type": "string"},
+        "updated_at": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "quote": {
+      "type": "object",
+      "required": ["id", "type", "text", "created_at"],
+      "properties": {
+        "id": {"type": "string"},
+        "type": {"type": "string"},
+        "text": {"type": "string"},
+        "page": {"type": ["integer", "null"]},
+        "page_end": {"type": ["integer", "null"]},
+        "comment": {"type": ["string", "null"]},
+        "tags": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "used_in": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "created_at": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "task": {
+      "type": "object",
+      "required": ["id", "title", "status", "created_at"],
+      "properties": {
+        "id": {"type": "string"},
+        "title": {"type": "string"},
+        "description": {"type": ["string", "null"]},
+        "status": {"type": "string"},
+        "priority": {"type": "string"},
+        "due_date": {"type": ["string", "null"]},
+        "page": {"type": ["integer", "null"]},
+        "tags": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "created_at": {"type": "string"},
+        "completed_at": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "summary": {
+      "type": "object",
+      "required": ["id", "title", "content", "created_at"],
+      "properties": {
+        "id": {"type": "string"},
+        "title": {"type": "string"},
+        "content": {"type": "string"},
+        "type": {"type": "string"},
+        "source": {"type": "string"},
+        "ai_model": {"type": ["string", "null"]},
+        "pages": {"type": ["string", "null"]},
+        "tags": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "created_at": {"type": "string"},
+        "updated_at": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "file": {
+      "type": "object",
+      "required": [
+        "role",
+        "name",
+        "relative_path",
+        "sha256",
+        "included",
+        "exists"
+      ],
+      "properties": {
+        "role": {"type": "string"},
+        "name": {"type": "string"},
+        "relative_path": {"type": "string"},
+        "sha256": {"type": ["string", "null"]},
+        "included": {"type": "boolean"},
+        "exists": {"type": "boolean"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

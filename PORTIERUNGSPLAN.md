@@ -61,17 +61,16 @@ Der sinnvolle Cross-Platform-Ansatz ist deshalb zweigeteilt:
 | Desktop Windows | vorhanden | Store-Pflichtartefakte prüfen |
 | macOS | nicht geprüft | Source-Smoke auf Mac Studio planen |
 | Linux | nicht geprüft | sauberer Linux-Smoke mit PySide6/PyMuPDF planen |
-| Exportformat | geplant | `litzentrum-library-v1.json` implementieren |
+| Exportformat | implementiert | Web/PWA-Companion gegen das neue Bundle prototypisieren |
 | Web/PWA | geplant | statischen Import-/Leser-Prototyp erstellen |
 | Android/iOS | abgeleitet von Web/PWA | erst nach PWA-Smoke bewerten |
 
 ## Priorisierte Aufgaben
 
-1. P0: Exportformat `litzentrum-library-v1.json` spezifizieren und implementieren.
-2. P1: Desktop-Export ohne PDF-Inhalte und ohne absolute lokale Pfade testen.
+1. DONE 2026-05-29: Exportformat `litzentrum-library-v1.json` spezifiziert und implementiert.
+2. DONE 2026-05-29: Desktop-Export ohne PDF-Inhalte und ohne absolute lokale Pfade per Regressionstests abgesichert.
 3. P1: Linux- und macOS-Source-Smokes für Start, Projektöffnung und BibTeX-Export durchführen.
 4. P1: Web/PWA-Companion als statischen Offline-Reader für Exportbündel erstellen.
 5. P2: Windows-Store-Pflichtartefakte aktualisieren: Screenshots, Listing, Datenschutz-/Support-URL, MSIX, WACK.
 6. P2: Android/iOS-PWA-Smokes für Import, Suche, Zitierkopie und Offline-Start durchführen.
 7. P3: Optionale Schreib-/Roundtrip-Strategie für geänderte Notizen und Aufgaben prüfen.
-
