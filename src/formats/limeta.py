@@ -76,7 +76,7 @@ class LiMeta(LitFormat):
     def from_dict(cls, data: dict) -> "LiMeta":
         """Erstellt aus Dictionary"""
         return cls(
-            title=data.get("title", "Untitled"),
+            title=data.get("title") or "Untitled",
             authors=data.get("authors", []),
             year=data.get("year"),
             doi=data.get("doi"),

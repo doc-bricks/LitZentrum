@@ -157,5 +157,34 @@ class TestLibraryExport(unittest.TestCase):
             tempdir.cleanup()
 
 
+class TestLiMetaFromDict(unittest.TestCase):
+    """Regression tests for LiMeta.from_dict null-field handling."""
+
+    def test_null_title_falls_back_to_untitled(self):
+        """Regression: data.get('title','Untitled') silently passes None through
+        when the JSON has "title": null.  Using `or` catches the null case."""
+        meta = LiMeta.from_dict({"title": None})
+        self.assertEqual(meta.title, "Untitled")
+
+    def test_null_title_roundtrip_does_not_crash_search_sources(self):
+        """Roundtrip via to_dict/from_dict must not produce a None title.
+        If it did, search_sources() would crash on meta.title.lower()."""
+        # A source saved with title="" and reloaded must keep title non-None
+        original = LiMeta(title="")
+        reloaded = LiMeta.from_dict(original.to_dict())
+        # to_dict stores "" → from_dict sees "" → `"" or "Untitled"` = "Untitled"
+        # Either way, title must be a non-None str
+        self.assertIsInstance(reloaded.title, str)
+        # Confirm .lower() does not crash (the actual call in search_sources)
+        reloaded.title.lower()  # must not raise
+
+    def test_null_title_bibtex_key_does_not_crash(self):
+        """bibtex_key calls _to_ascii(self.title) — must not raise for null title."""
+        meta = LiMeta.from_dict({"title": None})
+        # After the fix, title is "Untitled" — bibtex_key must not raise
+        key = meta.bibtex_key
+        self.assertIn("untitled", key)
+
+
 if __name__ == "__main__":
     unittest.main()
