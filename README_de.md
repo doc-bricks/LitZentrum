@@ -15,6 +15,7 @@ LitZentrum ist eine Desktop-Anwendung zur Verwaltung akademischer Literatur in l
 - Zusammenfassungen: manuell oder optional KI-gestützt.
 - Bibliografie: BibTeX-Export und mehrere Zitierstile.
 - Companion-Export: `litzentrum-library-v1.json` für read-only Web/PWA-Reader ohne PDF-Binärdaten.
+- Statischer `web_companion/`-Reader für Offline-Import, Suche und Zitierkopie im Browser.
 - Optionale KI-Integration: lokale Verarbeitung mit Ollama.
 - Git-freundliches Projektlayout für versionierte Forschungsarbeit.
 
@@ -112,7 +113,15 @@ ollama run mistral
 pip install -r requirements.txt
 python -m pytest -q
 python -m py_compile src/main.py
+node --test web_companion/tests/library.test.mjs
 ```
+
+## Web/PWA-Companion
+
+Der Ordner `web_companion/` enthält jetzt einen statischen Offline-Reader für
+`litzentrum-library-v1.json`. Er unterstützt lokalen Import, Suche über
+Metadaten/Notizen/Zitate/Aufgaben/Zusammenfassungen, Zitierkopie, Service Worker
+und die Wiederherstellung der zuletzt geladenen Bibliothek.
 
 ## Lizenz
 

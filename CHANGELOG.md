@@ -11,10 +11,11 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 - "Modelle laden" Button neben "Verbindung testen" im Einstellungen-Dialog
 - Read-only-Desktop-Export `litzentrum-library-v1.json` mit JSON-Schema, GUI-Aktion und Regressionstests für UTF-8, relative Pfade, fehlende PDFs und leere Projekte
 - English-first `README.md`, separate `README_de.md` und `llms.txt` für maschinenlesbaren Projektkontext
+- Statischer `web_companion/`-Offline-Reader für `litzentrum-library-v1.json` mit Import, Suche, Zitierkopie, lokaler Wiederherstellung, Manifest, Service Worker und Node-Regressionstests
 
 ### Geändert / Changed
 - Verbindungstest aktualisiert ComboBox automatisch bei Erfolg (Ollama)
-- Portierungsstatus aktualisiert: Exportformat für den Web/PWA-Companion ist jetzt implementiert
+- Portierungsstatus aktualisiert: Der Web/PWA-Companion ist jetzt als erster read-only Prototyp umgesetzt; nächste Plattformschritte sind Android-/iOS-Smokes
 - Community-Workflows auf aktuelle Actions-Versionen und Input-Namen aktualisiert
 - Lokale `*-library-v1.json`-Exportdateien werden ignoriert
 

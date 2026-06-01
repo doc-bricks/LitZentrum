@@ -1,26 +1,42 @@
 # LitZentrum Web/PWA Companion
 
-Stand: 2026-05-27
+Stand: 2026-06-01
 
-Dieser Ordner ist der Planungsanker für eine spätere Web/PWA-Linie von LitZentrum.
+Der Companion ist jetzt als statischer Offline-Reader für `litzentrum-library-v1.json` umgesetzt. Er ist bewusst read-only und ergänzt die Desktop-App für Recherche unterwegs.
 
-## Ziel
+## Enthalten
 
-Der Companion soll `litzentrum-library-v1.json` importieren und Literaturprojekte offline lesbar machen. Er ist kein Ersatz für die Desktop-App, sondern ein mobiler Reader für Recherche unterwegs.
+- Import per Datei-Dialog und Drag-and-drop
+- Demo-Modus über Button oder `?demo=1`
+- Projekt- und Quellenansicht mit Suche
+- Detailansicht für Metadaten, Notizen, Zitate, Aufgaben, Zusammenfassungen und Dateihinweise
+- Zitierkopie für BibTeX-Key, Kurzverweis und einzelne Zitate
+- Lokale Wiederherstellung der zuletzt geladenen Bibliothek
+- Web App Manifest und Service Worker für Offline-Nutzung
 
-## Geplanter Funktionsumfang
+## Start lokal
 
-- Import eines Desktop-Exports.
-- Projekt- und Quellenliste.
-- Suche in Metadaten, Notizen, Zitaten, Aufgaben und Zusammenfassungen.
-- Zitierkopie für BibTeX-Key und formatierte Kurzverweise.
-- Offline-Nutzung als PWA.
-- Android-/iOS-Browser-Smokes nach dem ersten Prototyp.
+```bash
+cd web_companion
+python -m http.server 8767
+```
+
+Danach im Browser öffnen:
+
+- `http://127.0.0.1:8767/`
+- `http://127.0.0.1:8767/?demo=1`
+
+## Tests
+
+```bash
+node --test web_companion/tests/library.test.mjs
+node --check web_companion/app.js
+node --check web_companion/library.js
+```
 
 ## Nicht-Ziele
 
-- Kein Upload von PDFs auf einen Server.
-- Keine Ollama-/KI-Funktionen im Browser.
-- Keine direkte Bearbeitung der Desktop-Projektordner.
-- Kein nativer Mobile-Vollklon.
-
+- Kein PDF-Upload auf einen Server
+- Keine direkte Bearbeitung der Desktop-Projektordner
+- Keine Ollama-Funktionen im Browser
+- Kein nativer Mobile-Vollklon

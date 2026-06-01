@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#17352c">
+    <title>LitZentrum Companion</title>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" href="../LitZentrum.ico" sizes="any">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">LitZentrum Web/PWA Companion</p>
+          <h1>Literatur lesen, Zitate greifen, Projektstand offline dabeihaben.</h1>
+          <p class="hero-text">
+            Dieser Companion importiert <code>litzentrum-library-v1.json</code> und zeigt Projekte,
+            Quellen, Notizen, Zitate, Aufgaben und Zusammenfassungen lokal im Browser an.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button id="import-trigger" class="button button-primary" type="button">Bibliothek importieren</button>
+          <button id="demo-trigger" class="button button-secondary" type="button">Demo laden</button>
+          <input id="file-input" type="file" accept=".json,application/json" tabindex="-1" aria-hidden="true">
+        </div>
+      </header>
+
+      <section id="drop-zone" class="drop-zone" aria-label="Importzone">
+        <strong>JSON hier ablegen</strong>
+        <span>oder den Import-Button nutzen</span>
+      </section>
+
+      <section id="summary-grid" class="summary-grid" aria-label="Bibliotheksübersicht"></section>
+
+      <section class="workspace">
+        <aside class="sidebar">
+          <div class="panel">
+            <label class="field-label" for="search-input">Suche</label>
+            <input id="search-input" class="search-input" type="search" placeholder="Titel, Autor, Notiz, Zitat, Aufgabe …">
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Projekte</h2>
+              <button id="copy-bibtex-trigger" class="text-button" type="button">BibTeX kopieren</button>
+            </div>
+            <div id="project-list" class="project-list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Quellen</h2>
+              <span id="source-count" class="muted"></span>
+            </div>
+            <div id="source-list" class="source-list"></div>
+          </div>
+        </aside>
+
+        <main class="content">
+          <div id="detail-empty" class="detail-empty">
+            Noch keine Bibliothek geladen.
+          </div>
+          <article id="detail-view" class="detail-view hidden" aria-live="polite"></article>
+        </main>
+      </section>
+
+      <footer id="status-bar" class="status-bar">Bereit für den Import.</footer>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

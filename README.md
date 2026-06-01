@@ -17,6 +17,7 @@ LitZentrum is a desktop application for managing academic literature in plain pr
 - Companion export: `litzentrum-library-v1.json` for read-only Web/PWA readers without embedded PDF binaries.
 - Optional AI integration: local processing with Ollama.
 - Git-friendly project layout for versioned research work.
+- Static `web_companion/` reader for offline import, search and citation copy on mobile browsers.
 
 ## Screenshots
 
@@ -112,7 +113,14 @@ ollama run mistral
 pip install -r requirements.txt
 python -m pytest -q
 python -m py_compile src/main.py
+node --test web_companion/tests/library.test.mjs
 ```
+
+## Web/PWA Companion
+
+The `web_companion/` folder contains a static offline reader for `litzentrum-library-v1.json`.
+It supports local import, search across metadata/notes/quotes/tasks/summaries, citation copy,
+service-worker caching and local restore of the last loaded bundle.
 
 ## License
 
