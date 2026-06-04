@@ -1,0 +1,15 @@
+{
+  "app_name": "LitZentrum",
+  "publisher": "CN=52596601-BAB4-4F3F-B182-E8F3F273B202",
+  "publisher_display": "Geiger",
+  "identity_name": "Geiger.LitZentrum",
+  "version": "1.0.0.0",
+  "description": "Lokale Literaturverwaltung mit PDF-Workflows, BibTeX-Export und Companion-JSON-Export.",
+  "executable": "LitZentrum.exe",
+  "capabilities": "runFullTrust",
+  "category": "Productivity",
+  "age_rating": "3+",
+  "privacy_url": "https://github.com/doc-bricks/LitZentrum/blob/master/PRIVACY_POLICY.md",
+  "support_url": "https://github.com/doc-bricks/LitZentrum/blob/master/SUPPORT.md",
+  "license": "AGPL-3.0-only"
+}

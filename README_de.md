@@ -115,6 +115,7 @@ pip install -r requirements.txt
 python -m pytest -q
 python -m py_compile src/main.py
 python tests/source_platform_smoke.py
+python -m pytest -q tests/test_store_materials.py
 node --test web_companion/tests/library.test.mjs
 node --test web_companion/tests/mobile-pwa.test.mjs
 node --check web_companion/sw.js
@@ -138,6 +139,15 @@ zeigt eine Quelle über den Offscreen-GUI-Pfad an, exportiert BibTeX und validie
 `litzentrum-library-v1.json`. Der GitHub-Workflow
 `.github/workflows/platform-smoke.yml` führt denselben Smoke auf Ubuntu und macOS
 aus.
+
+## Windows Store
+
+`store_package.json`, `STORE_LISTING.md`, `PRIVACY_POLICY.md`, `SUPPORT.md` und
+`WINDOWS_STORE_PREP.md` halten jetzt die aktuelle Windows-Store-Basis für
+LitZentrum fest. Der jetzige Stand deckt öffentliche Metadaten, Datenschutz- und
+Supportseiten sowie die Screenshot-Planung ab. Dedizierte Store-Screenshots, ein
+reproduzierbarer Windows-EXE-/MSIX-Buildpfad und WACK bleiben die nächsten
+expliziten Schritte.
 
 ## Lizenz
 
