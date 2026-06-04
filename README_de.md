@@ -16,6 +16,7 @@ LitZentrum ist eine Desktop-Anwendung zur Verwaltung akademischer Literatur in l
 - Bibliografie: BibTeX-Export und mehrere Zitierstile.
 - Companion-Export: `litzentrum-library-v1.json` für read-only Web/PWA-Reader ohne PDF-Binärdaten.
 - Statischer `web_companion/`-Reader für Offline-Import, Suche und Zitierkopie im Browser.
+- Mobile-PWA-Preflight für Android/iOS-Installierbarkeit, Offline-Navigation und Touch-Ziele.
 - Optionale KI-Integration: lokale Verarbeitung mit Ollama.
 - Git-freundliches Projektlayout für versionierte Forschungsarbeit.
 
@@ -113,7 +114,10 @@ ollama run mistral
 pip install -r requirements.txt
 python -m pytest -q
 python -m py_compile src/main.py
+python tests/source_platform_smoke.py
 node --test web_companion/tests/library.test.mjs
+node --test web_companion/tests/mobile-pwa.test.mjs
+node --check web_companion/sw.js
 ```
 
 ## Web/PWA-Companion
@@ -121,7 +125,19 @@ node --test web_companion/tests/library.test.mjs
 Der Ordner `web_companion/` enthält jetzt einen statischen Offline-Reader für
 `litzentrum-library-v1.json`. Er unterstützt lokalen Import, Suche über
 Metadaten/Notizen/Zitate/Aufgaben/Zusammenfassungen, Zitierkopie, Service Worker
-und die Wiederherstellung der zuletzt geladenen Bibliothek.
+und die Wiederherstellung der zuletzt geladenen Bibliothek. Zusätzlich prüft ein
+mobiler PWA-Preflight Android-/iOS-Installierbarkeit, Offline-Navigation und
+Touch-Ziele. Echte Geräte-Smokes bleiben vor einer Release-Entscheidung separat
+zu prüfen.
+
+## Plattform-Source-Smoke
+
+`tests/source_platform_smoke.py` prüft den Source-Installationspfad für macOS-
+und Linux-Nutzer. Der Smoke legt ein temporäres Projekt an, öffnet es erneut,
+zeigt eine Quelle über den Offscreen-GUI-Pfad an, exportiert BibTeX und validiert
+`litzentrum-library-v1.json`. Der GitHub-Workflow
+`.github/workflows/platform-smoke.yml` führt denselben Smoke auf Ubuntu und macOS
+aus.
 
 ## Lizenz
 

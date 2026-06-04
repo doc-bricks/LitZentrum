@@ -113,14 +113,26 @@ ollama run mistral
 pip install -r requirements.txt
 python -m pytest -q
 python -m py_compile src/main.py
+python tests/source_platform_smoke.py
 node --test web_companion/tests/library.test.mjs
+node --test web_companion/tests/mobile-pwa.test.mjs
+node --check web_companion/sw.js
 ```
 
 ## Web/PWA Companion
 
 The `web_companion/` folder contains a static offline reader for `litzentrum-library-v1.json`.
 It supports local import, search across metadata/notes/quotes/tasks/summaries, citation copy,
-service-worker caching and local restore of the last loaded bundle.
+service-worker caching, local restore of the last loaded bundle and a mobile PWA preflight for
+Android/iOS install readiness, offline navigation and touch-target checks.
+
+## Platform Source Smoke
+
+`tests/source_platform_smoke.py` verifies the source install path used by macOS
+and Linux users. It creates and reopens a temporary project, displays one source
+through the offscreen GUI path, exports BibTeX and validates
+`litzentrum-library-v1.json`. The GitHub workflow
+`.github/workflows/platform-smoke.yml` runs the same smoke on Ubuntu and macOS.
 
 ## License
 

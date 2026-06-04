@@ -102,6 +102,7 @@ input {
 
 .button {
   padding: 14px 18px;
+  min-height: 44px;
   cursor: pointer;
 }
 
@@ -141,6 +142,7 @@ input {
 }
 
 .drop-zone,
+.mobile-status article,
 .panel,
 .detail-view,
 .status-bar,
@@ -167,6 +169,37 @@ input {
   border-color: var(--highlight);
   background: rgba(255, 250, 243, 0.95);
   transform: scale(1.01);
+}
+
+.mobile-status {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.mobile-status article {
+  display: grid;
+  gap: 4px;
+  min-height: 76px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+}
+
+.mobile-status strong {
+  color: var(--accent);
+}
+
+.mobile-status span {
+  color: var(--muted);
+}
+
+.mobile-status span[data-state="active"] {
+  color: var(--accent-soft);
+}
+
+.mobile-status span[data-state="warning"] {
+  color: var(--warning);
 }
 
 .summary-grid {
@@ -258,6 +291,7 @@ input {
 .project-chip,
 .source-card {
   width: 100%;
+  min-height: 44px;
   text-align: left;
   border: 1px solid var(--line);
   border-radius: 16px;
@@ -455,6 +489,7 @@ code {
   .hero,
   .workspace,
   .content-grid,
+  .mobile-status,
   .summary-grid {
     grid-template-columns: 1fr;
   }
@@ -468,7 +503,11 @@ code {
 @media (max-width: 720px) {
   .page-shell {
     width: min(100% - 20px, 100%);
-    padding-top: 20px;
+    padding:
+      max(20px, env(safe-area-inset-top))
+      max(10px, env(safe-area-inset-right))
+      max(20px, env(safe-area-inset-bottom))
+      max(10px, env(safe-area-inset-left));
   }
 
   .hero,
@@ -485,5 +524,12 @@ code {
 
   .meta-grid {
     grid-template-columns: 1fr;
+  }
+
+  .button,
+  .text-button,
+  .project-chip,
+  .source-card {
+    width: 100%;
   }
 }

@@ -1,6 +1,6 @@
 # LitZentrum Web/PWA Companion
 
-Stand: 2026-06-01
+Stand: 2026-06-02
 
 Der Companion ist jetzt als statischer Offline-Reader für `litzentrum-library-v1.json` umgesetzt. Er ist bewusst read-only und ergänzt die Desktop-App für Recherche unterwegs.
 
@@ -13,6 +13,8 @@ Der Companion ist jetzt als statischer Offline-Reader für `litzentrum-library-v
 - Zitierkopie für BibTeX-Key, Kurzverweis und einzelne Zitate
 - Lokale Wiederherstellung der zuletzt geladenen Bibliothek
 - Web App Manifest und Service Worker für Offline-Nutzung
+- Mobile-PWA-Status für Android, iOS und Offline-Cache
+- Automatischer Mobile-PWA-Preflight für Manifest, Service Worker, Markup und Touch-Ziele
 
 ## Start lokal
 
@@ -30,9 +32,13 @@ Danach im Browser öffnen:
 
 ```bash
 node --test web_companion/tests/library.test.mjs
+node --test web_companion/tests/mobile-pwa.test.mjs
 node --check web_companion/app.js
 node --check web_companion/library.js
+node --check web_companion/sw.js
 ```
+
+Der Preflight ersetzt keinen echten Gerätetest. Für Release-Entscheidungen bleiben Android-Chrome- und iOS-Safari-Smokes mit realem Import, Suche, Zitierkopie und Offline-Start separat zu prüfen.
 
 ## Nicht-Ziele
 

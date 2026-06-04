@@ -25,6 +25,9 @@ const sourceCount = document.getElementById("source-count");
 const detailEmpty = document.getElementById("detail-empty");
 const detailView = document.getElementById("detail-view");
 const statusBar = document.getElementById("status-bar");
+const androidStatus = document.getElementById("android-status");
+const iosStatus = document.getElementById("ios-status");
+const offlineStatus = document.getElementById("offline-status");
 
 importTrigger.addEventListener("click", () => fileInput.click());
 demoTrigger.addEventListener("click", () => loadBundle(buildDemoLibrary(), { persist: false, label: "Demo geladen." }));
@@ -703,6 +706,30 @@ function setStatus(text, isError = false) {
   statusBar.className = "status-bar" + (isError ? " error" : "");
 }
 
+function setMobileStatus(element, text, state = "neutral") {
+  element.textContent = text;
+  element.dataset.state = state;
+}
+
+function updateMobilePwaStatus() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  const isAndroid = userAgent.includes("android");
+  const isIos = /iphone|ipad|ipod/.test(userAgent);
+  const isStandalone = window.matchMedia?.("(display-mode: standalone)").matches || navigator.standalone === true;
+
+  setMobileStatus(
+    androidStatus,
+    isAndroid ? (isStandalone ? "Installiert" : "PWA bereit") : "Chrome/Edge PWA",
+    isAndroid ? "active" : "neutral"
+  );
+  setMobileStatus(
+    iosStatus,
+    isIos ? (isStandalone ? "Installiert" : "Safari PWA bereit") : "Safari PWA",
+    isIos ? "active" : "neutral"
+  );
+  setMobileStatus(offlineStatus, "Offline-Cache wird vorbereitet.", "neutral");
+}
+
 function formatDate(value) {
   if (!value) {
     return "—";
@@ -723,8 +750,14 @@ function escapeHtml(text) {
     .replaceAll("'", "&#39;");
 }
 
+updateMobilePwaStatus();
+
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./sw.js").catch(() => {});
+  navigator.serviceWorker.register("./sw.js")
+    .then(() => setMobileStatus(offlineStatus, "Offline-Cache bereit.", "active"))
+    .catch(() => setMobileStatus(offlineStatus, "Offline-Cache blockiert.", "warning"));
+} else {
+  setMobileStatus(offlineStatus, "Kein Service Worker verfügbar.", "warning");
 }
 
 const params = new URLSearchParams(window.location.search);

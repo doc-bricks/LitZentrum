@@ -12,10 +12,12 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 - Read-only-Desktop-Export `litzentrum-library-v1.json` mit JSON-Schema, GUI-Aktion und Regressionstests für UTF-8, relative Pfade, fehlende PDFs und leere Projekte
 - English-first `README.md`, separate `README_de.md` und `llms.txt` für maschinenlesbaren Projektkontext
 - Statischer `web_companion/`-Offline-Reader für `litzentrum-library-v1.json` mit Import, Suche, Zitierkopie, lokaler Wiederherstellung, Manifest, Service Worker und Node-Regressionstests
+- Mobile-PWA-Preflight für Android/iOS: Statusanzeige, Touch-Ziele, Safe-Area-CSS, Offline-Navigation und statische Node-Smokes
+- Automatisierter macOS-/Linux-Source-Smoke für Projektstart, Projektöffnung, Quellenanzeige, BibTeX-Export und `litzentrum-library-v1.json`; GitHub Actions ergänzt eine Ubuntu-/macOS-Matrix
 
 ### Geändert / Changed
 - Verbindungstest aktualisiert ComboBox automatisch bei Erfolg (Ollama)
-- Portierungsstatus aktualisiert: Der Web/PWA-Companion ist jetzt als erster read-only Prototyp umgesetzt; nächste Plattformschritte sind Android-/iOS-Smokes
+- Portierungsstatus aktualisiert: Der Web/PWA-Companion hat jetzt einen automatisierten mobilen Preflight; der Desktop-Source-Smoke-Pfad ist für Ubuntu/macOS vorbereitet; echte Android-/iOS-Geräte-Smokes bleiben separat offen
 - Community-Workflows auf aktuelle Actions-Versionen und Input-Namen aktualisiert
 - Lokale `*-library-v1.json`-Exportdateien werden ignoriert
 
