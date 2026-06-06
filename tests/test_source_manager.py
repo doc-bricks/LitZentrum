@@ -75,6 +75,28 @@ class TestSourceManager(unittest.TestCase):
             self.assertEqual(manager.load_source(first.path).meta.tags, ["first"])
             self.assertEqual(manager.load_source(second.path).meta.tags, ["second"])
 
+    def test_get_all_sources_skips_corrupt_meta_file(self):
+        """A corrupt meta.limeta must not crash get_all_sources; good sources still load."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            project = ProjectManager().create_project(
+                path=Path(tmpdir) / "TestProjekt",
+                name="Test Projekt",
+            )
+            manager = SourceManager(project.path, project.config.sources_folder)
+
+            good = manager.create_source(
+                LiMeta(title="Good Source", authors=["Doe, John"], year=2023)
+            )
+
+            # Inject a corrupt meta file into a second folder
+            corrupt_dir = manager.sources_path / "CorruptFolder"
+            corrupt_dir.mkdir()
+            (corrupt_dir / "meta.limeta").write_text("{not valid json", encoding="utf-8")
+
+            sources = manager.get_all_sources()
+            self.assertEqual(len(sources), 1)
+            self.assertEqual(sources[0].path, good.path)
+
 
 if __name__ == "__main__":
     unittest.main()

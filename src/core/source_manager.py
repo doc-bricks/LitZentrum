@@ -5,6 +5,8 @@ Manages individual literature sources.
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
+import json
+import logging
 import shutil
 import re
 
@@ -139,7 +141,9 @@ class SourceManager:
                     sources.append(source)
                 except FileNotFoundError:
                     pass  # Ordner ohne Metadaten ignorieren
-        
+                except (json.JSONDecodeError, ValueError) as e:
+                    logging.warning("Defekte Metadatendatei übersprungen (%s): %s", folder.name, e)
+
         return sources
     
     def get_notes(self, source: LitSource) -> LiNote:
