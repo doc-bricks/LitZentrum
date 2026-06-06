@@ -4,7 +4,8 @@ Zeigt Details zur ausgewählten Quelle mit Tabs
 """
 from typing import Optional
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QUrl
+from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QTabWidget,
     QLabel, QScrollArea, QFrame, QPushButton, QTextEdit,
@@ -209,8 +210,7 @@ class DetailPanel(QWidget):
     def _open_pdf_external(self):
         """Öffnet die PDF extern"""
         if self.source and self.source.has_pdf:
-            import os
-            os.startfile(str(self.source.pdf_path))
+            QDesktopServices.openUrl(QUrl.fromLocalFile(str(self.source.pdf_path)))
     
     def _copy_cite_to_clipboard(self):
         """Kopiert \\cite{bibtex_key} in die Zwischenablage"""

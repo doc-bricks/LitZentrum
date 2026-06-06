@@ -4,7 +4,8 @@ Zeigt alle Quellen mit Filterung
 """
 from typing import List, Optional
 
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtCore import Qt, QUrl, Signal
+from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QListWidgetItem,
     QLabel, QLineEdit, QComboBox, QPushButton
@@ -163,9 +164,7 @@ class SourceListPanel(QWidget):
         """Item wurde doppelt angeklickt"""
         source = item.data(Qt.ItemDataRole.UserRole)
         if source and source.has_pdf:
-            # PDF öffnen
-            import os
-            os.startfile(str(source.pdf_path))
+            QDesktopServices.openUrl(QUrl.fromLocalFile(str(source.pdf_path)))
     
     def _on_search(self, text: str):
         """Suche geändert"""
