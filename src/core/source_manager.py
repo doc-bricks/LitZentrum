@@ -189,14 +189,14 @@ class SourceManager:
     
     def _generate_folder_name(self, meta: LiMeta) -> str:
         """Generates a filesystem-safe folder name from source metadata (Author+Year_Title)."""
-        author = meta.first_author.replace(" ", "")
+        _invalid = re.compile(r'[<>:"/\\|?*\s]')
+        author = _invalid.sub("", meta.first_author) or "Unbekannt"
         year = str(meta.year) if meta.year else "oJ"
-        
+
         # Titel kürzen und säubern
         title = meta.title[:30] if meta.title else "Untitled"
-        title = re.sub(r'[<>:"/\\|?*]', '', title)  # Ungültige Zeichen entfernen
-        title = title.replace(" ", "_")
-        
+        title = _invalid.sub("_", title).strip("_")
+
         return f"{author}{year}_{title}"
 
     def _get_unique_source_path(self, folder_name: str) -> Path:
