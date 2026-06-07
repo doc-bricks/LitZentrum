@@ -1,4 +1,4 @@
-const CACHE_NAME = "litzentrum-web-companion-v2";
+const CACHE_NAME = "litzentrum-web-companion-v3";
 const ASSETS = [
   "./",
   "./index.html",
@@ -6,7 +6,10 @@ const ASSETS = [
   "./app.js",
   "./library.js",
   "./manifest.webmanifest",
-  "../LitZentrum.ico"
+  "./icons/Icon-192.png",
+  "./icons/Icon-512.png",
+  "./icons/Icon-maskable-192.png",
+  "./icons/Icon-maskable-512.png"
 ];
 
 self.addEventListener("install", event => {
@@ -24,9 +27,8 @@ self.addEventListener("activate", event => {
           .filter(key => key !== CACHE_NAME)
           .map(key => caches.delete(key))
       )
-    )
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 self.addEventListener("fetch", event => {

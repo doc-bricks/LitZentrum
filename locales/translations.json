@@ -1,54 +1,106 @@
 {
   "Einstellungen": {
     "de": "Einstellungen",
-    "en": "Settings"
+    "en": "Settings",
+    "es": "Configuración",
+    "zh": "设置",
+    "ja": "設定",
+    "ru": "Настройки"
   },
   "Fällig:": {
     "de": "Fällig:",
-    "en": "Due:"
+    "en": "Due:",
+    "es": "Fecha límite:",
+    "zh": "截止时间:",
+    "ja": "期限:",
+    "ru": "Срок:"
   },
   "Kein PDF geladen\\n\\nWählen Sie eine Quelle mit PDF": {
     "de": "Kein PDF geladen\\n\\nWählen Sie eine Quelle mit PDF",
-    "en": "No PDF loaded\\n\\nSelect a source with PDF"
+    "en": "No PDF loaded\\n\\nSelect a source with PDF",
+    "es": "No se ha cargado ningún PDF\\n\\nSeleccione una fuente con PDF",
+    "zh": "未加载 PDF\\n\\n请选择包含 PDF 的来源",
+    "ja": "PDFが読み込まれていません\\n\\nPDFのあるソースを選択してください",
+    "ru": "PDF не загружен\\n\\nВыберите источник с PDF"
   },
   "Kein Projekt geöffnet": {
     "de": "Kein Projekt geöffnet",
-    "en": "No project open"
+    "en": "No project open",
+    "es": "Ningún proyecto abierto",
+    "zh": "未打开项目",
+    "ja": "プロジェクトが開かれていません",
+    "ru": "Проект не открыт"
   },
   "Keine PDF ausgewählt": {
     "de": "Keine PDF ausgewählt",
-    "en": "No PDF selected"
+    "en": "No PDF selected",
+    "es": "Ningún PDF seleccionado",
+    "zh": "未选择 PDF",
+    "ja": "PDFが選択されていません",
+    "ru": "PDF не выбран"
   },
   "Keine PDF verfügbar": {
     "de": "Keine PDF verfügbar",
-    "en": "No PDF available"
+    "en": "No PDF available",
+    "es": "Ningún PDF disponible",
+    "zh": "无可用 PDF",
+    "ja": "利用可能なPDFはありません",
+    "ru": "PDF недоступен"
   },
   "Keine Quelle ausgewählt": {
     "de": "Keine Quelle ausgewählt",
-    "en": "No source selected"
+    "en": "No source selected",
+    "es": "Ninguna fuente seleccionada",
+    "zh": "未选择来源",
+    "ja": "ソースが選択されていません",
+    "ru": "Источник не выбран"
   },
   "Keine Seite geladen": {
     "de": "Keine Seite geladen",
-    "en": "No page loaded"
+    "en": "No page loaded",
+    "es": "Ninguna página cargada",
+    "zh": "未加载页面",
+    "ja": "ページが読み込まれていません",
+    "ru": "Страница не загружена"
   },
   "Priorität:": {
     "de": "Priorität:",
-    "en": "Priority:"
+    "en": "Priority:",
+    "es": "Prioridad:",
+    "zh": "优先级:",
+    "ja": "優先度:",
+    "ru": "Приоритет:"
   },
   "✏️ Bearbeiten": {
     "de": "✏️ Bearbeiten",
-    "en": "✏️ Edit"
+    "en": "✏️ Edit",
+    "es": "✏️ Editar",
+    "zh": "✏️ 编辑",
+    "ja": "✏️ 編集",
+    "ru": "✏️ Редактировать"
   },
   "📁 Auswählen...": {
     "de": "📁 Auswählen...",
-    "en": "📁 Select..."
+    "en": "📁 Select...",
+    "es": "📁 Seleccionar...",
+    "zh": "📁 选择...",
+    "ja": "📁 選択...",
+    "ru": "📁 Выбрать..."
   },
   "📄 PDF auswählen...": {
     "de": "📄 PDF auswählen...",
-    "en": "📄 Select PDF..."
+    "en": "📄 Select PDF...",
+    "es": "📄 Seleccionar PDF...",
+    "zh": "📄 选择 PDF...",
+    "ja": "📄 PDFを選択...",
+    "ru": "📄 Выбрать PDF..."
   },
   "📄 PDF extern öffnen": {
     "de": "📄 PDF extern öffnen",
-    "en": "📄 Open PDF externally"
+    "en": "📄 Open PDF externally",
+    "es": "📄 Abrir PDF externamente",
+    "zh": "📄 在外部打开 PDF",
+    "ja": "📄 PDFを外部で開く",
+    "ru": "📄 Открыть PDF во внешней программе"
   }
 }

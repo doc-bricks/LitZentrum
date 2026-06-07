@@ -13,6 +13,7 @@ import os
 import sys
 
 TRANSLATION_FILE = "locales/translations.json"
+SUPPORTED_LANGUAGES = ['de', 'en', 'es', 'zh', 'ja', 'ru']
 
 STRING_PATTERNS = [
     re.compile(r'text\s*=\s*"([^"]+)"'),
@@ -72,7 +73,9 @@ def manage_translations(source_dir="."):
     added = []
     for s in sorted(found):
         if s not in translations:
-            translations[s] = {"de": s, "en": ""}
+            entry = {lang: "" for lang in SUPPORTED_LANGUAGES}
+            entry["de"] = s
+            translations[s] = entry
             added.append(s)
 
     os.makedirs(os.path.dirname(trans_file), exist_ok=True)
@@ -88,7 +91,10 @@ def manage_translations(source_dir="."):
     else:
         print("[i] Keine neuen deutschen Strings gefunden.")
 
-    missing = [k for k, v in translations.items() if not v.get("en")]
+    missing = [
+        k for k, v in translations.items()
+        if any(not v.get(lang) for lang in SUPPORTED_LANGUAGES if lang != 'de')
+    ]
     if missing:
         print(f"\n[!] {len(missing)} fehlende englische Uebersetzungen")
     else:

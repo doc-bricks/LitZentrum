@@ -97,6 +97,28 @@ class TestSourceManager(unittest.TestCase):
             self.assertEqual(len(sources), 1)
             self.assertEqual(sources[0].path, good.path)
 
+    def test_get_all_sources_skips_structurally_invalid_meta_file(self):
+        """A meta.limeta with valid JSON but wrong structure (e.g. []) must not crash get_all_sources."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            project = ProjectManager().create_project(
+                path=Path(tmpdir) / "TestProjekt",
+                name="Test Projekt",
+            )
+            manager = SourceManager(project.path, project.config.sources_folder)
+
+            good = manager.create_source(
+                LiMeta(title="Good Source", authors=["Doe, John"], year=2023)
+            )
+
+            # Inject a structurally wrong but syntactically valid JSON meta file
+            wrong_dir = manager.sources_path / "WrongStructure"
+            wrong_dir.mkdir()
+            (wrong_dir / "meta.limeta").write_text("[]", encoding="utf-8")
+
+            sources = manager.get_all_sources()
+            self.assertEqual(len(sources), 1)
+            self.assertEqual(sources[0].path, good.path)
+
 
 if __name__ == "__main__":
     unittest.main()

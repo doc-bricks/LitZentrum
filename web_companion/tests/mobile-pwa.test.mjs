@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, access } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -19,6 +19,22 @@ test("manifest ist als Android-/iOS-PWA installierbar", async () => {
   assert.ok(manifest.background_color);
   assert.ok(Array.isArray(manifest.icons));
   assert.ok(manifest.icons.length >= 1);
+  assert.ok(manifest.id, "manifest.id fehlt – Android-PWA-Identität instabil");
+});
+
+test("Icon-Dateien existieren physisch", async () => {
+  const icons = [
+    "icons/Icon-192.png",
+    "icons/Icon-512.png",
+    "icons/Icon-maskable-192.png",
+    "icons/Icon-maskable-512.png",
+  ];
+  for (const icon of icons) {
+    await assert.doesNotReject(
+      access(join(root, icon)),
+      `Icon-Datei fehlt: ${icon}`
+    );
+  }
 });
 
 test("HTML enthält Mobile-Status und sichere Viewport-Metadaten", async () => {
@@ -41,7 +57,7 @@ test("App-Code aktualisiert Android-, iOS- und Offline-Status", async () => {
 
 test("Service Worker unterstützt Offline-Navigation", async () => {
   const sw = await readCompanionFile("sw.js");
-  assert.match(sw, /litzentrum-web-companion-v2/);
+  assert.match(sw, /litzentrum-web-companion-v3/);
   assert.match(sw, /self\.skipWaiting\(\)/);
   assert.match(sw, /self\.clients\.claim\(\)/);
   assert.match(sw, /event\.request\.mode === "navigate"/);

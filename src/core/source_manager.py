@@ -141,7 +141,7 @@ class SourceManager:
                     sources.append(source)
                 except FileNotFoundError:
                     pass  # Ordner ohne Metadaten ignorieren
-                except (json.JSONDecodeError, ValueError) as e:
+                except Exception as e:
                     logging.warning("Defekte Metadatendatei übersprungen (%s): %s", folder.name, e)
 
         return sources
@@ -149,37 +149,49 @@ class SourceManager:
     def get_notes(self, source: LitSource) -> LiNote:
         """Loads the notes for a source."""
         if source.notes_path.exists():
-            return LiNote.load(source.notes_path)
+            try:
+                return LiNote.load(source.notes_path)
+            except Exception as e:
+                logging.warning("Defekte Notiz-Datei (%s): %s", source.name, e)
         return LiNote()
-    
+
     def save_notes(self, source: LitSource, notes: LiNote):
         """Saves notes for a source."""
         notes.save(source.notes_path)
-    
+
     def get_quotes(self, source: LitSource) -> LiQuote:
         """Loads the quotes for a source."""
         if source.quotes_path.exists():
-            return LiQuote.load(source.quotes_path)
+            try:
+                return LiQuote.load(source.quotes_path)
+            except Exception as e:
+                logging.warning("Defekte Zitat-Datei (%s): %s", source.name, e)
         return LiQuote()
-    
+
     def save_quotes(self, source: LitSource, quotes: LiQuote):
         """Saves quotes for a source."""
         quotes.save(source.quotes_path)
-    
+
     def get_tasks(self, source: LitSource) -> LiTask:
         """Loads the tasks for a source."""
         if source.tasks_path.exists():
-            return LiTask.load(source.tasks_path)
+            try:
+                return LiTask.load(source.tasks_path)
+            except Exception as e:
+                logging.warning("Defekte Aufgaben-Datei (%s): %s", source.name, e)
         return LiTask()
-    
+
     def save_tasks(self, source: LitSource, tasks: LiTask):
         """Saves tasks for a source."""
         tasks.save(source.tasks_path)
-    
+
     def get_summaries(self, source: LitSource) -> LiSum:
         """Loads the summaries for a source."""
         if source.summaries_path.exists():
-            return LiSum.load(source.summaries_path)
+            try:
+                return LiSum.load(source.summaries_path)
+            except Exception as e:
+                logging.warning("Defekte Zusammenfassung-Datei (%s): %s", source.name, e)
         return LiSum()
     
     def save_summaries(self, source: LitSource, summaries: LiSum):
