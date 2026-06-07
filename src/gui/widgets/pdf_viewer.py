@@ -271,6 +271,19 @@ class PDFViewer(QWidget):
         if 0 <= page < self.page_count:
             return self.doc[page].get_text()
         return ""
+
+    def search(self, query: str) -> list:
+        """Sucht Text im gesamten PDF und gibt seitenweise Treffer zurück."""
+        if not self.doc or not query:
+            return []
+        results = []
+        for page_num, page in enumerate(self.doc):
+            for rect in page.search_for(query):
+                results.append({
+                    "page": page_num + 1,
+                    "rect": (rect.x0, rect.y0, rect.x1, rect.y1),
+                })
+        return results
     
     def wheelEvent(self, event: QWheelEvent):
         if event.modifiers() == Qt.KeyboardModifier.ControlModifier:
