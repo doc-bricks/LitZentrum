@@ -3,7 +3,8 @@ import {
   filterSources,
   buildBibtexKey,
   buildShortCitation,
-  buildDemoLibrary
+  buildDemoLibrary,
+  isDone
 } from "./library.js";
 
 const STORAGE_KEY = "litzentrum-web-companion:last-library";
@@ -427,7 +428,7 @@ function buildTasksSection(source) {
     title.textContent = task.title;
 
     const badge = document.createElement("span");
-    badge.className = "pill" + (task.status && task.status.toLowerCase() === "done" ? "" : " warning");
+    badge.className = "pill" + (isDone(task.status) ? "" : " warning");
     badge.textContent = task.status || "offen";
 
     top.append(title, badge);

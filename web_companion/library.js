@@ -297,7 +297,15 @@ function normalizeProject(project) {
 }
 
 function normalizeSource(source) {
-  const metadata = source.metadata || {};
+  const rawMeta = source.metadata || {};
+  const metadata = {
+    ...rawMeta,
+    authors: Array.isArray(rawMeta.authors)
+      ? rawMeta.authors
+      : rawMeta.authors
+        ? [String(rawMeta.authors)]
+        : []
+  };
   const notes = (source.notes || []).map(normalizeNote);
   const quotes = (source.quotes || []).map(normalizeQuote);
   const tasks = (source.tasks || []).map(normalizeTask);
@@ -427,7 +435,7 @@ function toAscii(text) {
     .replace(/[^\x00-\x7F]/g, "");
 }
 
-function isDone(status) {
+export function isDone(status) {
   return ["done", "completed", "closed", "erledigt"].includes(String(status || "").toLowerCase());
 }
 

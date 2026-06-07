@@ -8,7 +8,8 @@ import {
   buildBibtexKey,
   buildShortCitation,
   buildSummaryStats,
-  buildDemoLibrary
+  buildDemoLibrary,
+  isDone
 } from "../library.js";
 
 const SAMPLE = {
@@ -184,4 +185,38 @@ test("buildDemoLibrary liefert eine parsebare Demo", () => {
   assert.ok(library.projects.length >= 1);
   assert.ok(library.projects[0].sources.length >= 1);
   assert.ok(library.stats.quoteCount >= 1);
+});
+
+test("isDone erkennt alle erledigten Status-Varianten", () => {
+  for (const done of ["done", "completed", "closed", "erledigt", "DONE", "Completed"]) {
+    assert.ok(isDone(done), `isDone("${done}") muss true sein`);
+  }
+  for (const open of ["open", "in-progress", "", null, undefined]) {
+    assert.ok(!isDone(open), `isDone(${JSON.stringify(open)}) muss false sein`);
+  }
+});
+
+test("parseLibrary normalisiert authors-String zu Array", () => {
+  const raw = {
+    ...SAMPLE,
+    projects: [
+      {
+        ...SAMPLE.projects[0],
+        sources: [
+          {
+            ...SAMPLE.projects[0].sources[0],
+            metadata: {
+              ...SAMPLE.projects[0].sources[0].metadata,
+              authors: "Müller, Jörg"
+            }
+          }
+        ]
+      }
+    ]
+  };
+  const library = parseLibrary(raw);
+  const src = library.projects[0].sources[0];
+  assert.ok(Array.isArray(src.metadata.authors), "authors muss ein Array sein");
+  assert.equal(src.metadata.authors.length, 1);
+  assert.equal(src.metadata.authors[0], "Müller, Jörg");
 });

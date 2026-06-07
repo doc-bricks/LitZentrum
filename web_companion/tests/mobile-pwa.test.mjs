@@ -55,6 +55,10 @@ test("App-Code aktualisiert Android-, iOS- und Offline-Status", async () => {
   assert.match(app, /Offline-Cache bereit/);
 });
 
+// Hinweis: Die folgenden zwei Tests sind statische Quelltext-Assertions (kein Browser-Runtime).
+// SW-Verhalten (Offline-Fallback mit ignoreSearch) und Badge-Laufzeit-Verhalten können im
+// Node.js-Testharness nicht behavioral abgedeckt werden (kein Service-Worker-API, kein DOM).
+
 test("Service Worker unterstützt Offline-Navigation", async () => {
   const sw = await readCompanionFile("sw.js");
   assert.match(sw, /litzentrum-web-companion-v3/);
@@ -62,6 +66,16 @@ test("Service Worker unterstützt Offline-Navigation", async () => {
   assert.match(sw, /self\.clients\.claim\(\)/);
   assert.match(sw, /event\.request\.mode === "navigate"/);
   assert.match(sw, /caches\.match\("\.\/index\.html"\)/);
+  assert.match(sw, /ignoreSearch:\s*true/, "caches.match muss ignoreSearch:true setzen – sonst schlägt Offline-Fallback bei URLs mit Query-Params fehl");
+});
+
+test("Aufgaben-Badge erkennt alle Done-Status-Varianten", async () => {
+  const app = await readCompanionFile("app.js");
+  assert.match(app, /isDone\(task\.status\)/, "Badge-Logik muss isDone() aus library.js verwenden");
+  const lib = await readCompanionFile("library.js");
+  assert.match(lib, /"completed"/, "isDone() muss 'completed' als erledigt kennen");
+  assert.match(lib, /"erledigt"/, "isDone() muss 'erledigt' als erledigt kennen");
+  assert.match(lib, /"closed"/, "isDone() muss 'closed' als erledigt kennen");
 });
 
 test("Mobile CSS hält Touch-Ziele und Safe-Area stabil", async () => {
