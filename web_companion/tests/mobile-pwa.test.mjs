@@ -18,7 +18,11 @@ test("manifest ist als Android-/iOS-PWA installierbar", async () => {
   assert.ok(manifest.theme_color);
   assert.ok(manifest.background_color);
   assert.ok(Array.isArray(manifest.icons));
-  assert.ok(manifest.icons.length >= 1);
+  assert.equal(manifest.icons.length, 4, "manifest.icons muss genau 4 Einträge haben (any-192, any-512, maskable-192, maskable-512)");
+  const anyIcons = manifest.icons.filter(i => !i.purpose || i.purpose === "any");
+  assert.ok(anyIcons.length >= 2, "mind. 2 Icons müssen purpose:'any' haben");
+  const maskableIcons = manifest.icons.filter(i => i.purpose === "maskable");
+  assert.ok(maskableIcons.length >= 2, "mind. 2 Icons müssen purpose:'maskable' haben");
   assert.ok(manifest.id, "manifest.id fehlt – Android-PWA-Identität instabil");
 });
 
@@ -44,6 +48,8 @@ test("HTML enthält Mobile-Status und sichere Viewport-Metadaten", async () => {
   assert.match(html, /id="android-status"/);
   assert.match(html, /id="ios-status"/);
   assert.match(html, /id="offline-status"/);
+  assert.match(html, /rel="apple-touch-icon"/, "apple-touch-icon fehlt – iOS-Homescreen-Icon defekt");
+  assert.match(html, /name="theme-color"/, "theme-color fehlt – Android Chrome-Leiste ungefärbt");
 });
 
 test("App-Code aktualisiert Android-, iOS- und Offline-Status", async () => {

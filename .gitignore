@@ -37,6 +37,7 @@ _private/
 .DS_Store
 Thumbs.db
 desktop.ini
+*.bak
 # ---- Interne Steuerungsdateien ----
 DECISIONS.md
 PORTIERUNGSPLAN.md

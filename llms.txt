@@ -4,10 +4,15 @@ Canonical repository: https://github.com/doc-bricks/LitZentrum
 
 LitZentrum is a local-first PySide6 desktop application for academic literature management. It stores projects as UTF-8 JSON files in user-owned folders and supports source metadata, notes, quotes, tasks, summaries, PDF workflows, BibTeX export and optional local Ollama-assisted features.
 
+## Docs
+
+- [README.md](https://github.com/doc-bricks/LitZentrum/blob/master/README.md): English project overview, features, installation, file formats and companion export.
+- [README_de.md](https://github.com/doc-bricks/LitZentrum/blob/master/README_de.md): German project overview.
+- [EXPORTFORMAT.md](https://github.com/doc-bricks/LitZentrum/blob/master/EXPORTFORMAT.md): Human-readable description of `litzentrum-library-v1.json`.
+- [CHANGELOG.md](https://github.com/doc-bricks/LitZentrum/blob/master/CHANGELOG.md): Version history.
+- [LICENSE](https://github.com/doc-bricks/LitZentrum/blob/master/LICENSE): AGPL v3 license text.
+
 Important files:
-- `README.md`: English project overview.
-- `README_de.md`: German project overview.
-- `EXPORTFORMAT.md`: Human-readable description of `litzentrum-library-v1.json`.
 - `schemas/litzentrum-library-v1.schema.json`: JSON schema for the read-only companion export.
 - `src/core/library_export.py`: Export implementation.
 - `tests/test_library_export.py`: Regression tests for UTF-8, relative paths, missing PDFs and empty projects.
@@ -16,3 +21,23 @@ Privacy and scope:
 - The default companion export does not embed PDF files.
 - The default companion export does not include absolute local paths.
 - The app is designed for local use and user-controlled exports, not server-side library hosting.
+
+## Audience
+
+- Academic researchers and students managing literature for papers, theses and dissertations
+- PhD students and postdocs tracking sources, quotes and notes across multiple projects
+- Writers and journalists who need offline, local-first literature tracking without cloud lock-in
+- Developers and open-source contributors interested in local-first, JSON-based data tools
+- Python and PySide6 developers studying desktop application architecture
+
+## Search Phrases
+
+- LitZentrum local-first literature management Python desktop
+- academic literature manager PySide6 offline BibTeX export
+- local literature database JSON notes quotes tasks summaries
+- Literaturverwaltung lokal offline Python Desktop BibTeX
+- open source bibliography manager no cloud offline research
+- PDF literature organiser academic writing tool Python
+- literature manager Ollama AI integration local
+
+## Last-checked: 2026-06-10

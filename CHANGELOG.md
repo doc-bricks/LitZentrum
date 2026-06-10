@@ -6,6 +6,9 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 ## [Unreleased]
 
 ### Hinzugefügt / Added
+- `web_companion`: `apple-touch-icon` für iOS-Homescreen-Unterstützung hinzugefügt; `purpose: "any"` zu `manifest.webmanifest`-Icons ergänzt; `mobile-pwa.test.mjs` mit strikteren Assertions für Icon-Anzahl, maskable-Icons, apple-touch-icon und theme-color erweitert
+- `*.bak` zu `.gitignore` hinzugefügt (Web-Companion-Backup-Dateien)
+- `llms.txt` um Docs-Abschnitt, Audience (5 Zielgruppen), Search Phrases (7 Phrasen) und Last-checked: 2026-06-10 ergänzt
 - Smoke-Tests für Core-Module (tests/test_smoke.py, 10 Tests: EventType, SearchResult, ExportOptions, ImportResult, PDFSelection, Statistics)
 - Ollama-Modellauswahl: ComboBox wird automatisch mit verfügbaren Modellen befüllt (_fetch_ollama_models, _populate_model_combo)
 - "Modelle laden" Button neben "Verbindung testen" im Einstellungen-Dialog
