@@ -54,16 +54,16 @@ https://github.com/doc-bricks/LitZentrum/blob/master/PRIVACY_POLICY.md
 ### Support
 https://github.com/doc-bricks/LitZentrum/blob/master/SUPPORT.md
 
-### Screenshot-Bedarf
-Vor der Einreichung sollten mindestens vier Store-Screenshots vorliegen:
+### Screenshot-Set
+Für die Einreichung liegt jetzt ein reproduzierbares Viererset unter
+`README/screenshots/store/` vor:
 
 1. Projektübersicht mit Quellenliste und Detailbereich
 2. Zitat- oder Notizworkflow mit wissenschaftlichem Kontext
 3. BibTeX-Export oder Aufgabenansicht
 4. Companion-Export oder mobile Companion-Ansicht
 
-Aktuell vorhanden ist `README/screenshots/main.png` als Basisscreenshot.
-Die geplante Store-Auswahl ist in `README/screenshots/store/README.md` dokumentiert.
+Zusätzlich dokumentiert `summary.json` die erzeugten Artefakte maschinenlesbar.
 
 ---
 

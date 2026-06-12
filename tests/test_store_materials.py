@@ -42,8 +42,20 @@ def test_store_documents_exist_and_reference_public_paths() -> None:
     assert "https://github.com/doc-bricks/LitZentrum/issues" in support
     assert "MSIX" in prep
     assert "main.png" in screenshot_note
+    assert "quotes-workflow.png" in screenshot_note
+    assert "bibtex-export.png" in screenshot_note
+    assert "companion-export.png" in screenshot_note
 
 
 def test_existing_main_screenshot_is_present() -> None:
     main_screenshot = PROJECT_ROOT / "README" / "screenshots" / "main.png"
     assert main_screenshot.exists()
+
+
+def test_store_screenshot_targets_are_present() -> None:
+    screenshot_dir = PROJECT_ROOT / "README" / "screenshots" / "store"
+    assert (screenshot_dir / "main.png").exists()
+    assert (screenshot_dir / "quotes-workflow.png").exists()
+    assert (screenshot_dir / "bibtex-export.png").exists()
+    assert (screenshot_dir / "companion-export.png").exists()
+    assert (screenshot_dir / "summary.json").exists()

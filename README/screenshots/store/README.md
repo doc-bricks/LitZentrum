@@ -1,12 +1,16 @@
 # Store-Screenshots - LitZentrum
 
-Stand: 2026-06-04
+Stand: 2026-06-12
 
-## Bereits vorhanden
+## Vorhandenes Set
 
-- `main.png` - Hauptfenster mit Projektbaum, Quellenliste und Detailbereich
+- `main.png` - Hauptfenster mit Projektbaum, Quellenliste, PDF-Vorschau und Detailbereich
+- `quotes-workflow.png` - Zitat-Workflow mit Seitenbezug, Kommentar und Zitierhilfe
+- `bibtex-export.png` - BibTeX-Exportvorschau mit lokalem Forschungs-Workflow
+- `companion-export.png` - Companion-Exportvorschau für `litzentrum-library-v1.json`
+- `summary.json` - Maschinelles Inventar der erzeugten Store-Screenshots
 
-## Geplantes Set für den Windows Store
+## Windows-Store-Set
 
 1. `main.png`
    Hauptfenster mit Projektüberblick, Quellenliste und Detailansicht.
@@ -17,8 +21,9 @@ Stand: 2026-06-04
 4. `companion-export.png`
    Companion-Export oder Web/PWA-Reader mit `litzentrum-library-v1.json`.
 
-## Hinweis
+## Reproduktion
 
-Vor der echten Store-Einreichung sollten alle Screenshots mit denselben
-Designfarben, echter Desktop-Auflösung und anonymisierten Projektdaten
-aufgenommen werden.
+Die Bilder werden reproduzierbar mit `python generate_store_screenshots.py`
+aus anonymisierten Demo-Daten erzeugt. Der Generator nutzt den realen Qt-Pfad
+für das Hauptfenster und Exportartefakte aus einem temporären Projekt ohne
+private PDFs oder Nutzerpfade.

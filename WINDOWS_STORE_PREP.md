@@ -1,6 +1,6 @@
 # Windows Store Prep - LitZentrum
 
-Stand: 2026-06-04
+Stand: 2026-06-12
 
 ## Ziel dieses Dokuments
 
@@ -15,23 +15,22 @@ Artefakte und die nächsten Blocker für den Store-Pfad.
 - `PRIVACY_POLICY.md` als öffentliche Datenschutzseite
 - `SUPPORT.md` als öffentliche Supportseite
 - `README/screenshots/main.png` als vorhandener Basis-Screenshot
-- `README/screenshots/store/README.md` als Inventar für das geplante Store-Screenshot-Set
+- reproduzierbares Store-Screenshot-Set unter `README/screenshots/store/`
+- `generate_store_screenshots.py` als Generator für anonymisierte Store-Bilder
+- `README/screenshots/store/README.md` als Inventar für das erzeugte Store-Screenshot-Set
 - `tests/test_store_materials.py` als Regressionstest für Metadaten, Links und Screenshot-Hinweise
 
 ## Geplanter Pretest-Ablauf
 
-1. Dediziertes Store-Screenshot-Set gemäß `README/screenshots/store/README.md` erzeugen.
-2. `THIRD_PARTY_LICENSES.txt` für die Store- und Lizenzdokumentation ergänzen.
-3. Reproduzierbaren Windows-Buildpfad für `LitZentrum.exe` festziehen und dokumentieren.
-4. `_STORE/msstore_pretest.ps1` mit LitZentrum-spezifischen Pfaden ausführen.
-5. MSIX bauen.
-6. WACK als Administrator gegen das MSIX ausführen.
-7. Partner-Center-Eintrag mit den Texten aus `STORE_LISTING.md` befüllen.
+1. `THIRD_PARTY_LICENSES.txt` für die Store- und Lizenzdokumentation ergänzen.
+2. Reproduzierbaren Windows-Buildpfad für `LitZentrum.exe` festziehen und dokumentieren.
+3. `_STORE/msstore_pretest.ps1` mit LitZentrum-spezifischen Pfaden ausführen.
+4. MSIX bauen.
+5. WACK als Administrator gegen das MSIX ausführen.
+6. Partner-Center-Eintrag mit den Texten aus `STORE_LISTING.md` und den vorhandenen Screenshots befüllen.
 
 ## Noch offene Blocker
 
-- Dediziertes Store-Screenshot-Set fehlt noch.
-- `THIRD_PARTY_LICENSES.txt` fehlt noch.
 - Ein dokumentierter EXE-/MSIX-Buildpfad fehlt noch.
 - WACK-Protokoll fehlt noch.
 

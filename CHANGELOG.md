@@ -7,6 +7,8 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ### Hinzugefügt / Added
 - README, README_de and `llms.txt` now include clearer discovery context for local-first literature management, bibliography/citation workflows, PDF-backed academic writing and differentiation from Zotero, Mendeley, JabRef, Calibre and cloud reference platforms
+- Reproduzierbarer Windows-Store-Screenshot-Generator `generate_store_screenshots.py`, der aus anonymisierten Demo-Daten vier Store-Bilder (`main.png`, `quotes-workflow.png`, `bibtex-export.png`, `companion-export.png`) plus `summary.json` erzeugt
+- Regressionstest `tests/test_store_screenshots.py` für die PNG-Erzeugung und das Screenshot-Inventar
 - `web_companion`: `apple-touch-icon` für iOS-Homescreen-Unterstützung hinzugefügt; `purpose: "any"` zu `manifest.webmanifest`-Icons ergänzt; `mobile-pwa.test.mjs` mit strikteren Assertions für Icon-Anzahl, maskable-Icons, apple-touch-icon und theme-color erweitert
 - `*.bak` zu `.gitignore` hinzugefügt (Web-Companion-Backup-Dateien)
 - `llms.txt` um Docs-Abschnitt, Audience (5 Zielgruppen), Search Phrases (7 Phrasen) und Last-checked: 2026-06-10 ergänzt
@@ -23,6 +25,7 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 ### Geändert / Changed
 - Verbindungstest aktualisiert ComboBox automatisch bei Erfolg (Ollama)
 - Portierungsstatus aktualisiert: Der Web/PWA-Companion hat jetzt einen automatisierten mobilen Preflight; der Desktop-Source-Smoke-Pfad ist für Ubuntu/macOS vorbereitet; echte Android-/iOS-Geräte-Smokes bleiben separat offen
+- Windows-Store-Doku verweist jetzt auf das vorhandene Screenshot-Set statt nur auf einen Planungsplatzhalter
 - Community-Workflows auf aktuelle Actions-Versionen und Input-Namen aktualisiert
 - Lokale `*-library-v1.json`-Exportdateien werden ignoriert
 - README und README_de dokumentieren jetzt zusätzlich den Windows-Store-Basisstand
