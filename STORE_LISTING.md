@@ -43,7 +43,7 @@ offengelegten AGPL-Kontext und werden in Repository, Datenschutzdokumentation
 und späterer Drittanbieter-Lizenzübersicht sichtbar dokumentiert.
 
 ### Schlüsselwörter
-Literaturverwaltung, BibTeX, PDF, Zitate, Forschung, Notizen, Aufgaben, lokal, Offline, Produktivität
+Literaturverwaltung, Bibliografiemanager, BibTeX, PDF, Zitate, Forschung, Notizen, Aufgaben, lokal, Offline, Produktivität
 
 ### Kategorie
 Productivity
@@ -110,7 +110,7 @@ in the disclosed AGPL context and are documented in the repository, privacy
 policy, and later third-party license summary.
 
 ### Keywords
-literature manager, BibTeX, PDF, citations, research, notes, tasks, local, offline, productivity
+literature manager, bibliography manager, citation manager, BibTeX, PDF, citations, research, notes, tasks, local, offline, productivity
 
 ### Category
 Productivity

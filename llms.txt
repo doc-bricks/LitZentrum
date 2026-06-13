@@ -21,6 +21,8 @@ Privacy and scope:
 - The default companion export does not embed PDF files.
 - The default companion export does not include absolute local paths.
 - The app is designed for local use and user-controlled exports, not server-side library hosting.
+- LitZentrum is positioned against cloud reference managers, hosted reading platforms and institutional library portals.
+- The project is not a Zotero, Mendeley, JabRef or Calibre clone; its core differentiator is folder-based local project ownership plus explicit read-only JSON export.
 
 ## Audience
 
@@ -34,10 +36,20 @@ Privacy and scope:
 
 - LitZentrum local-first literature management Python desktop
 - academic literature manager PySide6 offline BibTeX export
+- local-first bibliography manager PDF notes quotes tasks
+- open source citation manager desktop BibTeX PDF workflow
+- research workflow desktop app notes quotes summaries BibTeX
 - local literature database JSON notes quotes tasks summaries
 - Literaturverwaltung lokal offline Python Desktop BibTeX
+- lokaler Bibliografiemanager PDF Notizen Zitate Aufgaben
 - open source bibliography manager no cloud offline research
 - PDF literature organiser academic writing tool Python
 - literature manager Ollama AI integration local
 
-## Last-checked: 2026-06-10
+## External Discovery Notes
+
+- GitHub repository search did not list the repo for broad queries such as `doc-bricks LitZentrum`, `LitZentrum PDF BibTeX literature manager` or `local-first PySide6 literature manager PDF BibTeX` on 2026-06-13.
+- General web search found direct GitHub pages and the GitHub `literature-management` topic page, but broader literature-manager searches are dominated by established reference managers and generic research-tool lists.
+- Useful external listing contexts: local-first academic writing tools, open-source bibliography managers, PySide6 desktop apps, PDF note/quote workflows, BibTeX and research-workflow tool directories.
+
+## Last-checked: 2026-06-13

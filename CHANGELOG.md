@@ -6,6 +6,7 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 ## [Unreleased]
 
 ### Hinzugefügt / Added
+- README, README_de and `llms.txt` now include clearer discovery context for local-first literature management, bibliography/citation workflows, PDF-backed academic writing and differentiation from Zotero, Mendeley, JabRef, Calibre and cloud reference platforms
 - `web_companion`: `apple-touch-icon` für iOS-Homescreen-Unterstützung hinzugefügt; `purpose: "any"` zu `manifest.webmanifest`-Icons ergänzt; `mobile-pwa.test.mjs` mit strikteren Assertions für Icon-Anzahl, maskable-Icons, apple-touch-icon und theme-color erweitert
 - `*.bak` zu `.gitignore` hinzugefügt (Web-Companion-Backup-Dateien)
 - `llms.txt` um Docs-Abschnitt, Audience (5 Zielgruppen), Search Phrases (7 Phrasen) und Last-checked: 2026-06-10 ergänzt

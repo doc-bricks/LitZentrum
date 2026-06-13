@@ -6,6 +6,22 @@
 
 LitZentrum ist eine Desktop-Anwendung zur Verwaltung akademischer Literatur in lokalen Projektordnern. Die Anwendung verbindet UTF-8-JSON-Speicherformate, PDF-Workflows, Notizen, Zitate, Aufgaben, Zusammenfassungen, BibTeX-Export und optionale lokale KI-Unterstützung über Ollama.
 
+## Einstieg
+
+| Ziel | Einstieg |
+|---|---|
+| Literatur in lokalen Projektordnern verwalten | `python src/main.py` |
+| Quellen, Notizen, Zitate, Aufgaben und Zusammenfassungen pflegen | `src/core/` und `src/gui/` |
+| Zitationen für wissenschaftliche Texte exportieren | BibTeX-Export und Zitierstile |
+| Bibliothek mobil prüfen, ohne PDFs weiterzugeben | `web_companion/` mit `litzentrum-library-v1.json` |
+| Datenverträge für Agenten oder Tools prüfen | `schemas/litzentrum-library-v1.schema.json` und `EXPORTFORMAT.md` |
+
+## Auffindbarkeit und Abgrenzung
+
+LitZentrum ist am besten als lokale Literaturverwaltung, Offline-Bibliografiemanager, PDF-gestützter Schreibarbeitsplatz und PySide6-Forschungstool beschrieben. Das Projekt ist bewusst anders aufgebaut als Cloud-Referenzmanager, gehostete Leseplattformen oder Team-Zitationsdienste: Projekte bleiben in normalen Ordnern, Exporte sind explizit, und der Web/PWA-Companion erhält ein redigiertes JSON-Bündel statt kompletter PDF-Bibliotheken.
+
+Für Toolvergleiche passt LitZentrum, wenn lokale PDF-Dateien, BibTeX, Notizen, Zitate, Aufgaben und optionale lokale Ollama-Unterstützung wichtiger sind als Cloud-Sync. Es ist kein Zotero-, Mendeley- oder JabRef-Klon, keine Calibre-E-Book-Bibliothek und kein institutionelles Bibliotheksportal.
+
 ## Funktionen
 
 - Ordnerbasiertes System: jede Quelle liegt in einem eigenen Ordner.
