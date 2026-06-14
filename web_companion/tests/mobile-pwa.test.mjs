@@ -43,7 +43,8 @@ test("Icon-Dateien existieren physisch", async () => {
 
 test("HTML enthält Mobile-Status und sichere Viewport-Metadaten", async () => {
   const html = await readCompanionFile("index.html");
-  assert.match(html, /<meta name="viewport" content="width=device-width, initial-scale=1">/);
+  assert.match(html, /viewport-fit=cover/, "viewport-fit=cover fehlt – iOS-Notch-Bereich wird abgeschnitten");
+  assert.match(html, /width=device-width/, "width=device-width fehlt im viewport");
   assert.match(html, /id="mobile-status"/);
   assert.match(html, /id="android-status"/);
   assert.match(html, /id="ios-status"/);
@@ -67,7 +68,7 @@ test("App-Code aktualisiert Android-, iOS- und Offline-Status", async () => {
 
 test("Service Worker unterstützt Offline-Navigation", async () => {
   const sw = await readCompanionFile("sw.js");
-  assert.match(sw, /litzentrum-web-companion-v3/);
+  assert.match(sw, /litzentrum-web-companion-v4/);
   assert.match(sw, /self\.skipWaiting\(\)/);
   assert.match(sw, /self\.clients\.claim\(\)/);
   assert.match(sw, /event\.request\.mode === "navigate"/);
@@ -90,4 +91,56 @@ test("Mobile CSS hält Touch-Ziele und Safe-Area stabil", async () => {
   assert.match(css, /min-height: 44px/);
   assert.match(css, /env\(safe-area-inset-top\)/);
   assert.match(css, /@media \(max-width: 720px\)/);
+});
+
+test("iOS PWA: apple-touch-icon-180.png existiert physisch", async () => {
+  await assert.doesNotReject(
+    access(join(root, "icons/apple-touch-icon-180.png")),
+    "apple-touch-icon-180.png fehlt – iOS-Homescreen-Icon nicht generiert"
+  );
+});
+
+test("iOS PWA: apple-touch-icon verweist auf 180px-Icon", async () => {
+  const html = await readCompanionFile("index.html");
+  assert.match(
+    html,
+    /rel="apple-touch-icon" href="\.\/icons\/apple-touch-icon-180\.png"/,
+    "apple-touch-icon muss auf apple-touch-icon-180.png zeigen"
+  );
+});
+
+test("iOS PWA: apple-mobile-web-app-title gesetzt", async () => {
+  const html = await readCompanionFile("index.html");
+  assert.match(
+    html,
+    /name="apple-mobile-web-app-title"/,
+    "apple-mobile-web-app-title fehlt – iOS-Homescreen zeigt rohe URL statt App-Namen"
+  );
+});
+
+test("iOS PWA: apple-mobile-web-app-status-bar-style gesetzt", async () => {
+  const html = await readCompanionFile("index.html");
+  assert.match(
+    html,
+    /name="apple-mobile-web-app-status-bar-style"/,
+    "apple-mobile-web-app-status-bar-style fehlt – Statusleiste auf iOS nicht konfiguriert"
+  );
+});
+
+test("iOS PWA: kein apple-mobile-web-app-capable (deprecated seit iOS 11.3)", async () => {
+  const html = await readCompanionFile("index.html");
+  assert.doesNotMatch(
+    html,
+    /apple-mobile-web-app-capable/,
+    "apple-mobile-web-app-capable gesetzt – deprecated und soll weggelassen werden"
+  );
+});
+
+test("Service Worker cached apple-touch-icon-180.png", async () => {
+  const sw = await readCompanionFile("sw.js");
+  assert.match(
+    sw,
+    /apple-touch-icon-180\.png/,
+    "apple-touch-icon-180.png fehlt im SW-Cache-Asset-Array"
+  );
 });

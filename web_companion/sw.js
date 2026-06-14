@@ -1,4 +1,4 @@
-const CACHE_NAME = "litzentrum-web-companion-v3";
+const CACHE_NAME = "litzentrum-web-companion-v4";
 const ASSETS = [
   "./",
   "./index.html",
@@ -9,7 +9,8 @@ const ASSETS = [
   "./icons/Icon-192.png",
   "./icons/Icon-512.png",
   "./icons/Icon-maskable-192.png",
-  "./icons/Icon-maskable-512.png"
+  "./icons/Icon-maskable-512.png",
+  "./icons/apple-touch-icon-180.png"
 ];
 
 self.addEventListener("install", event => {
