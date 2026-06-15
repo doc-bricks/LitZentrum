@@ -1,6 +1,13 @@
+<img src="assets/banner.svg" width="100%" alt="LitZentrum Banner"/>
+
 # LitZentrum
 
-[Deutsch](README_de.md)
+**[Deutsch](README_de.md)** · English
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://python.org)
+[![Platform: Windows](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://github.com/doc-bricks/LitZentrum)
+[![Version](https://img.shields.io/badge/Version-1.0.0-purple.svg)](CHANGELOG.md)
 
 **Local-first literature management for academic writing.**
 
