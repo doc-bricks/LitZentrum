@@ -165,3 +165,15 @@ test("Bug #2: loadBundle() wickelt localStorage.setItem in try/catch (kein Quota
     "localStorage.setItem(STORAGE_KEY muss innerhalb eines try-Blocks stehen — QuotaExceededError in Safari Private Browsing und vollem Speicher"
   );
 });
+
+test("Bug #3: Startup-localStorage.getItem in try/catch (SecurityError in Safari/gesperrtem Storage beim Seitenstart)", async () => {
+  const app = await readCompanionFile("app.js");
+  const getItemIdx = app.indexOf("localStorage.getItem(STORAGE_KEY");
+  assert.ok(getItemIdx !== -1, "localStorage.getItem(STORAGE_KEY nicht gefunden");
+  // Übergeordneter try-Block muss VOR dem getItem-Aufruf stehen (im selben else-Zweig)
+  const preceding = app.slice(Math.max(0, getItemIdx - 80), getItemIdx);
+  assert.ok(
+    preceding.includes("try {"),
+    "localStorage.getItem(STORAGE_KEY muss in try/catch liegen — SecurityError in Safari mit gesperrtem Storage wirft schon beim getItem"
+  );
+});

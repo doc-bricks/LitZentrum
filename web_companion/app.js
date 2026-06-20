@@ -772,13 +772,17 @@ const params = new URLSearchParams(window.location.search);
 if (params.get("demo") === "1") {
   loadBundle(buildDemoLibrary(), { persist: false, label: "Demo geladen." });
 } else {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) {
-    try {
-      loadBundle(JSON.parse(saved), { persist: false, label: "Zuletzt geladene Bibliothek wiederhergestellt." });
-    } catch {
-      localStorage.removeItem(STORAGE_KEY);
-      setStatus("Gespeicherte Bibliothek war ungültig und wurde verworfen.", true);
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        loadBundle(JSON.parse(saved), { persist: false, label: "Zuletzt geladene Bibliothek wiederhergestellt." });
+      } catch {
+        try { localStorage.removeItem(STORAGE_KEY); } catch { /* storage blocked */ }
+        setStatus("Gespeicherte Bibliothek war ungültig und wurde verworfen.", true);
+      }
     }
+  } catch {
+    // localStorage blocked by security policy (Safari Private, sandboxed iframe)
   }
 }
