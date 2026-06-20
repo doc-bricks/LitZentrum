@@ -144,3 +144,24 @@ test("Service Worker cached apple-touch-icon-180.png", async () => {
     "apple-touch-icon-180.png fehlt im SW-Cache-Asset-Array"
   );
 });
+
+// ─── Bug-Regressionstests (Bugsweep Lauf 16, 2026-06-20) ─────────────────────
+
+test("Bug #1: readFile() hat reader.onerror-Handler (stille I/O-Fehler werden dem User angezeigt)", async () => {
+  const app = await readCompanionFile("app.js");
+  assert.ok(
+    app.includes("reader.onerror"),
+    "readFile() muss reader.onerror setzen — sonst bleiben OS-Level-Lesefehler stumm für den User"
+  );
+});
+
+test("Bug #2: loadBundle() wickelt localStorage.setItem in try/catch (kein QuotaExceededError in Safari Private Browsing)", async () => {
+  const app = await readCompanionFile("app.js");
+  const setItemIdx = app.indexOf("localStorage.setItem(STORAGE_KEY");
+  assert.ok(setItemIdx !== -1, "localStorage.setItem(STORAGE_KEY nicht gefunden");
+  const snippet = app.slice(Math.max(0, setItemIdx - 80), setItemIdx + 5);
+  assert.ok(
+    snippet.includes("try {"),
+    "localStorage.setItem(STORAGE_KEY muss innerhalb eines try-Blocks stehen — QuotaExceededError in Safari Private Browsing und vollem Speicher"
+  );
+});

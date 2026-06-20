@@ -82,6 +82,9 @@ function readFile(file) {
       setStatus("Ungültige JSON-Datei.", true);
     }
   };
+  reader.onerror = () => {
+    setStatus("Datei konnte nicht gelesen werden.", true);
+  };
   reader.readAsText(file, "utf-8");
 }
 
@@ -91,7 +94,11 @@ function loadBundle(payload, { persist, label }) {
     activeProjectId = library.projects[0]?.id ?? null;
     activeSourceId = library.projects[0]?.sources[0]?.id ?? null;
     if (persist) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      } catch {
+        // QuotaExceededError in Safari Private Browsing oder bei vollem Speicher
+      }
     }
     renderAll();
     setStatus(label || "Bibliothek geladen.");
