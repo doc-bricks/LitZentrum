@@ -265,8 +265,11 @@ class TaskDialog(QDialog):
             
             if self.task.due_date:
                 from datetime import datetime
-                date = datetime.fromisoformat(self.task.due_date)
-                self.due_date.setDate(QDate(date.year, date.month, date.day))
+                try:
+                    date = datetime.fromisoformat(self.task.due_date)
+                    self.due_date.setDate(QDate(date.year, date.month, date.day))
+                except (ValueError, TypeError):
+                    pass  # Ungültiges Datum ignorieren (BUG-U5)
             
             self.page_spin.setValue(self.task.page or 0)
             self.tags_input.setText(", ".join(self.task.tags))
