@@ -4,7 +4,7 @@
 
 Deutsch · **[English](README.md)**
 
-[![Lizenz: MIT](https://img.shields.io/badge/Lizenz-MIT-purple.svg)](LICENSE)
+[![Lizenz: AGPL v3](https://img.shields.io/badge/Lizenz-AGPL_v3-purple.svg)](LICENSE)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://python.org)
 [![Plattform: Windows](https://img.shields.io/badge/Plattform-Windows-lightgrey.svg)](https://github.com/doc-bricks/LitZentrum)
 [![Version](https://img.shields.io/badge/Version-1.0.0-purple.svg)](CHANGELOG.md)

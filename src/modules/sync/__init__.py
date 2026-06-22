@@ -24,6 +24,7 @@ class GitSync:
                 ["git", "--version"],
                 capture_output=True,
                 text=True,
+                timeout=5,
             )
             return result.returncode == 0
         except (OSError, subprocess.SubprocessError, FileNotFoundError) as e:
@@ -48,6 +49,7 @@ class GitSync:
                 cwd=str(self.project_path),
                 capture_output=True,
                 text=True,
+                timeout=10,
             )
 
             if result.returncode == 0:
@@ -88,6 +90,7 @@ Thumbs.db
                 cwd=str(self.project_path),
                 capture_output=True,
                 text=True,
+                timeout=10,
             )
             return result.stdout
         except (OSError, subprocess.SubprocessError) as e:
@@ -101,6 +104,7 @@ Thumbs.db
                 ["git", "add", "-A"],
                 cwd=str(self.project_path),
                 capture_output=True,
+                timeout=30,
             )
             return result.returncode == 0
         except (OSError, subprocess.SubprocessError) as e:
@@ -117,6 +121,7 @@ Thumbs.db
                 ["git", "commit", "-m", message],
                 cwd=str(self.project_path),
                 capture_output=True,
+                timeout=30,
             )
             return result.returncode == 0
         except (OSError, subprocess.SubprocessError) as e:

@@ -101,7 +101,10 @@ class LibraryExporter:
     def validate_bundle(self, bundle: dict) -> None:
         """Validates the export bundle against the JSON schema."""
         with open(self.SCHEMA_FILE, "r", encoding="utf-8") as handle:
-            schema = json.load(handle)
+            try:
+                schema = json.load(handle)
+            except (json.JSONDecodeError, OSError) as e:
+                raise ValueError(f"Schema-Datei ungültig: {self.SCHEMA_FILE}: {e}")
         jsonschema.validate(bundle, schema)
 
     def _serialize_source(

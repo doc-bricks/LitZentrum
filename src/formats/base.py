@@ -37,8 +37,11 @@ class LitFormat(ABC):
         if cls.SCHEMA_FILE not in cls._schema_cache:
             schema_path = Path(__file__).parent.parent.parent / "schemas" / cls.SCHEMA_FILE
             if schema_path.exists():
-                with open(schema_path, 'r', encoding='utf-8') as f:
-                    cls._schema_cache[cls.SCHEMA_FILE] = json.load(f)
+                try:
+                    with open(schema_path, 'r', encoding='utf-8') as f:
+                        cls._schema_cache[cls.SCHEMA_FILE] = json.load(f)
+                except (json.JSONDecodeError, OSError):
+                    cls._schema_cache[cls.SCHEMA_FILE] = {}
             else:
                 cls._schema_cache[cls.SCHEMA_FILE] = {}
         return cls._schema_cache[cls.SCHEMA_FILE]
@@ -98,8 +101,11 @@ class LitFormat(ABC):
             raise LitFormatError(f"Datei nicht gefunden: {path}")
         
         with open(path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        
+            try:
+                data = json.load(f)
+            except (json.JSONDecodeError, OSError) as e:
+                raise LitFormatError(f"Ungültige JSON-Datei: {path}: {e}")
+
         return cls.from_dict(data)
 
 
