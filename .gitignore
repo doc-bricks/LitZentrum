@@ -24,10 +24,21 @@ releases/
 # Planung & Interne Doku
 PLAN.txt
 AUFGABEN.txt
+ARCHITEKTUR_LitZentrum.md
+LIT-Konzept.html
+Roadmap*.html
+SUITE_*.md
 
 # Private / Archive
 _archive/
 _private/
+Projekte/
+*.limeta
+*.linote
+*.liproj
+*.liquote
+*.lisum
+*.litask
 
 # IDE
 .vscode/
