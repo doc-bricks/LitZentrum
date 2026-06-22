@@ -61,6 +61,10 @@ class LitFormat(ABC):
         """Validates the object against its JSON schema."""
         schema = self.get_schema()
         if not schema:
+            # BUGSWEEP-27 REVIEW-NOTIZ (L-1, NICHT auto-gefixt — User-Entscheidung): fehlt/leert das
+            # Schema (oder ist unlesbar -> get_schema cacht {}), akzeptiert validate() STILL alle Daten
+            # (gibt True zurueck). Das maskiert fehlerhafte Inhalte ohne Rueckmeldung. Ob das gewollte
+            # Toleranz ist oder einen Hinweis/Hard-Fail braucht, ist fachlich zu entscheiden -> belassen.
             return True  # Kein Schema = keine Validierung
         
         try:
