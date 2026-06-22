@@ -46,7 +46,7 @@ class Summary:
             source=data.get("source", "manual"),
             ai_model=data.get("ai_model"),
             pages=data.get("pages"),
-            tags=data.get("tags", []),
+            tags=data.get("tags") or [],
             created_at=data.get("created_at", now_iso()),
             updated_at=data.get("updated_at"),
         )
@@ -75,7 +75,7 @@ class LiSum(LitFormat):
     
     @classmethod
     def from_dict(cls, data: dict) -> "LiSum":
-        summaries = [Summary.from_dict(s) for s in data.get("summaries", [])]
+        summaries = [Summary.from_dict(s) for s in data.get("summaries") or []]
         return cls(
             summaries=summaries,
             schema_version=data.get("schema_version", "1.0.0"),

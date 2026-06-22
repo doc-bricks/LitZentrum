@@ -43,8 +43,8 @@ class Quote:
             page=data.get("page"),
             page_end=data.get("page_end"),
             comment=data.get("comment"),
-            tags=data.get("tags", []),
-            used_in=data.get("used_in", []),
+            tags=data.get("tags") or [],
+            used_in=data.get("used_in") or [],
             created_at=data.get("created_at", now_iso()),
         )
     
@@ -74,7 +74,7 @@ class LiQuote(LitFormat):
     
     @classmethod
     def from_dict(cls, data: dict) -> "LiQuote":
-        quotes = [Quote.from_dict(q) for q in data.get("quotes", [])]
+        quotes = [Quote.from_dict(q) for q in data.get("quotes") or []]
         return cls(
             quotes=quotes,
             schema_version=data.get("schema_version", "1.0.0"),

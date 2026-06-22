@@ -77,7 +77,7 @@ class LiMeta(LitFormat):
         """Erstellt aus Dictionary"""
         return cls(
             title=data.get("title") or "Untitled",
-            authors=data.get("authors", []),
+            authors=data.get("authors") or [],
             year=data.get("year"),
             doi=data.get("doi"),
             isbn=data.get("isbn"),
@@ -87,7 +87,7 @@ class LiMeta(LitFormat):
             issue=data.get("issue"),
             pages=data.get("pages"),
             abstract=data.get("abstract"),
-            tags=data.get("tags", []),
+            tags=data.get("tags") or [],
             source_file=data.get("source_file"),
             source_type=data.get("source_type", "article"),
             metadata_source=data.get("metadata_source", "manual"),

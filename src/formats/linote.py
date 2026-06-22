@@ -34,7 +34,7 @@ class Note:
             id=data.get("id", generate_id("n_")),
             content=data.get("content", ""),
             page=data.get("page"),
-            tags=data.get("tags", []),
+            tags=data.get("tags") or [],
             created_at=data.get("created_at", now_iso()),
             updated_at=data.get("updated_at"),
         )
@@ -58,7 +58,7 @@ class LiNote(LitFormat):
     
     @classmethod
     def from_dict(cls, data: dict) -> "LiNote":
-        notes = [Note.from_dict(n) for n in data.get("notes", [])]
+        notes = [Note.from_dict(n) for n in data.get("notes") or []]
         return cls(
             notes=notes,
             schema_version=data.get("schema_version", "1.0.0"),

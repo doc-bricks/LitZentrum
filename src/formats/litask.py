@@ -46,7 +46,7 @@ class Task:
             priority=data.get("priority", "normal"),
             due_date=data.get("due_date"),
             page=data.get("page"),
-            tags=data.get("tags", []),
+            tags=data.get("tags") or [],
             created_at=data.get("created_at", now_iso()),
             completed_at=data.get("completed_at"),
         )
@@ -66,8 +66,13 @@ class Task:
         if not self.due_date or not self.is_open:
             return False
         from datetime import datetime
-        due = datetime.fromisoformat(self.due_date)
-        return datetime.now() > due
+        # Bugsweep 27: ungueltiges oder tz-aware due_date nicht crashen lassen
+        # (fromisoformat-ValueError bzw. naive/aware-Vergleich-TypeError) -> dann "nicht ueberfaellig".
+        try:
+            due = datetime.fromisoformat(self.due_date)
+        except (ValueError, TypeError):
+            return False
+        return datetime.now(due.tzinfo) > due
 
 
 @dataclass
@@ -88,7 +93,7 @@ class LiTask(LitFormat):
     
     @classmethod
     def from_dict(cls, data: dict) -> "LiTask":
-        tasks = [Task.from_dict(t) for t in data.get("tasks", [])]
+        tasks = [Task.from_dict(t) for t in data.get("tasks") or []]
         return cls(
             tasks=tasks,
             schema_version=data.get("schema_version", "1.0.0"),

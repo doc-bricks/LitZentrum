@@ -328,11 +328,16 @@ class MainWindow(QMainWindow):
         from .dialogs.source_dialog import SourceDialog
         dialog = SourceDialog(self)
         if dialog.exec():
-            meta = dialog.get_meta()
-            pdf_path = dialog.get_pdf_path()
-            source = self.source_manager.create_source(meta, pdf_path)
-            self._refresh_sources()
-            self.event_bus.emit(EventType.SOURCE_CREATED, source)
+            # Bugsweep 27: create_source kann werfen (FS-Fehler, ungueltige Metadaten) -> sonst stille
+            # Exception im Slot ohne User-Feedback und mit veralteter Quellenliste.
+            try:
+                meta = dialog.get_meta()
+                pdf_path = dialog.get_pdf_path()
+                source = self.source_manager.create_source(meta, pdf_path)
+                self._refresh_sources()
+                self.event_bus.emit(EventType.SOURCE_CREATED, source)
+            except Exception as e:
+                QMessageBox.critical(self, "Fehler", f"Quelle konnte nicht erstellt werden:\n{e}")
     
     def _on_import_pdf(self):
         """PDF importieren"""

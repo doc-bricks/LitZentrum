@@ -78,9 +78,13 @@ class LitFormat(ABC):
             path = path.with_suffix(self.FILE_EXTENSION)
         
         path.parent.mkdir(parents=True, exist_ok=True)
-        
-        with open(path, 'w', encoding='utf-8') as f:
+
+        # Bugsweep 27: atomar schreiben (tmp + replace), sonst Datenverlust bei Crash/OneDrive-Lock
+        # mitten im json.dump (truncate-then-write hinterliesse eine leere/halbe .li*-Datei).
+        tmp = path.with_name(path.name + ".tmp")
+        with open(tmp, 'w', encoding='utf-8') as f:
             json.dump(self.to_dict(), f, ensure_ascii=False, indent=2, default=str)
+        tmp.replace(path)
     
     @classmethod
     def load(cls: Type[T], path: Path) -> T:
@@ -106,7 +110,12 @@ class LitFormat(ABC):
             except (json.JSONDecodeError, OSError) as e:
                 raise LitFormatError(f"Ungültige JSON-Datei: {path}: {e}")
 
-        return cls.from_dict(data)
+        # Bugsweep 27: from_dict-Fehler (z.B. fehlende Pflichtfelder/falsche Typen) als LitFormatError
+        # fassen statt rohem TypeError/KeyError -> konsistent fuer Aufrufer.
+        try:
+            return cls.from_dict(data)
+        except (TypeError, KeyError, ValueError) as e:
+            raise LitFormatError(f"Datei konnte nicht interpretiert werden: {path}: {e}")
 
 
 def generate_id(prefix: str = "") -> str:

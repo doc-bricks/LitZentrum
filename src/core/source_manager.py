@@ -206,7 +206,8 @@ class SourceManager:
     def _generate_folder_name(self, meta: LiMeta) -> str:
         """Generates a filesystem-safe folder name from source metadata (Author+Year_Title)."""
         _invalid = re.compile(r'[<>:"/\\|?*\s]')
-        author = _invalid.sub("", meta.first_author) or "Unbekannt"
+        # Bugsweep 27: first_author kann None sein (leere Autorenliste) -> re.sub(None) waere TypeError.
+        author = _invalid.sub("", str(meta.first_author or "")) or "Unbekannt"
         year = str(meta.year) if meta.year else "oJ"
 
         # Titel kürzen und säubern
