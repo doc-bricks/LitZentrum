@@ -16,7 +16,7 @@ python-docx>=0.8.11
 jsonschema>=4.17.0
 
 # HTTP Requests (für ISBN/DOI Lookup)
-requests>=2.28.0
+requests>=2.33.0
 
 # Optional: KI-Integration
 # ollama (muss separat installiert sein)

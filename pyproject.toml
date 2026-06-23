@@ -14,7 +14,7 @@ dependencies = [
     "bibtexparser>=1.4.0,<2.0.0",
     "python-docx>=0.8.11,<2.0.0",
     "jsonschema>=4.17.0,<5.0.0",
-    "requests>=2.28.0,<3.0.0",
+    "requests>=2.33.0,<3.0.0",
 ]
 
 [project.optional-dependencies]
