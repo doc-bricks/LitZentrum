@@ -9,9 +9,30 @@ import logging
 from formats import LiMeta
 
 
+def escape_bibtex(value: str) -> str:
+    """Escaped LaTeX/BibTeX-Sonderzeichen in Freitextfeldern.
+
+    Bugsweep (2026-06-23): Feldwerte wurden ungeescaped in ``{...}`` eingefügt.
+    Ein Titel wie ``AT&T Research`` oder ``cost_analysis`` (auch ``10% Anteil``)
+    erzeugte unkompilierbares BibTeX. Der Backslash wird über einen Sentinel
+    geschützt, damit die nachfolgende Klammer-Escapierung das eingefügte
+    ``\\textbackslash{}`` nicht erneut verändert.
+    """
+    if not value:
+        return value
+    sentinel = "\x00"
+    value = value.replace("\\", sentinel)
+    for ch in ("&", "%", "$", "#", "_", "{", "}"):
+        value = value.replace(ch, "\\" + ch)
+    value = value.replace("~", r"\textasciitilde{}")
+    value = value.replace("^", r"\textasciicircum{}")
+    value = value.replace(sentinel, r"\textbackslash{}")
+    return value
+
+
 class BibTeXGenerator:
     """Generiert BibTeX-Einträge"""
-    
+
     TYPE_MAP = {
         "article": "article",
         "book": "book",
@@ -31,20 +52,20 @@ class BibTeXGenerator:
         
         # Titel
         if meta.title:
-            lines.append(f'  title = {{{meta.title}}},')
-        
+            lines.append(f'  title = {{{escape_bibtex(meta.title)}}},')
+
         # Autoren
         if meta.authors:
-            authors = " and ".join(meta.authors)
+            authors = " and ".join(escape_bibtex(a) for a in meta.authors)
             lines.append(f'  author = {{{authors}}},')
-        
+
         # Jahr
         if meta.year:
             lines.append(f'  year = {{{meta.year}}},')
-        
+
         # Journal (für Artikel)
         if meta.journal:
-            lines.append(f'  journal = {{{meta.journal}}},')
+            lines.append(f'  journal = {{{escape_bibtex(meta.journal)}}},')
         
         # Volume
         if meta.volume:
@@ -60,7 +81,7 @@ class BibTeXGenerator:
         
         # Verlag
         if meta.publisher:
-            lines.append(f'  publisher = {{{meta.publisher}}},')
+            lines.append(f'  publisher = {{{escape_bibtex(meta.publisher)}}},')
         
         # DOI
         if meta.doi:
@@ -76,7 +97,7 @@ class BibTeXGenerator:
         
         # Abstract
         if meta.abstract:
-            abstract = meta.abstract.replace("\n", " ")
+            abstract = escape_bibtex(meta.abstract.replace("\n", " "))
             lines.append(f'  abstract = {{{abstract}}},')
         
         # Schließende Klammer

@@ -9,7 +9,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Optional
 
-from .base import LitFormat, now_iso
+from .base import LitFormat, now_iso, to_optional_int
 
 
 @dataclass
@@ -78,7 +78,7 @@ class LiMeta(LitFormat):
         return cls(
             title=data.get("title") or "Untitled",
             authors=data.get("authors") or [],
-            year=data.get("year"),
+            year=to_optional_int(data.get("year")),
             doi=data.get("doi"),
             isbn=data.get("isbn"),
             publisher=data.get("publisher"),

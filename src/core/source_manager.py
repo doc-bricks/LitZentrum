@@ -236,18 +236,21 @@ class SourceManager:
         
         for source in self.get_all_sources():
             # Titel
-            if query in source.meta.title.lower():
+            # Bugsweep (2026-06-23, Hardening): title/authors/tags defensiv gegen None
+            # absichern. Ueber den Load-Pfad sind sie zwar nie None (from_dict defaultet),
+            # aber programmatisch erzeugte LiMeta(title=None) wuerden hier crashen.
+            if query in (source.meta.title or "").lower():
                 results.append(source)
                 continue
-            
+
             # Autoren
-            for author in source.meta.authors:
+            for author in (source.meta.authors or []):
                 if query in author.lower():
                     results.append(source)
                     break
             else:
                 # Tags
-                for tag in source.meta.tags:
+                for tag in (source.meta.tags or []):
                     if query in tag.lower():
                         results.append(source)
                         break

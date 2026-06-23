@@ -5,7 +5,7 @@ Zitate aus Literaturquellen
 from dataclasses import dataclass, field
 from typing import List, Optional
 
-from .base import LitFormat, generate_id, now_iso
+from .base import LitFormat, generate_id, now_iso, to_optional_int
 
 
 @dataclass
@@ -40,8 +40,8 @@ class Quote:
             id=data.get("id", generate_id("q_")),
             type=data.get("type", "direct"),
             text=data.get("text", ""),
-            page=data.get("page"),
-            page_end=data.get("page_end"),
+            page=to_optional_int(data.get("page")),
+            page_end=to_optional_int(data.get("page_end")),
             comment=data.get("comment"),
             tags=data.get("tags") or [],
             used_in=data.get("used_in") or [],
@@ -51,7 +51,9 @@ class Quote:
     @property
     def page_range(self) -> str:
         """Gibt Seitenbereich als String zurück"""
-        if self.page_end and self.page_end != self.page:
+        # Bugsweep (2026-06-23): self.page kann None sein, waehrend page_end gesetzt ist.
+        # Ohne den self.page-Guard lieferte page_range "None-10" statt nur "10".
+        if self.page and self.page_end and self.page_end != self.page:
             return f"{self.page}-{self.page_end}"
         return str(self.page) if self.page else ""
 
