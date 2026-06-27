@@ -6,6 +6,9 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 ## [Unreleased]
 
 ### Hinzugefügt / Added
+- Reproduzierbarer Windows-Store-Buildpfad `releases/windowsstore/build_store_release.ps1` mit PyInstaller-Build, Store-Pretest, MSIX-Bau und Hash-Ausgabe
+- `generate_store_assets.py` erzeugt `store_assets/` aus `LitZentrum.ico` für den MSIX-/Store-Pfad
+- `releases/windowsstore/BUILD.md`, `releases/windowsstore/WACK_PROTOCOL.md` und `releases/windowsstore/SHA256SUMS.txt` dokumentieren den verifizierten Windows-Store-Lauf
 - README, README_de and `llms.txt` now include clearer discovery context for local-first literature management, bibliography/citation workflows, PDF-backed academic writing and differentiation from Zotero, Mendeley, JabRef, Calibre and cloud reference platforms
 - Reproduzierbarer Windows-Store-Screenshot-Generator `generate_store_screenshots.py`, der aus anonymisierten Demo-Daten vier Store-Bilder (`main.png`, `quotes-workflow.png`, `bibtex-export.png`, `companion-export.png`) plus `summary.json` erzeugt
 - Regressionstest `tests/test_store_screenshots.py` für die PNG-Erzeugung und das Screenshot-Inventar
@@ -23,6 +26,7 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 - Windows-Store-Basisartefakte: `store_package.json`, `STORE_LISTING.md`, `PRIVACY_POLICY.md`, `SUPPORT.md`, `WINDOWS_STORE_PREP.md`, Screenshot-Inventar und `tests/test_store_materials.py`
 
 ### Geändert / Changed
+- `WINDOWS_STORE_PREP.md`, `AUFGABEN.txt`, `PORTIERUNGSPLAN.md`, README und README_de spiegeln jetzt den realen lokalen EXE-/MSIX-Stand; offen bleibt nur noch der erhöhte WACK-Lauf
 - Verbindungstest aktualisiert ComboBox automatisch bei Erfolg (Ollama)
 - Portierungsstatus aktualisiert: Der Web/PWA-Companion hat jetzt einen automatisierten mobilen Preflight; der Desktop-Source-Smoke-Pfad ist für Ubuntu/macOS vorbereitet; echte Android-/iOS-Geräte-Smokes bleiben separat offen
 - Windows-Store-Doku verweist jetzt auf das vorhandene Screenshot-Set statt nur auf einen Planungsplatzhalter
@@ -31,6 +35,9 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 - README und README_de dokumentieren jetzt zusätzlich den Windows-Store-Basisstand
 
 ### Behoben / Fixed
+- `to_optional_year` in `base.py` eingeführt: konvertiert Float-Strings ("2023.0" → 2023) korrekt; behandelt None, leere Strings und "kein Datum"-Marker ("n.d.", "o.J." usw.) defensiv als None. `limeta.py` nutzt jetzt `to_optional_year` statt `to_optional_int` für das year-Feld; `to_optional_int` für page/page_end bleibt unverändert. Regressionstests: `tests/test_year_coercion.py`.
+- BibTeX-Entry-Keys im aktuellen und Legacy-Generator nutzen jetzt den vorhandenen ASCII-`bibtex_key` statt unsanitisiertem `citation_key`, damit Autoren wie `AT&T` oder `O'Brien` keine ungültigen Entry-Keys erzeugen
+- `start.bat` prüft die lokale Python-Umgebung jetzt auf `PySide6` statt auf das veraltete `PyQt6`
 - Bare except in settings_manager.py, project_tree.py, ollama_queue.py, bibtex.py, extractor.py, sync/__init__.py durch spezifische Exceptions ersetzt
 - TODO-Stellen in detail_panel.py und summaries_tab.py aufgeräumt
 - BibTeX-Export legt Zielordner jetzt an und ergänzt fehlende `.bib`-Suffixe
