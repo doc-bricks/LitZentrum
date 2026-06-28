@@ -7,6 +7,7 @@ from typing import List, Optional
 from datetime import datetime
 
 from formats import LiMeta
+from modules.bibliography.bibtex import escape_bibtex
 
 
 class BibTeXGenerator:
@@ -40,60 +41,60 @@ class BibTeXGenerator:
         
         # Titel
         if meta.title:
-            lines.append(f"  title = {{{meta.title}}},")
-        
+            lines.append(f"  title = {{{escape_bibtex(meta.title)}}},")
+
         # Autoren
         if meta.authors:
-            authors_str = " and ".join(meta.authors)
+            authors_str = " and ".join(escape_bibtex(a) for a in meta.authors)
             lines.append(f"  author = {{{authors_str}}},")
-        
+
         # Jahr
         if meta.year:
             lines.append(f"  year = {{{meta.year}}},")
-        
+
         # Journal/Booktitle
         if meta.journal:
             if bib_type == "article":
-                lines.append(f"  journal = {{{meta.journal}}},")
+                lines.append(f"  journal = {{{escape_bibtex(meta.journal)}}},")
             else:
-                lines.append(f"  booktitle = {{{meta.journal}}},")
-        
+                lines.append(f"  booktitle = {{{escape_bibtex(meta.journal)}}},")
+
         # Volume
         if meta.volume:
             lines.append(f"  volume = {{{meta.volume}}},")
-        
+
         # Number/Issue
         if meta.issue:
             lines.append(f"  number = {{{meta.issue}}},")
-        
+
         # Pages
         if meta.pages:
             lines.append(f"  pages = {{{meta.pages}}},")
-        
+
         # Publisher
         if meta.publisher:
-            lines.append(f"  publisher = {{{meta.publisher}}},")
-        
-        # DOI
+            lines.append(f"  publisher = {{{escape_bibtex(meta.publisher)}}},")
+
+        # DOI (verbatim — Escaping wuerde \url/hyperref brechen)
         if meta.doi:
             lines.append(f"  doi = {{{meta.doi}}},")
-        
+
         # ISBN
         if meta.isbn:
             lines.append(f"  isbn = {{{meta.isbn}}},")
-        
-        # URL
+
+        # URL (verbatim — Escaping wuerde \url/hyperref brechen)
         if meta.url:
             lines.append(f"  url = {{{meta.url}}},")
-        
+
         # Abstract
         if meta.abstract:
-            abstract = meta.abstract.replace("\n", " ")
+            abstract = escape_bibtex(meta.abstract.replace("\n", " "))
             lines.append(f"  abstract = {{{abstract}}},")
-        
+
         # Keywords/Tags
         if meta.tags:
-            keywords = ", ".join(meta.tags)
+            keywords = escape_bibtex(", ".join(meta.tags))
             lines.append(f"  keywords = {{{keywords}}},")
         
         lines.append("}")

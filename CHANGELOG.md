@@ -35,6 +35,7 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 - README und README_de dokumentieren jetzt zusätzlich den Windows-Store-Basisstand
 
 ### Behoben / Fixed
+- `bibtex_generator.py`: Freitextfelder (Titel, Autoren, Journal/Booktitle, Publisher, Abstract, Keywords) werden jetzt mit `escape_bibtex` aus `bibtex.py` escaped — kein doppelter Implementierungs-Fork; URL/DOI/ISBN bleiben verbatim. Regressions-test: `test_legacy_bibtex_generator_escapes_field_values` (Run 74, 2026-06-28)
 - `to_optional_year` in `base.py` eingeführt: konvertiert Float-Strings ("2023.0" → 2023) korrekt; behandelt None, leere Strings und "kein Datum"-Marker ("n.d.", "o.J." usw.) defensiv als None. `limeta.py` nutzt jetzt `to_optional_year` statt `to_optional_int` für das year-Feld; `to_optional_int` für page/page_end bleibt unverändert. Regressionstests: `tests/test_year_coercion.py`.
 - BibTeX-Entry-Keys im aktuellen und Legacy-Generator nutzen jetzt den vorhandenen ASCII-`bibtex_key` statt unsanitisiertem `citation_key`, damit Autoren wie `AT&T` oder `O'Brien` keine ungültigen Entry-Keys erzeugen
 - `start.bat` prüft die lokale Python-Umgebung jetzt auf `PySide6` statt auf das veraltete `PyQt6`

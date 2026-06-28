@@ -74,6 +74,46 @@ def test_legacy_bibtex_file_generator_uses_sanitized_key(tmp_path):
     assert "@article{AT&T2024," not in content
 
 
+def test_legacy_bibtex_generator_escapes_field_values(tmp_path):
+    """Bugsweep Run 74: bibtex_generator.py escapte Feldwerte nicht (nur bibtex.py tat es).
+
+    Sonderzeichen wie & % _ # in Titeln/Autoren/Verlagen erzeugten in bibtex_generator.py
+    unkompilierbares BibTeX. Fix: escape_bibtex aus bibtex.py importiert und auf alle
+    Freitextfelder (titel, autoren, journal, publisher, abstract, keywords) angewendet.
+    URL/DOI/ISBN bleiben verbatim (Escaping wuerde hyperref-Verlinkung brechen).
+    """
+    from formats import LiMeta
+    from modules.bibliography.bibtex_generator import BibTeXGenerator
+
+    meta = LiMeta(
+        title="AT&T cost_analysis 10% #1",
+        authors=["Müller, A&B"],
+        year=2024,
+        publisher="O'Reilly & Co_Ltd",
+        abstract="Enthält & Sonderzeichen_hier.",
+        tags=["tag_one", "tag&two"],
+        url="https://example.org/?a=1&b=2",
+        doi="10.1000/abc_def",
+    )
+    output = tmp_path / "refs.bib"
+    BibTeXGenerator().generate_file([meta], output)
+    content = output.read_text(encoding="utf-8")
+
+    # Freitextfelder muessen escaped sein.
+    assert r"\&" in content
+    assert r"\_" in content
+    assert r"\%" in content
+    assert r"\#" in content
+    assert "AT&T" not in content        # Titel: muss "AT\&T" sein
+    assert "cost_analysis" not in content  # Titel: muss "cost\_analysis" sein
+    assert "A&B" not in content         # Autor
+    assert "O'Reilly & Co_Ltd" not in content  # Publisher: & und _ escaped
+
+    # URL und DOI bleiben verbatim.
+    assert "https://example.org/?a=1&b=2" in content
+    assert "10.1000/abc_def" in content
+
+
 def test_bibtex_url_and_doi_not_escaped():
     from formats import LiMeta
     from modules.bibliography.bibtex import BibTeXGenerator
