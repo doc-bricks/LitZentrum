@@ -17,13 +17,17 @@ Artefakte und die nächsten Blocker für den Store-Pfad.
 - `README/screenshots/main.png` als vorhandener Basis-Screenshot
 - reproduzierbares Store-Screenshot-Set unter `README/screenshots/store/`
 - `generate_store_screenshots.py` als Generator für anonymisierte Store-Bilder
+- `generate_store_assets.py` als Generator für die benötigten Store-Logo-PNGs
+- `store_assets/` mit `Square44x44Logo.png`, `Square150x150Logo.png`, `Wide310x150Logo.png` und `Square310x310Logo.png`
 - `README/screenshots/store/README.md` als Inventar für das erzeugte Store-Screenshot-Set
 - `tests/test_store_materials.py` als Regressionstest für Metadaten, Links und Screenshot-Hinweise
+- `releases/windowsstore/build_store_release.ps1` als reproduzierbarer EXE-/MSIX-Buildpfad
+- `releases/windowsstore/BUILD.md`, `releases/windowsstore/WACK_PROTOCOL.md` und `releases/windowsstore/SHA256SUMS.txt`
 
 ## Geplanter Pretest-Ablauf
 
 1. `THIRD_PARTY_LICENSES.txt` für die Store- und Lizenzdokumentation ergänzen.
-2. Reproduzierbaren Windows-Buildpfad für `LitZentrum.exe` festziehen und dokumentieren.
+2. Reproduzierbaren Windows-Buildpfad für `LitZentrum.exe` ausführen.
 3. `_STORE/msstore_pretest.ps1` mit LitZentrum-spezifischen Pfaden ausführen.
 4. MSIX bauen.
 5. WACK als Administrator gegen das MSIX ausführen.
@@ -31,8 +35,8 @@ Artefakte und die nächsten Blocker für den Store-Pfad.
 
 ## Noch offene Blocker
 
-- Ein dokumentierter EXE-/MSIX-Buildpfad fehlt noch.
-- WACK-Protokoll fehlt noch.
+- Ein echter erhöhter WACK-Lauf mit XML-Report fehlt noch.
+- Partner-Center-Werte und Store-Einreichung fehlen noch.
 
 ## Hinweise zu Store-Claims
 

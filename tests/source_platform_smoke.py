@@ -128,7 +128,7 @@ def run_source_platform_smoke() -> dict:
         BibTeXGenerator().save_bibliography([source.meta for source in sources], bib_path)
         bib_file = bib_path.with_suffix(".bib")
         bib_text = bib_file.read_text(encoding="utf-8")
-        assert "@article{Müller2026," in bib_text
+        assert "@article{mueller_2026_aerztliche," in bib_text
         assert "title = {Ärztliche Übersicht zur Mobilität}" in bib_text
         assert "author = {Müller, Jörg}" in bib_text
 

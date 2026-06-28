@@ -161,11 +161,13 @@ through the offscreen GUI path, exports BibTeX and validates
 ## Windows Store
 
 `store_package.json`, `STORE_LISTING.md`, `PRIVACY_POLICY.md`, `SUPPORT.md`,
-`WINDOWS_STORE_PREP.md` and `generate_store_screenshots.py` capture the current
-Windows Store baseline for LitZentrum. The current state covers public metadata,
-support/privacy pages and a reproducible four-image Store screenshot set under
-`README/screenshots/store/`. A reproducible Windows EXE/MSIX build path and WACK
-remain the next explicit steps.
+`WINDOWS_STORE_PREP.md` and `releases/windowsstore/build_store_release.ps1`
+capture the current Windows Store path for LitZentrum. The current state now
+covers public metadata, support/privacy pages, a reproducible four-image Store
+screenshot set under `README/screenshots/store/`, generated Store logo assets,
+a reproducible local EXE/MSIX build path, a passing pre-submission test run and
+a local MSIX artifact. The remaining explicit Store gate is the elevated WACK
+run plus the later Partner Center submission.
 
 ## License
 

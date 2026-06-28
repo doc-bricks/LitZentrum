@@ -41,6 +41,39 @@ def test_bibtex_escapes_special_chars():
     assert "cost_analysis" not in entry  # muss "cost\_analysis" sein
 
 
+def test_bibtex_entry_key_uses_existing_sanitized_key():
+    from formats import LiMeta
+    from modules.bibliography.bibtex import BibTeXGenerator
+
+    meta = LiMeta(
+        title="Research Platforms",
+        authors=["O'Brien Labs"],
+        year=2024,
+    )
+    entry = BibTeXGenerator().generate_entry(meta)
+
+    assert entry.startswith("@article{obrienlabs_2024_research,")
+    assert "@article{O'Brien2024," not in entry
+
+
+def test_legacy_bibtex_file_generator_uses_sanitized_key(tmp_path):
+    from formats import LiMeta
+    from modules.bibliography.bibtex_generator import BibTeXGenerator
+
+    meta = LiMeta(
+        title="Research Platforms",
+        authors=["AT&T Research"],
+        year=2024,
+    )
+    output = tmp_path / "refs.bib"
+
+    BibTeXGenerator().generate_file([meta], output)
+
+    content = output.read_text(encoding="utf-8")
+    assert "@article{attresearch_2024_research," in content
+    assert "@article{AT&T2024," not in content
+
+
 def test_bibtex_url_and_doi_not_escaped():
     from formats import LiMeta
     from modules.bibliography.bibtex import BibTeXGenerator

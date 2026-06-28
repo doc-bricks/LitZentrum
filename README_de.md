@@ -165,12 +165,14 @@ aus.
 
 ## Windows Store
 
-`store_package.json`, `STORE_LISTING.md`, `PRIVACY_POLICY.md`, `SUPPORT.md` und
-`WINDOWS_STORE_PREP.md` halten jetzt die aktuelle Windows-Store-Basis für
-LitZentrum fest. Der jetzige Stand deckt öffentliche Metadaten, Datenschutz- und
-Supportseiten sowie die Screenshot-Planung ab. Dedizierte Store-Screenshots, ein
-reproduzierbarer Windows-EXE-/MSIX-Buildpfad und WACK bleiben die nächsten
-expliziten Schritte.
+`store_package.json`, `STORE_LISTING.md`, `PRIVACY_POLICY.md`, `SUPPORT.md`,
+`WINDOWS_STORE_PREP.md` und `releases/windowsstore/build_store_release.ps1`
+halten jetzt den aktuellen Windows-Store-Pfad für LitZentrum fest. Der jetzige
+Stand deckt öffentliche Metadaten, Datenschutz- und Supportseiten, dedizierte
+Store-Screenshots, generierte Store-Logo-Assets, einen reproduzierbaren lokalen
+Windows-EXE-/MSIX-Buildpfad, einen bestandenen Pretest und ein lokales
+MSIX-Artefakt ab. Das nächste explizite Store-Gate ist der erhöhte WACK-Lauf
+sowie danach der Partner-Center-Eintrag.
 
 ## Lizenz
 

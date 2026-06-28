@@ -46,7 +46,7 @@ class BibTeXGenerator:
     def generate_entry(self, meta: LiMeta) -> str:
         """Generiert einen BibTeX-Eintrag"""
         entry_type = self.TYPE_MAP.get(meta.source_type, "misc")
-        key = meta.citation_key
+        key = meta.bibtex_key
         
         lines = [f"@{entry_type}{{{key},"]
         

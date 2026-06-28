@@ -33,6 +33,8 @@ def test_store_documents_exist_and_reference_public_paths() -> None:
     listing = (PROJECT_ROOT / "STORE_LISTING.md").read_text(encoding="utf-8")
     support = (PROJECT_ROOT / "SUPPORT.md").read_text(encoding="utf-8")
     prep = (PROJECT_ROOT / "WINDOWS_STORE_PREP.md").read_text(encoding="utf-8")
+    build = (PROJECT_ROOT / "releases" / "windowsstore" / "BUILD.md").read_text(encoding="utf-8")
+    wack = (PROJECT_ROOT / "releases" / "windowsstore" / "WACK_PROTOCOL.md").read_text(encoding="utf-8")
     screenshot_note = (PROJECT_ROOT / "README" / "screenshots" / "store" / "README.md").read_text(
         encoding="utf-8"
     )
@@ -41,6 +43,8 @@ def test_store_documents_exist_and_reference_public_paths() -> None:
     assert "https://github.com/doc-bricks/LitZentrum/blob/master/SUPPORT.md" in listing
     assert "https://github.com/doc-bricks/LitZentrum/issues" in support
     assert "MSIX" in prep
+    assert "build_store_release.ps1" in build
+    assert "WACK" in wack
     assert "main.png" in screenshot_note
     assert "quotes-workflow.png" in screenshot_note
     assert "bibtex-export.png" in screenshot_note
@@ -59,3 +63,11 @@ def test_store_screenshot_targets_are_present() -> None:
     assert (screenshot_dir / "bibtex-export.png").exists()
     assert (screenshot_dir / "companion-export.png").exists()
     assert (screenshot_dir / "summary.json").exists()
+
+
+def test_store_assets_are_present() -> None:
+    store_assets = PROJECT_ROOT / "store_assets"
+    assert (store_assets / "Square44x44Logo.png").exists()
+    assert (store_assets / "Square150x150Logo.png").exists()
+    assert (store_assets / "Square310x310Logo.png").exists()
+    assert (store_assets / "Wide310x150Logo.png").exists()

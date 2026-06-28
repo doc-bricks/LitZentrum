@@ -12,7 +12,13 @@ build/
 venv/
 
 # Releases
-releases/
+releases/*
+!releases/windowsstore/
+releases/windowsstore/*
+!releases/windowsstore/BUILD.md
+!releases/windowsstore/WACK_PROTOCOL.md
+!releases/windowsstore/SHA256SUMS.txt
+!releases/windowsstore/build_store_release.ps1
 *-library-v1.json
 
 # Secrets
@@ -50,7 +56,9 @@ Thumbs.db
 desktop.ini
 *.bak
 # ---- Interne Steuerungsdateien ----
+LOCK*.txt
 DECISIONS.md
 PORTIERUNGSPLAN.md
 TODO.md
 DONE.md
+_WARTUNG/msix_staging/

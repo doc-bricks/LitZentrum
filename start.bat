@@ -17,7 +17,7 @@ REM Wechsle zum Projektverzeichnis
 cd /d "%~dp0"
 
 REM Prüfe ob Abhängigkeiten installiert sind
-python -c "import PyQt6" >nul 2>&1
+python -c "import PySide6" >nul 2>&1
 if errorlevel 1 (
     echo [INFO] Installiere Abhängigkeiten...
     pip install -r requirements.txt
