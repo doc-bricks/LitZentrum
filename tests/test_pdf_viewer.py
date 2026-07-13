@@ -58,3 +58,34 @@ def test_pdf_viewer_search_finds_text_and_returns_1based_page(tmp_path):
 
     # Kein Treffer bei unbekanntem Begriff
     assert viewer.search("xyz_nonexistent_42") == []
+
+
+def test_pdf_viewer_symbol_controls_expose_accessible_context():
+    """Die kompakte Symbol-Toolbar muss Screenreadern sprechenden Kontext geben."""
+    from PySide6.QtWidgets import QApplication
+    app = QApplication.instance() or QApplication(sys.argv)
+
+    from gui.widgets.pdf_viewer import PDFViewer
+    viewer = PDFViewer()
+
+    controls = [
+        (viewer.prev_btn, "Vorherige Seite", "Vorherige Seite"),
+        (viewer.next_btn, "Nächste Seite", "Nächste Seite"),
+        (viewer.zoom_out_btn, "Verkleinern", "Verkleinern"),
+        (viewer.zoom_in_btn, "Vergrößern", "Vergrößern"),
+        (viewer.fit_width_btn, "An Breite anpassen", "An Breite anpassen"),
+        (viewer.fit_page_btn, "An Seite anpassen", "An Seite anpassen"),
+    ]
+
+    for widget, name, tooltip in controls:
+        assert widget.accessibleName() == name
+        assert widget.toolTip() == tooltip
+        assert widget.accessibleDescription()
+
+    assert viewer.page_spin.accessibleName() == "Aktuelle Seite"
+    assert viewer.page_spin.toolTip()
+    assert viewer.page_spin.accessibleDescription()
+
+    assert viewer.zoom_combo.accessibleName() == "Zoomstufe"
+    assert viewer.zoom_combo.toolTip()
+    assert viewer.zoom_combo.accessibleDescription()
