@@ -1,5 +1,7 @@
 # 🏗️ LitZentrum - Architektur-Skizze
 
+> Stand: 2026-07-22. Die aktuelle Desktop-GUI nutzt PySide6. Die frühere PyQt6-Basis wurde am 2026-03-15 migriert; PyQt6-Nennungen beschreiben ausschließlich diese Historie.
+
 ## Hauptfenster-Layout
 
 ```
@@ -215,7 +217,7 @@
 │                    TECHNOLOGIE-STACK                            │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  GUI:        PyQt6 (Widgets, Dialogs, Panels)                  │
+│  GUI:        PySide6 (Widgets, Dialogs, Panels)                │
 │                                                                 │
 │  PDF:        PyMuPDF (fitz), pikepdf, pdf2image               │
 │                                                                 │
