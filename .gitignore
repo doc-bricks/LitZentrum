@@ -30,6 +30,7 @@ releases/windowsstore/*
 # Planung & Interne Doku
 PLAN.txt
 AUFGABEN.txt
+AUFGABEN-*.txt
 ARCHITEKTUR_LitZentrum.md
 LIT-Konzept.html
 Roadmap*.html

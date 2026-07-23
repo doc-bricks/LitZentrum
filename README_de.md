@@ -163,6 +163,15 @@ zeigt eine Quelle über den Offscreen-GUI-Pfad an, exportiert BibTeX und validie
 `.github/workflows/platform-smoke.yml` führt denselben Smoke auf Ubuntu und macOS
 aus.
 
+## Windows-EXE-Build
+
+`build_exe.bat` baut eine direkte Windows-Desktop-EXE lokal unter
+`C:\_Local_DEV\codex_build\litzentrum`, nutzt den gemeinsamen
+`_tools/build_exclude_scanner.py`, aktualisiert `dist\LitZentrum.exe` und legt
+`releases\v1.0.0\LitZentrum-1.0.0-win64.exe` plus `SHA256SUMS.txt` ab.
+Der Store-spezifische EXE-/MSIX-Pfad bleibt
+`releases/windowsstore/build_store_release.ps1`.
+
 ## Windows Store
 
 `store_package.json`, `STORE_LISTING.md`, `PRIVACY_POLICY.md`, `SUPPORT.md`,

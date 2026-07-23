@@ -6,6 +6,8 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 ## [Unreleased]
 
 ### Hinzugefügt / Added
+- `build_exe.bat` für den direkten Windows-Desktop-Build mit lokalem Build-Venv, gemeinsamem Exclude-Scanner, `dist\LitZentrum.exe` und versionierter Release-EXE `releases\v1.0.0\LitZentrum-1.0.0-win64.exe`
+- Regressionstest `tests/test_release_materials.py` für `build_exe.bat`, README-Hinweise und den Ignore-Schutz für interne Aufgabenvarianten
 - Reproduzierbarer Windows-Store-Buildpfad `releases/windowsstore/build_store_release.ps1` mit PyInstaller-Build, Store-Pretest, MSIX-Bau und Hash-Ausgabe
 - `generate_store_assets.py` erzeugt `store_assets/` aus `LitZentrum.ico` für den MSIX-/Store-Pfad
 - `releases/windowsstore/BUILD.md`, `releases/windowsstore/WACK_PROTOCOL.md` und `releases/windowsstore/SHA256SUMS.txt` dokumentieren den verifizierten Windows-Store-Lauf
@@ -26,6 +28,8 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 - Windows-Store-Basisartefakte: `store_package.json`, `STORE_LISTING.md`, `PRIVACY_POLICY.md`, `SUPPORT.md`, `WINDOWS_STORE_PREP.md`, Screenshot-Inventar und `tests/test_store_materials.py`
 
 ### Geändert / Changed
+- `.gitignore` ignoriert jetzt zusätzlich `AUFGABEN-*.txt`, damit maschinenspezifische Aufgabenvarianten nicht versehentlich in Git landen
+- README und README_de dokumentieren jetzt den direkten Windows-EXE-Build getrennt vom Store-spezifischen EXE-/MSIX-Pfad
 - `WINDOWS_STORE_PREP.md`, `AUFGABEN.txt`, `PORTIERUNGSPLAN.md`, README und README_de spiegeln jetzt den realen lokalen EXE-/MSIX-Stand; offen bleibt nur noch der erhöhte WACK-Lauf
 - Verbindungstest aktualisiert ComboBox automatisch bei Erfolg (Ollama)
 - Portierungsstatus aktualisiert: Der Web/PWA-Companion hat jetzt einen automatisierten mobilen Preflight; der Desktop-Source-Smoke-Pfad ist für Ubuntu/macOS vorbereitet; echte Android-/iOS-Geräte-Smokes bleiben separat offen

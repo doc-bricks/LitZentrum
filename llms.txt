@@ -16,6 +16,8 @@ Important files:
 - `schemas/litzentrum-library-v1.schema.json`: JSON schema for the read-only companion export.
 - `src/core/library_export.py`: Export implementation.
 - `tests/test_library_export.py`: Regression tests for UTF-8, relative paths, missing PDFs and empty projects.
+- `build_exe.bat`: Direct Windows desktop EXE build with the shared exclude scanner, local build root and versioned release artifact.
+- `releases/windowsstore/build_store_release.ps1`: Store-specific EXE/MSIX path for local pretest, MSIX generation and later WACK submission.
 
 Privacy and scope:
 - The default companion export does not embed PDF files.

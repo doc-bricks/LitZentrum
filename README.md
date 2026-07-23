@@ -158,6 +158,15 @@ through the offscreen GUI path, exports BibTeX and validates
 `litzentrum-library-v1.json`. The GitHub workflow
 `.github/workflows/platform-smoke.yml` runs the same smoke on Ubuntu and macOS.
 
+## Windows EXE Build
+
+`build_exe.bat` builds a direct Windows desktop EXE locally under
+`C:\_Local_DEV\codex_build\litzentrum`, uses the shared
+`_tools/build_exclude_scanner.py`, refreshes `dist\LitZentrum.exe` and writes
+`releases\v1.0.0\LitZentrum-1.0.0-win64.exe` plus `SHA256SUMS.txt`.
+The Store-specific EXE/MSIX path remains
+`releases/windowsstore/build_store_release.ps1`.
+
 ## Windows Store
 
 `store_package.json`, `STORE_LISTING.md`, `PRIVACY_POLICY.md`, `SUPPORT.md`,
