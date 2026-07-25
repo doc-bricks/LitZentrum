@@ -28,6 +28,7 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 - Windows-Store-Basisartefakte: `store_package.json`, `STORE_LISTING.md`, `PRIVACY_POLICY.md`, `SUPPORT.md`, `WINDOWS_STORE_PREP.md`, Screenshot-Inventar und `tests/test_store_materials.py`
 
 ### Geändert / Changed
+- Windows-Store Partner-Center-Metadaten in `store_package.json` vervollständigt (Publisher DN `CN=52596601-BAB4-4F3F-B182-E8F3F273B202`, Publisher Display Name `Lukas Geiger`, Price `Free`, Sprachen `de-DE`/`en-US`, Logo-Pfad); `test_store_materials.py` erweitert (99/99 Pytest grün); `WINDOWS_STORE_PREP.md` & `AUFGABEN.txt` (`TW-LITZENTRUM-02`) aktualisiert
 - `.gitignore` ignoriert jetzt zusätzlich `AUFGABEN-*.txt`, damit maschinenspezifische Aufgabenvarianten nicht versehentlich in Git landen
 - README und README_de dokumentieren jetzt den direkten Windows-EXE-Build getrennt vom Store-spezifischen EXE-/MSIX-Pfad
 - `WINDOWS_STORE_PREP.md`, `AUFGABEN.txt`, `PORTIERUNGSPLAN.md`, README und README_de spiegeln jetzt den realen lokalen EXE-/MSIX-Stand; offen bleibt nur noch der erhöhte WACK-Lauf

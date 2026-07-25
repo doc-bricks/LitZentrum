@@ -19,14 +19,20 @@ def test_store_package_matches_project_metadata() -> None:
     package = json.loads((PROJECT_ROOT / "store_package.json").read_text(encoding="utf-8"))
 
     assert package["app_name"] == "LitZentrum"
+    assert package["publisher"] == "CN=52596601-BAB4-4F3F-B182-E8F3F273B202"
+    assert package["publisher_display"] == "Lukas Geiger"
     assert package["identity_name"] == "Geiger.LitZentrum"
     assert package["executable"] == "LitZentrum.exe"
     assert package["capabilities"] == "runFullTrust"
     assert package["category"] == "Productivity"
+    assert package["pricing"] == "Free"
     assert package["license"] == "AGPL-3.0-only"
     assert package["version"] == f"{_read_version_from_main()}.0"
     assert package["privacy_url"].endswith("/PRIVACY_POLICY.md")
     assert package["support_url"].endswith("/SUPPORT.md")
+    assert package["logo"] == "store_assets/Square150x150Logo.png"
+    assert "de-DE" in package["languages"]
+    assert "en-US" in package["languages"]
 
 
 def test_store_documents_exist_and_reference_public_paths() -> None:
