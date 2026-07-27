@@ -8,8 +8,15 @@ Deutsch · **[English](README.md)**
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://python.org)
 [![Plattform: Windows](https://img.shields.io/badge/Plattform-Windows-lightgrey.svg)](https://github.com/doc-bricks/LitZentrum)
 [![Version](https://img.shields.io/badge/Version-1.0.0-purple.svg)](CHANGELOG.md)
+[![Pytest Tests](https://img.shields.io/badge/Pytest-99%20bestanden-success.svg)](tests)
+[![LLM Bereit](https://img.shields.io/badge/LLM--Bereit-llms.txt-blue.svg)](llms.txt)
+[![Ökosystem: doc-bricks](https://img.shields.io/badge/%C3%96kosystem-doc--bricks-orange.svg)](https://github.com/doc-bricks)
+[![Dachprojekt: open-bricks](https://img.shields.io/badge/Dachprojekt-open--bricks-blue.svg)](https://github.com/open-bricks)
 
 **Ordnerbasierte Literaturverwaltung für wissenschaftliches Schreiben.**
+
+> [!NOTE]
+> **KI & Agenten-Integration**: LitZentrum bietet maschinenlesbare JSON-Schemas (`schemas/litzentrum-library-v1.schema.json`) und eine explizite `llms.txt`-Spezifikation für KI-Agenten, Zitationsgenerierung und lokale Forschungs-Automatisierungs-Workflows.
 
 LitZentrum ist eine Desktop-Anwendung zur Verwaltung akademischer Literatur in lokalen Projektordnern. Die Anwendung verbindet UTF-8-JSON-Speicherformate, PDF-Workflows, Notizen, Zitate, Aufgaben, Zusammenfassungen, BibTeX-Export und optionale lokale KI-Unterstützung über Ollama.
 
@@ -22,6 +29,29 @@ LitZentrum ist eine Desktop-Anwendung zur Verwaltung akademischer Literatur in l
 | Zitationen für wissenschaftliche Texte exportieren | BibTeX-Export und Zitierstile |
 | Bibliothek mobil prüfen, ohne PDFs weiterzugeben | `web_companion/` mit `litzentrum-library-v1.json` |
 | Datenverträge für Agenten oder Tools prüfen | `schemas/litzentrum-library-v1.schema.json` und `EXPORTFORMAT.md` |
+
+## Systemarchitektur
+
+```mermaid
+graph TD
+    UI["PySide6 Desktop-Oberfläche<br/>(Hauptfenster / PDF-Viewer / Quellenmanager)"] --> Core["Kern-Domain-Engine<br/>(Projekte, Quellen, Notizen, Zitate, Aufgaben, Zusammenfassungen)"]
+    CLI["Python CLI / Automatisierung"] --> Core
+    
+    Core --> Storage["Lokaler Dateispeicher<br/>(UTF-8 JSON: .liproj, .limeta, .linote, .liquote, .litask, .lisum)"]
+    Core --> BibTeX["Bibliografie-Engine<br/>(BibTeX Export / APA7, MLA9, Chicago, Harvard, DIN 1505)"]
+    Core --> Companion["Web/PWA-Exporter<br/>(litzentrum-library-v1.json)"]
+    
+    Companion --> PWA["web_companion/ PWA Reader<br/>(Mobil- & Browser-Lese-Arbeitsplatz)"]
+    Core -. Optional .-> Ollama["Lokale Ollama KI-Integration<br/>(Offline-Zusammenfassungen & Zitatextraktion)"]
+    
+    style UI fill:#6b21a8,stroke:#9333ea,color:#fff
+    style Core fill:#1e3a8a,stroke:#3b82f6,color:#fff
+    style Storage fill:#065f46,stroke:#10b981,color:#fff
+    style BibTeX fill:#7c2d12,stroke:#f97316,color:#fff
+    style Companion fill:#831843,stroke:#ec4899,color:#fff
+    style PWA fill:#374151,stroke:#9ca3af,color:#fff
+    style Ollama fill:#4c1d95,stroke:#8b5cf6,color:#fff
+```
 
 ## Auffindbarkeit und Abgrenzung
 

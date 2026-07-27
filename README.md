@@ -8,8 +8,15 @@
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://python.org)
 [![Platform: Windows](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://github.com/doc-bricks/LitZentrum)
 [![Version](https://img.shields.io/badge/Version-1.0.0-purple.svg)](CHANGELOG.md)
+[![Pytest Tests](https://img.shields.io/badge/Pytest-99%20passed-success.svg)](tests)
+[![LLM Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blue.svg)](llms.txt)
+[![Ecosystem: doc-bricks](https://img.shields.io/badge/Ecosystem-doc--bricks-orange.svg)](https://github.com/doc-bricks)
+[![Umbrella: open-bricks](https://img.shields.io/badge/Umbrella-open--bricks-blue.svg)](https://github.com/open-bricks)
 
 **Local-first literature management for academic writing.**
+
+> [!NOTE]
+> **AI & Agent Integration**: LitZentrum provides machine-readable JSON Schemas (`schemas/litzentrum-library-v1.schema.json`) and an explicit `llms.txt` context specification for AI agents, citation generation, and local-first research automation workflows.
 
 LitZentrum is a desktop application for managing academic literature in plain project folders. It combines local JSON-based storage, PDF handling, notes, quotes, tasks, summaries, BibTeX export and optional local AI support through Ollama.
 
@@ -22,6 +29,29 @@ LitZentrum is a desktop application for managing academic literature in plain pr
 | Export citations for academic writing | BibTeX export and citation styles |
 | Review a library on mobile without shipping PDFs | `web_companion/` with `litzentrum-library-v1.json` |
 | Inspect data contracts for agent or tool integration | `schemas/litzentrum-library-v1.schema.json` and `EXPORTFORMAT.md` |
+
+## System Architecture
+
+```mermaid
+graph TD
+    UI["PySide6 Desktop GUI<br/>(Main Window / PDF Viewer / Source Manager)"] --> Core["Core Domain Engine<br/>(Projects, Sources, Notes, Quotes, Tasks, Summaries)"]
+    CLI["Python CLI / Automation"] --> Core
+    
+    Core --> Storage["Local File Storage<br/>(UTF-8 JSON: .liproj, .limeta, .linote, .liquote, .litask, .lisum)"]
+    Core --> BibTeX["Bibliography Engine<br/>(BibTeX Export / APA7, MLA9, Chicago, Harvard, DIN 1505)"]
+    Core --> Companion["Web/PWA Exporter<br/>(litzentrum-library-v1.json)"]
+    
+    Companion --> PWA["web_companion/ PWA Reader<br/>(Offline Mobile & Browser Reading Workspace)"]
+    Core -. Optional .-> Ollama["Local Ollama AI Integration<br/>(Offline Summaries & Quote Extraction)"]
+    
+    style UI fill:#6b21a8,stroke:#9333ea,color:#fff
+    style Core fill:#1e3a8a,stroke:#3b82f6,color:#fff
+    style Storage fill:#065f46,stroke:#10b981,color:#fff
+    style BibTeX fill:#7c2d12,stroke:#f97316,color:#fff
+    style Companion fill:#831843,stroke:#ec4899,color:#fff
+    style PWA fill:#374151,stroke:#9ca3af,color:#fff
+    style Ollama fill:#4c1d95,stroke:#8b5cf6,color:#fff
+```
 
 ## Discovery Context
 

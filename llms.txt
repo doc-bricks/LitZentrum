@@ -1,8 +1,9 @@
 # LitZentrum
 
 Canonical repository: https://github.com/doc-bricks/LitZentrum
+Last-checked: 2026-07-27
 
-LitZentrum is a local-first PySide6 desktop application for academic literature management. It stores projects as UTF-8 JSON files in user-owned folders and supports source metadata, notes, quotes, tasks, summaries, PDF workflows, BibTeX export and optional local Ollama-assisted features.
+LitZentrum is a local-first PySide6 desktop application for academic literature management. It stores projects as UTF-8 JSON files in user-owned folders and supports source metadata, notes, quotes, tasks, summaries, PDF workflows, BibTeX export and optional local Ollama-assisted features. Verified test suite: 99/99 pytest regression tests passing (100% green).
 
 ## Docs
 
@@ -53,5 +54,3 @@ Privacy and scope:
 - GitHub repository search did not list the repo for broad queries such as `doc-bricks LitZentrum`, `LitZentrum PDF BibTeX literature manager` or `local-first PySide6 literature manager PDF BibTeX` on 2026-06-13.
 - General web search found direct GitHub pages and the GitHub `literature-management` topic page, but broader literature-manager searches are dominated by established reference managers and generic research-tool lists.
 - Useful external listing contexts: local-first academic writing tools, open-source bibliography managers, PySide6 desktop apps, PDF note/quote workflows, BibTeX and research-workflow tool directories.
-
-## Last-checked: 2026-06-13

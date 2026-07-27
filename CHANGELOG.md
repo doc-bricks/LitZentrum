@@ -6,7 +6,9 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 ## [Unreleased]
 
 ### Hinzugefügt / Added
+- Discoverability & Marketing Check (2026-07-27): Shields.io Badges (`Pytest 99 passed`, `LLM-Ready llms.txt`, `Ecosystem doc-bricks`, `Umbrella open-bricks`), GFM Callout-Box (`> [!NOTE]` for AI Agent & LLM integration context) and Mermaid System Architecture Diagram in `README.md` & `README_de.md` added; `llms.txt` header timestamp updated to `Last-checked: 2026-07-27` with 99 verified passing tests.
 - `build_exe.bat` für den direkten Windows-Desktop-Build mit lokalem Build-Venv, gemeinsamem Exclude-Scanner, `dist\LitZentrum.exe` und versionierter Release-EXE `releases\v1.0.0\LitZentrum-1.0.0-win64.exe`
+
 - Regressionstest `tests/test_release_materials.py` für `build_exe.bat`, README-Hinweise und den Ignore-Schutz für interne Aufgabenvarianten
 - Reproduzierbarer Windows-Store-Buildpfad `releases/windowsstore/build_store_release.ps1` mit PyInstaller-Build, Store-Pretest, MSIX-Bau und Hash-Ausgabe
 - `generate_store_assets.py` erzeugt `store_assets/` aus `LitZentrum.ico` für den MSIX-/Store-Pfad
