@@ -103,7 +103,7 @@ class ProjectManager:
         config_path = path / self.PROJECT_CONFIG_FILE
         
         if not config_path.exists():
-            raise FileNotFoundError(f"Kein LitZentrum-Projekt in: {path}")
+            raise FileNotFoundError(f"Kein LitZen-Projekt in: {path}")
         
         config = LiProj.load(config_path)
         project = LitProject(path=path, config=config)

@@ -195,7 +195,7 @@ def _build_demo_project(workspace: Path) -> DemoContext:
         "Ärztliche Übersicht zur Mobilität",
         [
             "Lokale Literaturarbeit braucht klare Zitate, Notizen und Aufgaben mit echten Umlauten.",
-            "Dieser Demo-Text zeigt LitZentrum mit PDF-Vorschau, BibTeX-Export und Companion-Bundle.",
+            "Dieser Demo-Text zeigt LitZen mit PDF-Vorschau, BibTeX-Export und Companion-Bundle.",
             "Wissenschaftliche Workflows bleiben lokal, ohne Cloud-Zwang und ohne öffentliche Uploads.",
         ],
     )
@@ -344,7 +344,7 @@ def _build_bibtex_preview(context: DemoContext) -> StorePreviewWidget:
         ("Projekt", context.project_path.name),
     ]
     return StorePreviewWidget(
-        title="LitZentrum - BibTeX-Export",
+        title="LitZen - BibTeX-Export",
         subtitle="Reproduzierbarer Export aus lokalen Projektordnern mit echten Zitationsdaten und ohne Cloud-Abhängigkeit.",
         cards=cards,
         section_title="Exportvorschau",
@@ -369,7 +369,7 @@ def _build_companion_preview(context: DemoContext) -> StorePreviewWidget:
         ("PDF-Inhalte", "nein"),
     ]
     return StorePreviewWidget(
-        title="LitZentrum - Companion-Export",
+        title="LitZen - Companion-Export",
         subtitle="Read-only Exportbündel für Web/PWA-Nutzung auf mobilen Geräten mit anonymisierten, lokalen Forschungsdaten.",
         cards=cards,
         section_title="Exportvertrag `litzentrum-library-v1.json`",

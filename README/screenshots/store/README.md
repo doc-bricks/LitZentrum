@@ -1,4 +1,4 @@
-# Store-Screenshots - LitZentrum
+# Store-Screenshots - LitZen
 
 Stand: 2026-06-12
 

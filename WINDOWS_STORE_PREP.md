@@ -1,10 +1,10 @@
-# Windows Store Prep - LitZentrum
+# Windows Store Prep - LitZen
 
 Stand: 2026-06-12
 
 ## Ziel dieses Dokuments
 
-Dieses Dokument hält die aktuell vorhandene Windows-Store-Basis für LitZentrum
+Dieses Dokument hält die aktuell vorhandene Windows-Store-Basis für LitZen
 fest. Es ersetzt noch keine echte Einreichung, bündelt aber die öffentlichen
 Artefakte und die nächsten Blocker für den Store-Pfad.
 
@@ -24,7 +24,7 @@ Artefakte und die nächsten Blocker für den Store-Pfad.
 
 1. `THIRD_PARTY_LICENSES.txt` für die Store- und Lizenzdokumentation ergänzen.
 2. Reproduzierbaren Windows-Buildpfad für `LitZentrum.exe` festziehen und dokumentieren.
-3. `_STORE/msstore_pretest.ps1` mit LitZentrum-spezifischen Pfaden ausführen.
+3. `_STORE/msstore_pretest.ps1` mit LitZen-spezifischen Pfaden ausführen.
 4. MSIX bauen.
 5. WACK als Administrator gegen das MSIX ausführen.
 6. Partner-Center-Eintrag mit den Texten aus `STORE_LISTING.md` und den vorhandenen Screenshots befüllen.
@@ -36,7 +36,7 @@ Artefakte und die nächsten Blocker für den Store-Pfad.
 
 ## Hinweise zu Store-Claims
 
-- LitZentrum ist eine lokale Desktop-App und kein Cloud-Literaturdienst.
+- LitZen ist eine lokale Desktop-App und kein Cloud-Literaturdienst.
 - Es gibt keine Pflichtregistrierung und keinen Serverzwang.
 - Der mobile Pfad läuft über einen read-only Companion-Export, nicht über
   vollständige Cloud-Synchronisierung.

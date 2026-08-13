@@ -1,6 +1,6 @@
-<img src="assets/banner.svg" width="100%" alt="LitZentrum Banner"/>
+<img src="assets/banner.svg" width="100%" alt="LitZen Banner"/>
 
-# LitZentrum
+# LitZen
 
 Deutsch · **[English](README.md)**
 
@@ -11,7 +11,7 @@ Deutsch · **[English](README.md)**
 
 **Ordnerbasierte Literaturverwaltung für wissenschaftliches Schreiben.**
 
-LitZentrum ist eine Desktop-Anwendung zur Verwaltung akademischer Literatur in lokalen Projektordnern. Die Anwendung verbindet UTF-8-JSON-Speicherformate, PDF-Workflows, Notizen, Zitate, Aufgaben, Zusammenfassungen, BibTeX-Export und optionale lokale KI-Unterstützung über Ollama.
+LitZen ist eine Desktop-Anwendung zur Verwaltung akademischer Literatur in lokalen Projektordnern. Die Anwendung verbindet UTF-8-JSON-Speicherformate, PDF-Workflows, Notizen, Zitate, Aufgaben, Zusammenfassungen, BibTeX-Export und optionale lokale KI-Unterstützung über Ollama.
 
 ## Einstieg
 
@@ -25,9 +25,9 @@ LitZentrum ist eine Desktop-Anwendung zur Verwaltung akademischer Literatur in l
 
 ## Auffindbarkeit und Abgrenzung
 
-LitZentrum ist am besten als lokale Literaturverwaltung, Offline-Bibliografiemanager, PDF-gestützter Schreibarbeitsplatz und PySide6-Forschungstool beschrieben. Das Projekt ist bewusst anders aufgebaut als Cloud-Referenzmanager, gehostete Leseplattformen oder Team-Zitationsdienste: Projekte bleiben in normalen Ordnern, Exporte sind explizit, und der Web/PWA-Companion erhält ein redigiertes JSON-Bündel statt kompletter PDF-Bibliotheken.
+LitZen ist am besten als lokale Literaturverwaltung, Offline-Bibliografiemanager, PDF-gestützter Schreibarbeitsplatz und PySide6-Forschungstool beschrieben. Das Projekt ist bewusst anders aufgebaut als Cloud-Referenzmanager, gehostete Leseplattformen oder Team-Zitationsdienste: Projekte bleiben in normalen Ordnern, Exporte sind explizit, und der Web/PWA-Companion erhält ein redigiertes JSON-Bündel statt kompletter PDF-Bibliotheken.
 
-Für Toolvergleiche passt LitZentrum, wenn lokale PDF-Dateien, BibTeX, Notizen, Zitate, Aufgaben und optionale lokale Ollama-Unterstützung wichtiger sind als Cloud-Sync. Es ist kein Zotero-, Mendeley- oder JabRef-Klon, keine Calibre-E-Book-Bibliothek und kein institutionelles Bibliotheksportal.
+Für Toolvergleiche passt LitZen, wenn lokale PDF-Dateien, BibTeX, Notizen, Zitate, Aufgaben und optionale lokale Ollama-Unterstützung wichtiger sind als Cloud-Sync. Es ist kein Zotero-, Mendeley- oder JabRef-Klon, keine Calibre-E-Book-Bibliothek und kein institutionelles Bibliotheksportal.
 
 ## Funktionen
 
@@ -125,7 +125,7 @@ MeinProjekt/
 
 ## Optionale KI-Integration
 
-LitZentrum kann eine lokale Ollama-Installation für optionale KI-gestützte Zusammenfassungen, Zitatextraktion und Metadatenunterstützung verwenden.
+LitZen kann eine lokale Ollama-Installation für optionale KI-gestützte Zusammenfassungen, Zitatextraktion und Metadatenunterstützung verwenden.
 
 ```bash
 ollama run mistral
@@ -167,7 +167,7 @@ aus.
 
 `store_package.json`, `STORE_LISTING.md`, `PRIVACY_POLICY.md`, `SUPPORT.md` und
 `WINDOWS_STORE_PREP.md` halten jetzt die aktuelle Windows-Store-Basis für
-LitZentrum fest. Der jetzige Stand deckt öffentliche Metadaten, Datenschutz- und
+LitZen fest. Der jetzige Stand deckt öffentliche Metadaten, Datenschutz- und
 Supportseiten sowie die Screenshot-Planung ab. Dedizierte Store-Screenshots, ein
 reproduzierbarer Windows-EXE-/MSIX-Buildpfad und WACK bleiben die nächsten
 expliziten Schritte.

@@ -47,7 +47,7 @@ class MainWindow(QMainWindow):
     
     def _setup_ui(self):
         """Initialisiert die UI"""
-        self.setWindowTitle("LitZentrum - Literaturverwaltung")
+        self.setWindowTitle("LitZen - Literaturverwaltung")
         self.setMinimumSize(1200, 800)
         
         # Central Widget
@@ -160,7 +160,7 @@ class MainWindow(QMainWindow):
         # Hilfe-Menü
         help_menu = menubar.addMenu("&Hilfe")
         
-        about = QAction("Über &LitZentrum", self)
+        about = QAction("Über &LitZen", self)
         about.triggered.connect(self._on_about)
         help_menu.addAction(about)
     
@@ -448,8 +448,8 @@ class MainWindow(QMainWindow):
         """Über-Dialog"""
         QMessageBox.about(
             self,
-            "Über LitZentrum",
-            "<h3>LitZentrum</h3>"
+            "Über LitZen",
+            "<h3>LitZen</h3>"
             "<p>Ordnerbasierte Literaturverwaltung</p>"
             "<p>Version 1.0.0</p>"
             "<p>© 2026</p>"

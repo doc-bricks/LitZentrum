@@ -1,4 +1,4 @@
-# LitZentrum - Literaturverwaltung
+# LitZen - Literaturverwaltung
 # Erstellt: 03.01.2026
 
 # GUI Framework

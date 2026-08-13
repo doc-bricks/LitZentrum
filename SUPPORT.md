@@ -1,4 +1,4 @@
-# Support - LitZentrum
+# Support - LitZen
 
 ## Primärer Kanal
 
@@ -12,7 +12,7 @@
 
 ## Was in ein gutes Ticket gehört
 
-- LitZentrum-Version oder Commit-Stand
+- LitZen-Version oder Commit-Stand
 - Windows-Version
 - betroffener Workflow, zum Beispiel Import, PDF-Vorschau, BibTeX-Export oder Companion-Export
 - kurze Repro-Schritte

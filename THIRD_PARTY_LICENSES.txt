@@ -1,4 +1,4 @@
-Third-Party Licenses — LitZentrum
+Third-Party Licenses — LitZen
 ==================================
 Stand: 2026-06-11. Lizenzangaben gegen lokale Paket-Metadaten bzw. die
 offiziellen Projektseiten geprüft. Laufzeit-Abhängigkeiten aus pyproject.toml.

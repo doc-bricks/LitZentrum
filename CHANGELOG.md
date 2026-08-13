@@ -5,6 +5,9 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ## [Unreleased]
 
+### Geändert / Changed (2026-08-14)
+- **Produktname:** Die Anwendung heißt jetzt **LitZen** statt „LitZentrum“. Angepasst wurden Dokumentation, Store-Listing, Datenschutzerklärung, Support-Dokument, Banner-Wortmarke sowie nutzersichtbare GUI-Texte (Fenstertitel, Info-Dialog, Menüeintrag, Projekt-Fehlermeldung). Unverändert bleiben Repository-URLs, Ordner- und Artefaktnamen (`LitZentrum.exe`), das Exportformat `litzentrum-library-v1`, der QSettings-Pfad (`LitZentrum`) und historische Changelog-Einträge.
+
 ### Hinzugefügt / Added
 - README, README_de and `llms.txt` now include clearer discovery context for local-first literature management, bibliography/citation workflows, PDF-backed academic writing and differentiation from Zotero, Mendeley, JabRef, Calibre and cloud reference platforms
 - Reproduzierbarer Windows-Store-Screenshot-Generator `generate_store_screenshots.py`, der aus anonymisierten Demo-Daten vier Store-Bilder (`main.png`, `quotes-workflow.png`, `bibtex-export.png`, `companion-export.png`) plus `summary.json` erzeugt

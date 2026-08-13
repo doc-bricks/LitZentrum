@@ -1,4 +1,4 @@
-# Exportformat LitZentrum
+# Exportformat LitZen
 
 Stand: 2026-05-29
 

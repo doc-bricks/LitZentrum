@@ -1,4 +1,4 @@
-# Store Listing - LitZentrum
+# Store Listing - LitZen
 
 ## Deutsch
 
@@ -6,12 +6,12 @@
 Lokale Literaturverwaltung mit PDF-Workflows, Zitierhilfe, BibTeX-Export und Companion-Export.
 
 ### Beschreibung (max. 10.000 Zeichen)
-LitZentrum ist eine lokale Desktop-App für wissenschaftliche Literaturarbeit.
+LitZen ist eine lokale Desktop-App für wissenschaftliche Literaturarbeit.
 Die Anwendung organisiert Quellen in normalen Projektordnern, zeigt Metadaten,
 Notizen, Zitate, Aufgaben und Zusammenfassungen an und unterstützt den Export
 von BibTeX sowie einen redigierten Companion-Export für mobile Browser.
 
-**Was LitZentrum kann:**
+**Was LitZen kann:**
 
 - ordnerbasierte Literaturverwaltung ohne Datenbank-Zwang
 - PDF-Integration mit Vorschau, Textextraktion und projektbezogenen Quellenordnern
@@ -21,7 +21,7 @@ von BibTeX sowie einen redigierten Companion-Export für mobile Browser.
 - optionale lokale KI-Unterstützung über Ollama, ohne Cloud-Pflicht
 - Offline-First: Literaturprojekte bleiben im Nutzerordner
 
-**Für wen ist LitZentrum gedacht?**
+**Für wen ist LitZen gedacht?**
 
 - Studierende, Forschende und Wissensarbeiter
 - Nutzer mit lokalen Literaturordnern statt geschlossener Cloud-Silos
@@ -30,14 +30,14 @@ von BibTeX sowie einen redigierten Companion-Export für mobile Browser.
 
 **Warum kein Webdienst?**
 
-LitZentrum ist bewusst lokal aufgebaut. Die Desktop-App betreibt keinen
+LitZen ist bewusst lokal aufgebaut. Die Desktop-App betreibt keinen
 zentralen Cloud-Dienst und lädt Literaturprojekte nicht automatisch auf einen
 Server hoch. Der mobile Pfad läuft über einen redigierten Companion-Export statt
 über einen Online-Accountzwang.
 
 **Lizenz- und Open-Source-Hinweis**
 
-LitZentrum wird als kostenloser Open-Source-Store-Kandidat vorbereitet. Das
+LitZen wird als kostenloser Open-Source-Store-Kandidat vorbereitet. Das
 Projekt steht unter AGPL-3.0. PDF-Workflows über PyMuPDF bleiben deshalb im
 offengelegten AGPL-Kontext und werden in Repository, Datenschutzdokumentation
 und späterer Drittanbieter-Lizenzübersicht sichtbar dokumentiert.
@@ -73,12 +73,12 @@ Zusätzlich dokumentiert `summary.json` die erzeugten Artefakte maschinenlesbar.
 Local literature manager with PDF workflows, citation help, BibTeX export, and companion export.
 
 ### Description (max. 10,000 chars)
-LitZentrum is a local desktop application for academic literature work. It
+LitZen is a local desktop application for academic literature work. It
 organizes sources in normal project folders, displays metadata, notes, quotes,
 tasks, and summaries, and supports BibTeX export plus a redacted companion
 bundle for mobile browsers.
 
-**What LitZentrum does:**
+**What LitZen does:**
 
 - folder-based literature management without a forced cloud database
 - PDF integration with preview, text extraction, and per-source project folders
@@ -88,7 +88,7 @@ bundle for mobile browsers.
 - optional local AI assistance through Ollama without a cloud requirement
 - offline-first: research projects stay in the user's own folders
 
-**Who is LitZentrum for?**
+**Who is LitZen for?**
 
 - students, researchers, and knowledge workers
 - users who prefer local project folders over closed cloud silos
@@ -97,14 +97,14 @@ bundle for mobile browsers.
 
 **Why not a web service?**
 
-LitZentrum is intentionally local-first. The desktop app does not run a central
+LitZen is intentionally local-first. The desktop app does not run a central
 cloud service and does not automatically upload literature projects to a server.
 The mobile path is based on a redacted companion export rather than an online
 account requirement.
 
 **License and open-source note**
 
-LitZentrum is being prepared as a free open-source Windows Store candidate. The
+LitZen is being prepared as a free open-source Windows Store candidate. The
 project is licensed under AGPL-3.0. PDF workflows via PyMuPDF therefore remain
 in the disclosed AGPL context and are documented in the repository, privacy
 policy, and later third-party license summary.

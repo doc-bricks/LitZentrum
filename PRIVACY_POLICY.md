@@ -1,10 +1,10 @@
-# Datenschutz - LitZentrum
+# Datenschutz - LitZen
 
 Stand: 2026-06-04
 
 ## Kurzfassung
 
-LitZentrum arbeitet lokal auf dem Gerät. Die App lädt Literaturprojekte, PDFs,
+LitZen arbeitet lokal auf dem Gerät. Die App lädt Literaturprojekte, PDFs,
 Notizen, Zitate, Aufgaben oder Zusammenfassungen nicht in einen eigenen
 Cloud-Dienst hoch und betreibt keinen zentralen Sync-Server.
 
@@ -21,7 +21,7 @@ den lokalen Anwendungseinstellungen.
 
 ## Welche Daten werden nicht standardmäßig übertragen?
 
-- PDF-Inhalte oder komplette Literaturordner an einen LitZentrum-Server
+- PDF-Inhalte oder komplette Literaturordner an einen LitZen-Server
 - persönliche Forschungsdaten an eine Pflicht-Cloud
 - Konten, Tracker, Telemetrie oder Werbe-IDs
 - absolute lokale Pfade im Companion-Standardexport
@@ -37,11 +37,11 @@ entstehen nur, wenn Nutzer selbst externe Ziele verwenden, zum Beispiel:
 - GitHub-Seiten aus README-, Support- oder Lizenzlinks
 - eine lokale oder entfernte Ollama-Instanz für KI-gestützte Funktionen
 
-Wenn Ollama nicht konfiguriert ist, bleibt LitZentrum vollständig lokal nutzbar.
+Wenn Ollama nicht konfiguriert ist, bleibt LitZen vollständig lokal nutzbar.
 
 ## Open-Source- und Lizenzhinweis
 
-LitZentrum steht unter AGPL-3.0. Die PDF-Verarbeitung kann PyMuPDF nutzen, das
+LitZen steht unter AGPL-3.0. Die PDF-Verarbeitung kann PyMuPDF nutzen, das
 ebenfalls im AGPL-Kontext steht. Weitere Lizenzhinweise für Drittkomponenten
 werden vor dem finalen Windows-Store-Schritt zusätzlich in
 `THIRD_PARTY_LICENSES.txt` gesammelt.

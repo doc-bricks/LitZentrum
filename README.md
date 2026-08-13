@@ -1,6 +1,6 @@
-<img src="assets/banner.svg" width="100%" alt="LitZentrum Banner"/>
+<img src="assets/banner.svg" width="100%" alt="LitZen Banner"/>
 
-# LitZentrum
+# LitZen
 
 **[Deutsch](README_de.md)** · English
 
@@ -11,7 +11,7 @@
 
 **Local-first literature management for academic writing.**
 
-LitZentrum is a desktop application for managing academic literature in plain project folders. It combines local JSON-based storage, PDF handling, notes, quotes, tasks, summaries, BibTeX export and optional local AI support through Ollama.
+LitZen is a desktop application for managing academic literature in plain project folders. It combines local JSON-based storage, PDF handling, notes, quotes, tasks, summaries, BibTeX export and optional local AI support through Ollama.
 
 ## Start Here
 
@@ -25,9 +25,9 @@ LitZentrum is a desktop application for managing academic literature in plain pr
 
 ## Discovery Context
 
-LitZentrum is best described as a local-first literature manager, offline bibliography manager, PDF-backed academic writing workspace, and PySide6 research tool. It is intentionally different from cloud reference managers, hosted reading platforms and team citation services: projects stay in normal folders, exports are explicit, and the Web/PWA companion receives a redacted JSON bundle instead of full PDF libraries.
+LitZen is best described as a local-first literature manager, offline bibliography manager, PDF-backed academic writing workspace, and PySide6 research tool. It is intentionally different from cloud reference managers, hosted reading platforms and team citation services: projects stay in normal folders, exports are explicit, and the Web/PWA companion receives a redacted JSON bundle instead of full PDF libraries.
 
-If you are comparing tools, use LitZentrum when you want a local alternative around PDF files, BibTeX, notes, quotes, task tracking and optional local Ollama support. It is not a Zotero, Mendeley or JabRef clone, not a Calibre e-book library, and not a cloud sync or institutional library portal.
+If you are comparing tools, use LitZen when you want a local alternative around PDF files, BibTeX, notes, quotes, task tracking and optional local Ollama support. It is not a Zotero, Mendeley or JabRef clone, not a Calibre e-book library, and not a cloud sync or institutional library portal.
 
 ## Features
 
@@ -124,7 +124,7 @@ MyProject/
 
 ## Optional AI Integration
 
-LitZentrum can use a local Ollama installation for optional AI-assisted summaries, quote extraction and metadata support.
+LitZen can use a local Ollama installation for optional AI-assisted summaries, quote extraction and metadata support.
 
 ```bash
 ollama run mistral
@@ -162,7 +162,7 @@ through the offscreen GUI path, exports BibTeX and validates
 
 `store_package.json`, `STORE_LISTING.md`, `PRIVACY_POLICY.md`, `SUPPORT.md`,
 `WINDOWS_STORE_PREP.md` and `generate_store_screenshots.py` capture the current
-Windows Store baseline for LitZentrum. The current state covers public metadata,
+Windows Store baseline for LitZen. The current state covers public metadata,
 support/privacy pages and a reproducible four-image Store screenshot set under
 `README/screenshots/store/`. A reproducible Windows EXE/MSIX build path and WACK
 remain the next explicit steps.
