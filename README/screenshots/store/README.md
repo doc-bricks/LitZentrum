@@ -1,6 +1,6 @@
 # Store-Screenshots - LitZen
 
-Stand: 2026-06-12
+Stand: 2026-08-14
 
 ## Vorhandenes Set
 
