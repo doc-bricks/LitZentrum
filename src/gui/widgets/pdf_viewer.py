@@ -74,12 +74,23 @@ class PDFViewer(QWidget):
         self.prev_btn = QPushButton("◀")
         self.prev_btn.setFixedWidth(30)
         self.prev_btn.clicked.connect(self.previous_page)
+        self._set_control_context(
+            self.prev_btn,
+            "Vorherige Seite",
+            "Geht im geöffneten PDF eine Seite zurück.",
+        )
         toolbar.addWidget(self.prev_btn)
-        
+
         self.page_spin = QSpinBox()
         self.page_spin.setMinimum(1)
         self.page_spin.setMaximum(1)
         self.page_spin.valueChanged.connect(self._on_page_changed)
+        self._set_control_context(
+            self.page_spin,
+            "Aktuelle Seite",
+            "Zeigt die aktuelle PDF-Seite an und springt zu einer eingegebenen Seitennummer.",
+            "Aktuelle Seite anzeigen oder Seitennummer eingeben",
+        )
         toolbar.addWidget(self.page_spin)
         
         self.page_label = QLabel(" / 0")
@@ -88,6 +99,11 @@ class PDFViewer(QWidget):
         self.next_btn = QPushButton("▶")
         self.next_btn.setFixedWidth(30)
         self.next_btn.clicked.connect(self.next_page)
+        self._set_control_context(
+            self.next_btn,
+            "Nächste Seite",
+            "Geht im geöffneten PDF eine Seite vor.",
+        )
         toolbar.addWidget(self.next_btn)
         
         toolbar.addSeparator()
@@ -96,32 +112,56 @@ class PDFViewer(QWidget):
         self.zoom_out_btn = QPushButton("−")
         self.zoom_out_btn.setFixedWidth(30)
         self.zoom_out_btn.clicked.connect(self.zoom_out)
+        self._set_control_context(
+            self.zoom_out_btn,
+            "Verkleinern",
+            "Reduziert die Zoomstufe der PDF-Ansicht.",
+        )
         toolbar.addWidget(self.zoom_out_btn)
-        
+
         self.zoom_combo = QComboBox()
         self.zoom_combo.setEditable(False)
         for level in self.ZOOM_LEVELS:
             self.zoom_combo.addItem(f"{level}%", level)
         self.zoom_combo.setCurrentText("100%")
         self.zoom_combo.currentIndexChanged.connect(self._on_zoom_changed)
+        self._set_control_context(
+            self.zoom_combo,
+            "Zoomstufe",
+            "Wählt die Vergrößerung der PDF-Ansicht aus.",
+            "Zoomstufe der PDF-Ansicht auswählen",
+        )
         toolbar.addWidget(self.zoom_combo)
-        
+
         self.zoom_in_btn = QPushButton("+")
         self.zoom_in_btn.setFixedWidth(30)
         self.zoom_in_btn.clicked.connect(self.zoom_in)
+        self._set_control_context(
+            self.zoom_in_btn,
+            "Vergrößern",
+            "Erhöht die Zoomstufe der PDF-Ansicht.",
+        )
         toolbar.addWidget(self.zoom_in_btn)
         
         toolbar.addSeparator()
         
         # Fit-Buttons
         self.fit_width_btn = QPushButton("↔")
-        self.fit_width_btn.setToolTip("An Breite anpassen")
         self.fit_width_btn.clicked.connect(self.fit_width)
+        self._set_control_context(
+            self.fit_width_btn,
+            "An Breite anpassen",
+            "Passt die PDF-Ansicht an die verfügbare Breite an.",
+        )
         toolbar.addWidget(self.fit_width_btn)
-        
+
         self.fit_page_btn = QPushButton("◻")
-        self.fit_page_btn.setToolTip("An Seite anpassen")
         self.fit_page_btn.clicked.connect(self.fit_page)
+        self._set_control_context(
+            self.fit_page_btn,
+            "An Seite anpassen",
+            "Passt die PDF-Ansicht so an, dass eine ganze Seite sichtbar wird.",
+        )
         toolbar.addWidget(self.fit_page_btn)
         
         layout.addWidget(toolbar)
@@ -137,8 +177,16 @@ class PDFViewer(QWidget):
         self.scroll_area.setWidget(self.page_widget)
         
         layout.addWidget(self.scroll_area)
-        
+
         self._show_placeholder()
+
+    @staticmethod
+    def _set_control_context(widget, name: str, description: str, tooltip: Optional[str] = None):
+        """Gibt kompakten Symbolsteuerungen sprechenden Screenreader- und Tooltip-Kontext."""
+        tooltip = tooltip or name
+        widget.setToolTip(tooltip)
+        widget.setAccessibleName(name)
+        widget.setAccessibleDescription(description)
     
     def _show_placeholder(self):
         """Zeigt Platzhalter wenn kein PDF geladen"""
