@@ -5,10 +5,20 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ## [Unreleased]
 
+### Behoben / Fixed (2026-08-14)
+- **Werkzeugleiste im PDF-Reiter wurde vom Viewer überdeckt** (Usertest Welle 1, U1): Von der Knopfreihe unter der Reiterleiste war nur die obere Hälfte sichtbar. Ursache war eine `QToolBar` innerhalb des `PDFViewer`: `QMainWindow.restoreState()` sucht QToolBar-Kinder rekursiv und ordnet sie über den `objectName` dem gespeicherten Fensterzustand zu. Da beide Leisten der Anwendung einen leeren `objectName` hatten, wurde die verschachtelte Viewer-Leiste in das Toolbar-Band des Hauptfensters gezogen und bekam dessen Geometrie aufgezwungen — gemessen `(0, 21, 417, 33)` statt `(0, 0, 760, 33)`. Der Scrollbereich blieb bei `y=33` und überdeckte die verschobene Leiste. Die Leiste ist jetzt ein gewöhnliches `QWidget` mit `QHBoxLayout` (Separatoren als `QFrame(VLine)`) und nimmt an der Zustandswiederherstellung nicht mehr teil; `setMinimumHeight()` schützt zusätzlich gegen ein gestauchtes Elternlayout. Der Defekt trat nur im real angezeigten Fenster auf, nicht unter `WA_DontShowOnScreen`. Drei Regressionstests in `tests/test_pdf_viewer.py`.
+
 ### Geändert / Changed (2026-08-14)
 - **Produktname:** Die Anwendung heißt jetzt **LitZen** statt „LitZentrum“. Angepasst wurden Dokumentation, Store-Listing, Datenschutzerklärung, Support-Dokument, Banner-Wortmarke sowie nutzersichtbare GUI-Texte (Fenstertitel, Info-Dialog, Menüeintrag, Projekt-Fehlermeldung). Unverändert bleiben Repository-URLs, Ordner- und Artefaktnamen (`LitZentrum.exe`), das Exportformat `litzentrum-library-v1`, der QSettings-Pfad (`LitZentrum`) und historische Changelog-Einträge.
 
 ### Hinzugefügt / Added
+- Discoverability & Marketing Check (2026-07-27): Shields.io Badges (`Pytest 99 passed`, `LLM-Ready llms.txt`, `Ecosystem doc-bricks`, `Umbrella open-bricks`), GFM Callout-Box (`> [!NOTE]` for AI Agent & LLM integration context) and Mermaid System Architecture Diagram in `README.md` & `README_de.md` added; `llms.txt` header timestamp updated to `Last-checked: 2026-07-27` with 99 verified passing tests.
+- `build_exe.bat` für den direkten Windows-Desktop-Build mit lokalem Build-Venv, gemeinsamem Exclude-Scanner, `dist\LitZentrum.exe` und versionierter Release-EXE `releases\v1.0.0\LitZentrum-1.0.0-win64.exe`
+
+- Regressionstest `tests/test_release_materials.py` für `build_exe.bat`, README-Hinweise und den Ignore-Schutz für interne Aufgabenvarianten
+- Reproduzierbarer Windows-Store-Buildpfad `releases/windowsstore/build_store_release.ps1` mit PyInstaller-Build, Store-Pretest, MSIX-Bau und Hash-Ausgabe
+- `generate_store_assets.py` erzeugt `store_assets/` aus `LitZentrum.ico` für den MSIX-/Store-Pfad
+- `releases/windowsstore/BUILD.md`, `releases/windowsstore/WACK_PROTOCOL.md` und `releases/windowsstore/SHA256SUMS.txt` dokumentieren den verifizierten Windows-Store-Lauf
 - README, README_de and `llms.txt` now include clearer discovery context for local-first literature management, bibliography/citation workflows, PDF-backed academic writing and differentiation from Zotero, Mendeley, JabRef, Calibre and cloud reference platforms
 - Reproduzierbarer Windows-Store-Screenshot-Generator `generate_store_screenshots.py`, der aus anonymisierten Demo-Daten vier Store-Bilder (`main.png`, `quotes-workflow.png`, `bibtex-export.png`, `companion-export.png`) plus `summary.json` erzeugt
 - Regressionstest `tests/test_store_screenshots.py` für die PNG-Erzeugung und das Screenshot-Inventar
@@ -26,6 +36,10 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 - Windows-Store-Basisartefakte: `store_package.json`, `STORE_LISTING.md`, `PRIVACY_POLICY.md`, `SUPPORT.md`, `WINDOWS_STORE_PREP.md`, Screenshot-Inventar und `tests/test_store_materials.py`
 
 ### Geändert / Changed
+- Windows-Store Partner-Center-Metadaten in `store_package.json` vervollständigt (Publisher DN `CN=52596601-BAB4-4F3F-B182-E8F3F273B202`, Publisher Display Name `Lukas Geiger`, Price `Free`, Sprachen `de-DE`/`en-US`, Logo-Pfad); `test_store_materials.py` erweitert (99/99 Pytest grün); `WINDOWS_STORE_PREP.md` & `AUFGABEN.txt` (`TW-LITZENTRUM-02`) aktualisiert
+- `.gitignore` ignoriert jetzt zusätzlich `AUFGABEN-*.txt`, damit maschinenspezifische Aufgabenvarianten nicht versehentlich in Git landen
+- README und README_de dokumentieren jetzt den direkten Windows-EXE-Build getrennt vom Store-spezifischen EXE-/MSIX-Pfad
+- `WINDOWS_STORE_PREP.md`, `AUFGABEN.txt`, `PORTIERUNGSPLAN.md`, README und README_de spiegeln jetzt den realen lokalen EXE-/MSIX-Stand; offen bleibt nur noch der erhöhte WACK-Lauf
 - Verbindungstest aktualisiert ComboBox automatisch bei Erfolg (Ollama)
 - Portierungsstatus aktualisiert: Der Web/PWA-Companion hat jetzt einen automatisierten mobilen Preflight; der Desktop-Source-Smoke-Pfad ist für Ubuntu/macOS vorbereitet; echte Android-/iOS-Geräte-Smokes bleiben separat offen
 - Windows-Store-Doku verweist jetzt auf das vorhandene Screenshot-Set statt nur auf einen Planungsplatzhalter
@@ -34,6 +48,12 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 - README und README_de dokumentieren jetzt zusätzlich den Windows-Store-Basisstand
 
 ### Behoben / Fixed
+- `web_companion/icons/apple-touch-icon-180.png`: Alphakanal ergänzt (RGB → RGBA, gleiche 180x180-Auflösung) für saubere Transparenz auf iOS-Homescreens
+- Unreferenzierte Icon-Duplikate/-Waisen (Root-`assets/*.png`, doppelte `apple-touch-icon`/`favicon`-Kopien außerhalb von `web_companion/icons/`) aus dem Arbeitsbaum nach `_archive/` verschoben statt versehentlich zu committen — kein Code-/Manifest-/HTML-Verweis nutzte sie
+- `bibtex_generator.py`: Freitextfelder (Titel, Autoren, Journal/Booktitle, Publisher, Abstract, Keywords) werden jetzt mit `escape_bibtex` aus `bibtex.py` escaped — kein doppelter Implementierungs-Fork; URL/DOI/ISBN bleiben verbatim. Regressions-test: `test_legacy_bibtex_generator_escapes_field_values` (Run 74, 2026-06-28)
+- `to_optional_year` in `base.py` eingeführt: konvertiert Float-Strings ("2023.0" → 2023) korrekt; behandelt None, leere Strings und "kein Datum"-Marker ("n.d.", "o.J." usw.) defensiv als None. `limeta.py` nutzt jetzt `to_optional_year` statt `to_optional_int` für das year-Feld; `to_optional_int` für page/page_end bleibt unverändert. Regressionstests: `tests/test_year_coercion.py`.
+- BibTeX-Entry-Keys im aktuellen und Legacy-Generator nutzen jetzt den vorhandenen ASCII-`bibtex_key` statt unsanitisiertem `citation_key`, damit Autoren wie `AT&T` oder `O'Brien` keine ungültigen Entry-Keys erzeugen
+- `start.bat` prüft die lokale Python-Umgebung jetzt auf `PySide6` statt auf das veraltete `PyQt6`
 - Bare except in settings_manager.py, project_tree.py, ollama_queue.py, bibtex.py, extractor.py, sync/__init__.py durch spezifische Exceptions ersetzt
 - TODO-Stellen in detail_panel.py und summaries_tab.py aufgeräumt
 - BibTeX-Export legt Zielordner jetzt an und ergänzt fehlende `.bib`-Suffixe
