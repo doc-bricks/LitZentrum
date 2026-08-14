@@ -129,3 +129,39 @@ def test_pdf_viewer_toolbar_keeps_minimum_height():
         f"Werkzeugleiste auf {squeezed}px gestaucht (natuerlich {natural}px) -- "
         "die Knoepfe waeren angeschnitten."
     )
+
+
+def test_pdf_viewer_toolbar_survives_narrow_splitter():
+    """Auch bei schmal gezogenem Splitter darf kein Knopf seitlich herausragen.
+
+    Die alte QToolBar hatte einen Extension-Knopf ('>>'), der ueberzaehlige
+    Elemente in ein Menue klappte. Das QHBoxLayout hat diesen Rueckfall nicht --
+    stattdessen propagiert sein Minimum nach oben, sodass der Splitter den
+    Viewer nicht unter die noetige Breite ziehen kann.
+    """
+    from PySide6.QtWidgets import QApplication
+    app = QApplication.instance() or QApplication(sys.argv)
+
+    from gui.tabs.pdf_tab import PDFTab
+    tab = PDFTab()
+    tab.resize(900, 600)
+    tab.show()
+    app.processEvents()
+
+    toolbar = tab.pdf_viewer.layout().itemAt(0).widget()
+    layout = toolbar.layout()
+    worst = 0
+    for target in (500, 350, 200):
+        tab.splitter.setSizes([target, 900 - target])
+        app.processEvents()
+        for i in range(layout.count()):
+            child = layout.itemAt(i).widget()
+            if child is not None:
+                worst = max(worst, (child.x() + child.width()) - toolbar.width())
+
+    tab.close()
+
+    assert worst <= 0, (
+        f"Bedienelement ragt {worst}px seitlich aus der Werkzeugleiste heraus, "
+        "wenn der Splitter schmal gezogen wird."
+    )
