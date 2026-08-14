@@ -9,7 +9,7 @@ from PySide6.QtCore import Qt, Signal, QPoint, QRect
 from PySide6.QtGui import QPixmap, QImage, QPainter, QColor, QWheelEvent, QMouseEvent
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QScrollArea, QLabel,
-    QPushButton, QSpinBox, QComboBox, QToolBar, QFrame,
+    QPushButton, QSpinBox, QComboBox, QFrame,
     QSizePolicy
 )
 
@@ -66,10 +66,24 @@ class PDFViewer(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
         
-        # Toolbar
-        toolbar = QToolBar()
-        toolbar.setMovable(False)
-        
+        # Werkzeugleiste
+        #
+        # BEWUSST QWidget + QHBoxLayout statt QToolBar:
+        # QMainWindow.restoreState() sucht QToolBar-Kinder REKURSIV und ordnet sie
+        # ueber den objectName dem gespeicherten Fensterzustand zu. Eine hier
+        # verschachtelte, unbenannte QToolBar wurde dadurch in das Toolbar-Band des
+        # Hauptfensters gezogen und bekam dessen Geometrie aufgezwungen -- gemessen
+        # (0, 21, 417, 33) statt der vom Layout vorgesehenen (0, 0, 760, 33).
+        # Der darunter liegende Viewer begann weiterhin bei y=33 und ueberdeckte
+        # die um 21px nach unten verschobene Leiste, sodass von der Knopfreihe nur
+        # die obere Haelfte sichtbar blieb.
+        # Ein einfaches QWidget nimmt an der Zustandswiederherstellung nicht teil.
+        toolbar = QWidget()
+        toolbar.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+        toolbar_layout = QHBoxLayout(toolbar)
+        toolbar_layout.setContentsMargins(4, 4, 4, 4)
+        toolbar_layout.setSpacing(4)
+
         # Navigation
         self.prev_btn = QPushButton("◀")
         self.prev_btn.setFixedWidth(30)
@@ -79,7 +93,7 @@ class PDFViewer(QWidget):
             "Vorherige Seite",
             "Geht im geöffneten PDF eine Seite zurück.",
         )
-        toolbar.addWidget(self.prev_btn)
+        toolbar_layout.addWidget(self.prev_btn)
 
         self.page_spin = QSpinBox()
         self.page_spin.setMinimum(1)
@@ -91,10 +105,10 @@ class PDFViewer(QWidget):
             "Zeigt die aktuelle PDF-Seite an und springt zu einer eingegebenen Seitennummer.",
             "Aktuelle Seite anzeigen oder Seitennummer eingeben",
         )
-        toolbar.addWidget(self.page_spin)
+        toolbar_layout.addWidget(self.page_spin)
         
         self.page_label = QLabel(" / 0")
-        toolbar.addWidget(self.page_label)
+        toolbar_layout.addWidget(self.page_label)
         
         self.next_btn = QPushButton("▶")
         self.next_btn.setFixedWidth(30)
@@ -104,9 +118,9 @@ class PDFViewer(QWidget):
             "Nächste Seite",
             "Geht im geöffneten PDF eine Seite vor.",
         )
-        toolbar.addWidget(self.next_btn)
+        toolbar_layout.addWidget(self.next_btn)
         
-        toolbar.addSeparator()
+        toolbar_layout.addWidget(self._make_separator())
         
         # Zoom
         self.zoom_out_btn = QPushButton("−")
@@ -117,7 +131,7 @@ class PDFViewer(QWidget):
             "Verkleinern",
             "Reduziert die Zoomstufe der PDF-Ansicht.",
         )
-        toolbar.addWidget(self.zoom_out_btn)
+        toolbar_layout.addWidget(self.zoom_out_btn)
 
         self.zoom_combo = QComboBox()
         self.zoom_combo.setEditable(False)
@@ -131,7 +145,7 @@ class PDFViewer(QWidget):
             "Wählt die Vergrößerung der PDF-Ansicht aus.",
             "Zoomstufe der PDF-Ansicht auswählen",
         )
-        toolbar.addWidget(self.zoom_combo)
+        toolbar_layout.addWidget(self.zoom_combo)
 
         self.zoom_in_btn = QPushButton("+")
         self.zoom_in_btn.setFixedWidth(30)
@@ -141,9 +155,9 @@ class PDFViewer(QWidget):
             "Vergrößern",
             "Erhöht die Zoomstufe der PDF-Ansicht.",
         )
-        toolbar.addWidget(self.zoom_in_btn)
+        toolbar_layout.addWidget(self.zoom_in_btn)
         
-        toolbar.addSeparator()
+        toolbar_layout.addWidget(self._make_separator())
         
         # Fit-Buttons
         self.fit_width_btn = QPushButton("↔")
@@ -153,7 +167,7 @@ class PDFViewer(QWidget):
             "An Breite anpassen",
             "Passt die PDF-Ansicht an die verfügbare Breite an.",
         )
-        toolbar.addWidget(self.fit_width_btn)
+        toolbar_layout.addWidget(self.fit_width_btn)
 
         self.fit_page_btn = QPushButton("◻")
         self.fit_page_btn.clicked.connect(self.fit_page)
@@ -162,10 +176,18 @@ class PDFViewer(QWidget):
             "An Seite anpassen",
             "Passt die PDF-Ansicht so an, dass eine ganze Seite sichtbar wird.",
         )
-        toolbar.addWidget(self.fit_page_btn)
-        
+        toolbar_layout.addWidget(self.fit_page_btn)
+
+        # Knoepfe links buendig halten (entspricht dem Verhalten der alten QToolBar)
+        toolbar_layout.addStretch()
+
+        # Untergrenze festnageln: selbst wenn ein uebergeordnetes Layout oder eine
+        # gespeicherte Splitter-Position den Bereich staucht, darf die Leiste nicht
+        # unter ihre natuerliche Hoehe gedrueckt und damit angeschnitten werden.
+        toolbar.setMinimumHeight(toolbar.sizeHint().height())
+
         layout.addWidget(toolbar)
-        
+
         # Scroll-Bereich für PDF
         self.scroll_area = QScrollArea()
         self.scroll_area.setWidgetResizable(True)
@@ -179,6 +201,14 @@ class PDFViewer(QWidget):
         layout.addWidget(self.scroll_area)
 
         self._show_placeholder()
+
+    @staticmethod
+    def _make_separator() -> QFrame:
+        """Senkrechter Trenner zwischen den Knopfgruppen der Werkzeugleiste."""
+        separator = QFrame()
+        separator.setFrameShape(QFrame.Shape.VLine)
+        separator.setFrameShadow(QFrame.Shadow.Sunken)
+        return separator
 
     @staticmethod
     def _set_control_context(widget, name: str, description: str, tooltip: Optional[str] = None):

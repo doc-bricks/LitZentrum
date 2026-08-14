@@ -58,3 +58,74 @@ def test_pdf_viewer_search_finds_text_and_returns_1based_page(tmp_path):
 
     # Kein Treffer bei unbekanntem Begriff
     assert viewer.search("xyz_nonexistent_42") == []
+
+
+def test_pdf_viewer_toolbar_is_not_a_qtoolbar():
+    """Die Werkzeugleiste des Viewers darf KEINE QToolBar sein.
+
+    Regression WP-LZ-01: QMainWindow.restoreState() sucht QToolBar-Kinder
+    rekursiv und ordnet sie ueber den objectName dem gespeicherten
+    Fensterzustand zu. Eine hier verschachtelte QToolBar wurde dadurch in das
+    Toolbar-Band des Hauptfensters gezogen (gemessene Geometrie (0, 21, 417, 33)
+    statt (0, 0, 760, 33)) und vom darunter liegenden Viewer ueberdeckt --
+    sichtbar blieb nur die obere Haelfte der Knopfreihe.
+    """
+    from PySide6.QtWidgets import QApplication, QToolBar
+    app = QApplication.instance() or QApplication(sys.argv)
+
+    from gui.widgets.pdf_viewer import PDFViewer
+    viewer = PDFViewer()
+
+    found = viewer.findChildren(QToolBar)
+    assert not found, (
+        "PDFViewer enthaelt eine verschachtelte QToolBar. "
+        "QMainWindow.restoreState() reisst sie in das Toolbar-Band des "
+        "Hauptfensters; die Knopfreihe wird dann vom Viewer ueberdeckt. "
+        "Stattdessen QWidget + QHBoxLayout verwenden."
+    )
+
+
+def test_pdf_viewer_toolbar_does_not_overlap_viewer():
+    """Werkzeugleiste und Scrollbereich duerfen sich nicht ueberlappen."""
+    from PySide6.QtWidgets import QApplication
+    app = QApplication.instance() or QApplication(sys.argv)
+
+    from gui.widgets.pdf_viewer import PDFViewer
+    viewer = PDFViewer()
+    viewer.resize(760, 600)
+    viewer.show()
+    app.processEvents()
+
+    toolbar = viewer.layout().itemAt(0).widget()
+    scroll_area = viewer.scroll_area
+    overlap = (toolbar.y() + toolbar.height()) - scroll_area.y()
+
+    viewer.close()
+
+    assert overlap <= 0, (
+        f"Werkzeugleiste ragt {overlap}px in den Scrollbereich hinein "
+        f"(Leiste {toolbar.geometry()}, Ansicht {scroll_area.geometry()}). "
+        "Die Knopfreihe wird dadurch abgeschnitten."
+    )
+
+
+def test_pdf_viewer_toolbar_keeps_minimum_height():
+    """Die Leiste behaelt ihre Hoehe, auch wenn der Viewer stark gestaucht wird."""
+    from PySide6.QtWidgets import QApplication
+    app = QApplication.instance() or QApplication(sys.argv)
+
+    from gui.widgets.pdf_viewer import PDFViewer
+    viewer = PDFViewer()
+    toolbar = viewer.layout().itemAt(0).widget()
+    natural = toolbar.sizeHint().height()
+
+    viewer.resize(760, 60)  # absichtlich viel zu niedrig
+    viewer.show()
+    app.processEvents()
+    squeezed = toolbar.height()
+    viewer.close()
+
+    assert squeezed >= natural, (
+        f"Werkzeugleiste auf {squeezed}px gestaucht (natuerlich {natural}px) -- "
+        "die Knoepfe waeren angeschnitten."
+    )
