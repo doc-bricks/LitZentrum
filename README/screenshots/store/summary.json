@@ -1,21 +1,21 @@
 {
-  "generated_at": "2026-06-12T15:55:33Z",
+  "generated_at": "2026-08-14T01:03:11Z",
   "files": [
     {
       "name": "main.png",
-      "path": "C:\\Users\\User\\OneDrive\\.TOPICS\\.SOFTWARE\\DOCS\\REL-PUB_LitZentrum_SUITE\\README\\screenshots\\store\\main.png"
+      "path": "C:\\_Local_DEV\\repos\\LitZentrum\\README\\screenshots\\store\\main.png"
     },
     {
       "name": "quotes-workflow.png",
-      "path": "C:\\Users\\User\\OneDrive\\.TOPICS\\.SOFTWARE\\DOCS\\REL-PUB_LitZentrum_SUITE\\README\\screenshots\\store\\quotes-workflow.png"
+      "path": "C:\\_Local_DEV\\repos\\LitZentrum\\README\\screenshots\\store\\quotes-workflow.png"
     },
     {
       "name": "bibtex-export.png",
-      "path": "C:\\Users\\User\\OneDrive\\.TOPICS\\.SOFTWARE\\DOCS\\REL-PUB_LitZentrum_SUITE\\README\\screenshots\\store\\bibtex-export.png"
+      "path": "C:\\_Local_DEV\\repos\\LitZentrum\\README\\screenshots\\store\\bibtex-export.png"
     },
     {
       "name": "companion-export.png",
-      "path": "C:\\Users\\User\\OneDrive\\.TOPICS\\.SOFTWARE\\DOCS\\REL-PUB_LitZentrum_SUITE\\README\\screenshots\\store\\companion-export.png"
+      "path": "C:\\_Local_DEV\\repos\\LitZentrum\\README\\screenshots\\store\\companion-export.png"
     }
   ]
 }

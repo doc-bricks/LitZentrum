@@ -8,8 +8,26 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
-os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 os.environ.setdefault("QT_SCALE_FACTOR", "1.25")
+
+
+def _ensure_native_platform() -> None:
+    """Entfernt eine erzwungene offscreen-Plattform VOR der QApplication-Erzeugung.
+
+    ROOT CAUSE des Tofu-Bugs (Welle-1 U2): Unter QT_QPA_PLATFORM=offscreen
+    rendert Qt auf diesem System keine echten Glyphen -- jedes Zeichen wird zum
+    .notdef-Kaestchen. window.grab() liefert dann Screenshots, auf denen die
+    komplette Oberflaeche aus leeren Kaestchen besteht; als Store-Material sind
+    sie unbrauchbar. Der Generator laeuft deshalb auf der nativen Plattform und
+    haelt das Fenster stattdessen ueber Qt.WA_DontShowOnScreen unsichtbar.
+    Testlaeufe duerfen offscreen weiterhin setzen -- hier wird es abgeraeumt,
+    solange noch keine QApplication existiert.
+    """
+    if os.environ.get("QT_QPA_PLATFORM") == "offscreen":
+        del os.environ["QT_QPA_PLATFORM"]
+
+
+_ensure_native_platform()
 
 from PySide6 import QtCore, QtWidgets
 
@@ -64,6 +82,10 @@ class StorePreviewWidget(QtWidgets.QWidget):
         self.setStyleSheet(
             """
             QWidget { background: #f4f6f9; color: #17212b; font-family: Segoe UI; }
+            /* Ohne diese Zeile erben die Labels den hellen QWidget-Hintergrund
+               und malen ihn als Balken hinter den Text -- der weisse Hero-Titel
+               stand dadurch weiss auf hellgrau und war unlesbar. */
+            QLabel { background: transparent; }
             QFrame#hero { background: #17324d; border-radius: 18px; }
             QLabel#heroTitle { color: white; font-size: 28px; font-weight: 700; }
             QLabel#heroSubtitle { color: #d7e4f1; font-size: 14px; }
@@ -305,7 +327,27 @@ def _build_demo_project(workspace: Path) -> DemoContext:
     )
 
 
+def _show_status_message(window: QtWidgets.QMainWindow, text: str) -> None:
+    """Setzt die Statuszeile ueberlagerungsfrei.
+
+    Bei einem real gemappten Fenster blendet QStatusBar.showMessage() die
+    normalen (nicht-permanenten) Widgets selbst aus. Unter
+    WA_DontShowOnScreen + grab() greift das nicht: Botschaft und
+    Projekt-Label werden uebereinandergezeichnet, im Screenshot entsteht
+    unlesbarer Textsalat. Das normale Label wird deshalb explizit versteckt;
+    das permanente Quellen-Label bleibt sichtbar, wie es auch Qt handhabt.
+    """
+    label = getattr(window, "project_label", None)
+    if label is not None:
+        label.hide()
+    window.statusBar().showMessage(text, 0)
+
+
 def _save_widget(widget: QtWidgets.QWidget, target: Path) -> None:
+    # Unsichtbar halten, ohne die offscreen-Plattform zu benutzen (siehe
+    # _ensure_native_platform): so rendern Glyphen korrekt, aber waehrend des
+    # Laufs poppt kein Fenster auf.
+    widget.setAttribute(QtCore.Qt.WidgetAttribute.WA_DontShowOnScreen, True)
     widget.show()
     widget.raise_()
     widget.activateWindow()
@@ -401,7 +443,20 @@ def generate_store_screenshots(output_dir: Path) -> list[Path]:
         app.setApplicationVersion("1.0.0")
         app.setStyle("Fusion")
 
+        # Fail-fast statt stiller Tofu-Bilder: laeuft Qt doch unter offscreen
+        # (z. B. weil eine QApplication schon vorher erzeugt wurde), waeren die
+        # Screenshots wertlos -- lieber hier abbrechen als unbrauchbares
+        # Store-Material erzeugen.
+        platform_name = app.platformName()
+        if platform_name == "offscreen":
+            raise RuntimeError(
+                "Qt laeuft unter der 'offscreen'-Plattform -- die Screenshots wuerden "
+                "Tofu (Kaestchen statt Text) enthalten. QT_QPA_PLATFORM=offscreen nicht "
+                "setzen; der Generator nutzt WA_DontShowOnScreen auf der nativen Plattform."
+            )
+
         window = MainWindow()
+        window.setAttribute(QtCore.Qt.WidgetAttribute.WA_DontShowOnScreen, True)
         window.resize(1520, 920)
         targets = [
             output_dir / SCREENSHOT_FILES["main"],
@@ -416,7 +471,7 @@ def generate_store_screenshots(output_dir: Path) -> list[Path]:
             window.source_list.search_input.setText("Müller")
             _process_events(app, 0.12)
             window.detail_panel.tabs.setCurrentWidget(window.detail_panel.pdf_tab)
-            window.statusBar().showMessage("Lokales Literaturprojekt mit PDF-Vorschau geöffnet", 0)
+            _show_status_message(window, "Lokales Literaturprojekt mit PDF-Vorschau geöffnet")
             _save_widget(window, targets[0])
 
             window.source_list.search_input.clear()
@@ -424,7 +479,7 @@ def generate_store_screenshots(output_dir: Path) -> list[Path]:
             window.detail_panel.quotes_tab.type_filter.setCurrentText("Direkt")
             if window.detail_panel.quotes_tab.list_widget.count() > 0:
                 window.detail_panel.quotes_tab.list_widget.setCurrentRow(0)
-            window.statusBar().showMessage("Zitierworkflow mit Seitenbezug und Kommentar", 0)
+            _show_status_message(window, "Zitierworkflow mit Seitenbezug und Kommentar")
             _save_widget(window, targets[1])
         finally:
             window.detail_panel.pdf_tab.pdf_viewer.close_pdf()
