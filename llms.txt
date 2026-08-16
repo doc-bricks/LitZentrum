@@ -52,4 +52,7 @@ Privacy and scope:
 - General web search found direct GitHub pages and the GitHub `literature-management` topic page, but broader literature-manager searches are dominated by established reference managers and generic research-tool lists.
 - Useful external listing contexts: local-first academic writing tools, open-source bibliography managers, PySide6 desktop apps, PDF note/quote workflows, BibTeX and research-workflow tool directories.
 
-## Last-checked: 2026-06-13
+## Verification
+
+- Last checked: 2026-08-16
+- 67 Python tests, the platform source smoke, and 25 Web Companion tests passed.

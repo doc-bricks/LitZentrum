@@ -127,7 +127,7 @@ class TestLibraryExport(unittest.TestCase):
                     title="Privater Pfad",
                     authors=["Beispiel, Eva"],
                     year=2025,
-                    source_file=r"C:\Users\User\Secret\quelle.pdf",
+                    source_file=r"C:\Users\Example\Private\quelle.pdf",
                 )
             )
 
@@ -137,7 +137,7 @@ class TestLibraryExport(unittest.TestCase):
 
             self.assertEqual(exported_source["metadata"]["source_file"], "quelle.pdf")
             self.assertEqual(exported_source["files"][0]["relative_path"], "Quellen/Beispiel2025_Privater_Pfad/quelle.pdf")
-            self.assertNotIn(r"C:\Users\User\Secret", dumped)
+            self.assertNotIn(r"C:\Users\Example\Private", dumped)
         finally:
             tempdir.cleanup()
 

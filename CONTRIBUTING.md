@@ -18,26 +18,11 @@ Vielen Dank für Ihr Interesse, zu diesem Projekt beizutragen!
 4. Pushen Sie den Branch: `git push origin feature/mein-feature`
 5. Erstellen Sie einen Pull Request
 
-### Contributor License Agreement (CLA)
+### Lizenz für Beiträge
 
-<!-- OPTION A: Für Projekte mit Dual-Licensing (RPX, etc.) -- diesen Block verwenden -->
-Dieses Projekt verwendet ein [Contributor License Agreement (CLA)](CLA.md).
-Bei Ihrem ersten Pull Request bestätigen Sie bitte Ihre Zustimmung durch einen Kommentar:
-
-> I have read and agree to the Contributor License Agreement (CLA).
-
-Sie behalten Ihr Urheberrecht -- das CLA räumt dem Projektinhaber lediglich Nutzungsrechte ein, die eine flexible Lizenzierung des Gesamtprojekts ermöglichen.
-
-<!-- OPTION B: Für Community-Projekte ohne kommerzielle Pläne -- diesen Block stattdessen verwenden
-### Developer Certificate of Origin (DCO)
-
-Dieses Projekt verwendet den [Developer Certificate of Origin (DCO)](https://developercertificate.org/).
-Bitte signieren Sie jeden Commit mit `--signoff`:
-
-    git commit --signoff -m "Beschreibung der Änderung"
-
-Damit bestätigen Sie, dass Sie das Recht haben, den Code unter der Projektlizenz einzureichen.
--->
+Für Beiträge ist kein separates CLA hinterlegt. Mit einem Pull Request erklären
+Sie, dass Sie den Beitrag unter der [AGPL-3.0-Lizenz](LICENSE) dieses Projekts
+einreichen dürfen.
 
 ### Code-Richtlinien
 
@@ -49,8 +34,8 @@ Damit bestätigen Sie, dass Sie das Recht haben, den Code unter der Projektlizen
 ### Erste Schritte
 
 ```bash
-git clone https://github.com/lukisch/REL-PUB_LitZentrum_SUITE.git
-cd REL-PUB_LitZentrum_SUITE
+git clone https://github.com/doc-bricks/LitZentrum.git
+cd LitZentrum
 pip install -r requirements.txt
 python main.py
 ```
@@ -75,26 +60,11 @@ Thank you for your interest in contributing to this project!
 4. Push the branch: `git push origin feature/my-feature`
 5. Create a Pull Request
 
-### Contributor License Agreement (CLA)
+### Contribution License
 
-<!-- OPTION A: For projects with dual licensing (RPX, etc.) -->
-This project uses a [Contributor License Agreement (CLA)](CLA.md).
-On your first pull request, please confirm your agreement by commenting:
-
-> I have read and agree to the Contributor License Agreement (CLA).
-
-You retain your copyright -- the CLA only grants the project owner usage rights that enable flexible licensing of the overall project.
-
-<!-- OPTION B: For community projects without commercial plans
-### Developer Certificate of Origin (DCO)
-
-This project uses the [Developer Certificate of Origin (DCO)](https://developercertificate.org/).
-Please sign off every commit with `--signoff`:
-
-    git commit --signoff -m "Description of change"
-
-This certifies that you have the right to submit the code under the project license.
--->
+No separate CLA is maintained for this project. By opening a pull request, you
+confirm that you may submit the contribution under this project's
+[AGPL-3.0 license](LICENSE).
 
 ### Code Guidelines
 
@@ -106,8 +76,8 @@ This certifies that you have the right to submit the code under the project lice
 ### Getting Started
 
 ```bash
-git clone https://github.com/lukisch/REL-PUB_LitZentrum_SUITE.git
-cd REL-PUB_LitZentrum_SUITE
+git clone https://github.com/doc-bricks/LitZentrum.git
+cd LitZentrum
 pip install -r requirements.txt
 python main.py
 ```

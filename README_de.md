@@ -144,6 +144,9 @@ node --test web_companion/tests/mobile-pwa.test.mjs
 node --check web_companion/sw.js
 ```
 
+Verifiziert am 2026-08-16: 67 Python-Tests, der Plattform-Source-Smoke und 25
+Web-Companion-Tests waren erfolgreich.
+
 ## Web/PWA-Companion
 
 Der Ordner `web_companion/` enthält jetzt einen statischen Offline-Reader für

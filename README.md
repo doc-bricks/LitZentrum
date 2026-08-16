@@ -143,6 +143,9 @@ node --test web_companion/tests/mobile-pwa.test.mjs
 node --check web_companion/sw.js
 ```
 
+Verified on 2026-08-16: 67 Python tests, the platform source smoke, and 25
+Web Companion tests passed.
+
 ## Web/PWA Companion
 
 The `web_companion/` folder contains a static offline reader for `litzentrum-library-v1.json`.
