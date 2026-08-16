@@ -26,8 +26,9 @@ Inakzeptables Verhalten umfasst:
 
 ### Durchsetzung
 
-Fälle von missbräuchlichem Verhalten können dem Projektteam unter
-**lukas@geiger.sh** gemeldet werden. Alle Beschwerden werden geprüft und untersucht.
+Fälle von missbräuchlichem Verhalten können über die
+[GitHub-Issues](https://github.com/doc-bricks/LitZentrum/issues) dem Projektteam
+gemeldet werden. Alle Beschwerden werden geprüft und untersucht.
 
 ---
 
@@ -56,8 +57,9 @@ Unacceptable behavior includes:
 
 ### Enforcement
 
-Instances of abusive behavior may be reported to the project team at
-**lukas@geiger.sh**. All complaints will be reviewed and investigated.
+Instances of abusive behavior may be reported to the project team through
+[GitHub Issues](https://github.com/doc-bricks/LitZentrum/issues). All complaints
+will be reviewed and investigated.
 
 ---
 
