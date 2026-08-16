@@ -6,7 +6,7 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 ## [Unreleased]
 
 ### Geändert / Changed (2026-08-16)
-- Repository-Hygiene: Die Beispielpfad-Fixture verwendet keinen lokalen Benutzerpfad mehr. CONTRIBUTING verweist auf den kanonischen `doc-bricks/LitZentrum`-Klon und beschreibt korrekt, dass kein separates CLA hinterlegt ist. README und `llms.txt` dokumentieren den aktuellen Verifikationsstand.
+- Repository-Hygiene: Die Beispielpfad-Fixture verwendet keinen lokalen Benutzerpfad mehr; die Paketmetadaten veröffentlichen keine persönliche Autor-E-Mail. CONTRIBUTING verweist auf den kanonischen `doc-bricks/LitZentrum`-Klon und beschreibt korrekt, dass kein separates CLA hinterlegt ist. README und `llms.txt` dokumentieren den aktuellen Verifikationsstand.
 
 ### Behoben / Fixed (2026-08-14)
 - **Store-Screenshots zeigten Tofu statt Text** (Usertest Welle 1, U2): Alle vier Bilder unter `README/screenshots/store/` bestanden aus leeren Kästchen — keine lesbare Beschriftung. Ursache: `generate_store_screenshots.py` setzte `QT_QPA_PLATFORM=offscreen`; unter der Offscreen-Plattform rendert Qt auf diesem System keine echten Glyphen, und `widget.grab()` fotografiert genau das. Behoben nach dem Muster von `DATA/REL_ProfiPrompt`: native Plattform, Fenster über `Qt.WA_DontShowOnScreen` unsichtbar, plus Laufzeit-Guard, der abbricht statt unbrauchbare Bilder zu schreiben. Zwei erst dadurch sichtbare Folgefehler mitbehoben — überlagerte Statuszeile (`_show_status_message()` blendet das Projekt-Label aus) und Labels mit geerbtem hellem Hintergrund (weißer Hero-Titel auf hellgrau). Drei Regressionstests in `tests/test_store_screenshots.py`.

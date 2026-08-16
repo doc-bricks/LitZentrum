@@ -2,7 +2,7 @@
 name = "litzentrum-suite"
 version = "1.0.0"
 description = "Literatur-Verwaltungszentrale mit LaTeX, BibTeX und PDF-Unterstützung"
-authors = [{ name = "Lukas Geiger", email = "lukasgeiger@googlemail.com" }]
+authors = [{ name = "Lukas Geiger" }]
 requires-python = ">=3.11"
 license = { file = "LICENSE" }
 readme = "README.md"
