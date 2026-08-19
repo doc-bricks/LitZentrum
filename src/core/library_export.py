@@ -9,6 +9,7 @@ import re
 
 import jsonschema
 
+from app_paths import base_dir
 from core.project_manager import LitProject, ProjectManager
 from core.source_manager import LitSource, SourceManager
 from modules.bibliography.styles import CitationStyleManager
@@ -23,7 +24,7 @@ class LibraryExporter:
     APP_VERSION = "1.0.0"
     SCHEMA_NAME = "litzentrum-library"
     SCHEMA_VERSION = "1.0"
-    SCHEMA_FILE = Path(__file__).parent.parent.parent / "schemas" / "litzentrum-library-v1.schema.json"
+    SCHEMA_FILE = base_dir() / "schemas" / "litzentrum-library-v1.schema.json"
 
     def __init__(
         self,

@@ -15,6 +15,13 @@ venv/
 releases/
 *-library-v1.json
 
+# Store-Build-Artefakte (gebuendelte EXE/MSIX bleiben lokal/OneDrive, nur
+# Manifest+Icons werden getrackt -- Konvention wie AmpelClip/DokuZen/ProFiler)
+*.exe
+*.msix
+store_package/*/*.exe
+store_package/*/*.msix
+
 # Secrets
 .env
 

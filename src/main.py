@@ -14,6 +14,7 @@ from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon
 
+from app_paths import base_dir
 from gui import MainWindow
 
 
@@ -32,8 +33,8 @@ def main():
     # Style
     app.setStyle("Fusion")
     
-    # Icon (falls vorhanden)
-    icon_path = Path(__file__).parent.parent / "resources" / "icons" / "litzentrum.ico"
+    # Icon (falls vorhanden) -- base_dir() loest Quell- vs. Frozen-Layout auf
+    icon_path = base_dir() / "resources" / "icons" / "litzentrum.ico"
     if icon_path.exists():
         app.setWindowIcon(QIcon(str(icon_path)))
     

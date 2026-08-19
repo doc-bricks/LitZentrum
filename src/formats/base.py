@@ -9,6 +9,8 @@ from typing import Any, Dict, List, Optional, Type, TypeVar
 import json
 import jsonschema
 
+from app_paths import base_dir
+
 T = TypeVar('T', bound='LitFormat')
 
 
@@ -35,7 +37,7 @@ class LitFormat(ABC):
     def get_schema(cls) -> dict:
         """Loads and caches the JSON schema for this format."""
         if cls.SCHEMA_FILE not in cls._schema_cache:
-            schema_path = Path(__file__).parent.parent.parent / "schemas" / cls.SCHEMA_FILE
+            schema_path = base_dir() / "schemas" / cls.SCHEMA_FILE
             if schema_path.exists():
                 try:
                     with open(schema_path, 'r', encoding='utf-8') as f:
