@@ -200,8 +200,16 @@ class SourceManager:
     
     def delete_source(self, source: LitSource):
         """Deletes a source and all its associated files from disk."""
-        if source.path.exists():
-            shutil.rmtree(source.path)
+        if not self.sources_path:
+            raise ValueError("Kein Projekt-Pfad gesetzt")
+
+        source_path = source.path.resolve()
+        sources_path = self.sources_path.resolve()
+        if source_path.parent != sources_path:
+            raise ValueError("Quelle liegt außerhalb des Quellen-Ordners")
+
+        if source_path.exists():
+            shutil.rmtree(source_path)
     
     def _generate_folder_name(self, meta: LiMeta) -> str:
         """Generates a filesystem-safe folder name from source metadata (Author+Year_Title)."""

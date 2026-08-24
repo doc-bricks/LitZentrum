@@ -5,6 +5,9 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ## [Unreleased]
 
+### Behoben / Fixed (2026-08-24)
+- **Quellenlöschung außerhalb des geöffneten Projekts verhindert:** `SourceManager.delete_source()` akzeptierte bislang jeden `LitSource`-Pfad und konnte deshalb bei einem konstruierten Objekt einen fremden Ordner rekursiv entfernen. Die Methode akzeptiert jetzt ausschließlich direkte Unterordner des konfigurierten Quellen-Ordners; abweichende oder über Symlinks aufgelöste Pfade werden mit `ValueError` abgewiesen. Ein Regressionstest sichert, dass eine fremde Datei erhalten bleibt.
+
 ### Geändert / Changed (2026-08-16)
 - Repository-Hygiene: Die Beispielpfad-Fixture verwendet keinen lokalen Benutzerpfad mehr; die Paketmetadaten veröffentlichen keine persönliche Autor-E-Mail und der Verhaltenskodex nutzt GitHub Issues statt einer Template-Adresse. CONTRIBUTING verweist auf den kanonischen `doc-bricks/LitZentrum`-Klon und beschreibt korrekt, dass kein separates CLA hinterlegt ist. README und `llms.txt` dokumentieren den aktuellen Verifikationsstand.
 

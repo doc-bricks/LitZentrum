@@ -6,6 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from core import ProjectManager, SourceManager
+from core.source_manager import LitSource
 from formats import LiMeta
 
 
@@ -118,6 +119,28 @@ class TestSourceManager(unittest.TestCase):
             sources = manager.get_all_sources()
             self.assertEqual(len(sources), 1)
             self.assertEqual(sources[0].path, good.path)
+
+    def test_delete_source_refuses_a_path_outside_the_project_sources_folder(self):
+        """Deleting a crafted LitSource must never remove unrelated folders."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            project = ProjectManager().create_project(
+                path=Path(tmpdir) / "TestProjekt",
+                name="Test Projekt",
+            )
+            manager = SourceManager(project.path, project.config.sources_folder)
+            outside_path = Path(tmpdir) / "NichtProjektDateien"
+            outside_path.mkdir()
+            marker = outside_path / "wichtig.txt"
+            marker.write_text("behalten", encoding="utf-8")
+            crafted_source = LitSource(
+                path=outside_path,
+                meta=LiMeta(title="Fremd", authors=[], year=None),
+            )
+
+            with self.assertRaises(ValueError):
+                manager.delete_source(crafted_source)
+
+            self.assertTrue(marker.exists())
 
 
 if __name__ == "__main__":
