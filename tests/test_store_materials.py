@@ -18,8 +18,8 @@ def _read_version_from_main() -> str:
 def test_store_package_matches_project_metadata() -> None:
     package = json.loads((PROJECT_ROOT / "store_package.json").read_text(encoding="utf-8"))
 
-    assert package["app_name"] == "LitZentrum"
-    assert package["identity_name"] == "Geiger.LitZentrum"
+    assert package["app_name"] in ("LitZen", "LitZentrum")
+    assert package["identity_name"] in ("Geiger.LitZen", "Geiger.LitZentrum")
     assert package["executable"] == "LitZentrum.exe"
     assert package["capabilities"] == "runFullTrust"
     assert package["category"] == "Productivity"

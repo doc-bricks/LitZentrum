@@ -51,9 +51,14 @@ class Quote:
     @property
     def page_range(self) -> str:
         """Gibt Seitenbereich als String zurück"""
-        if self.page_end and self.page_end != self.page:
-            return f"{self.page}-{self.page_end}"
-        return str(self.page) if self.page else ""
+        if self.page is not None and self.page_end is not None and self.page_end != self.page:
+            start, end = sorted((self.page, self.page_end))
+            return f"{start}-{end}"
+        if self.page is not None:
+            return str(self.page)
+        if self.page_end is not None:
+            return str(self.page_end)
+        return ""
 
 
 @dataclass
@@ -82,13 +87,15 @@ class LiQuote(LitFormat):
     
     def add(self, text: str, page: Optional[int] = None,
             quote_type: str = "direct", comment: str = None,
-            tags: List[str] = None) -> Quote:
+            tags: List[str] = None,
+            page_end: Optional[int] = None) -> Quote:
         """Fügt ein neues Zitat hinzu"""
         quote = Quote(
             id=generate_id("q_"),
             type=quote_type,
             text=text,
             page=page,
+            page_end=page_end,
             comment=comment,
             tags=tags or [],
             created_at=now_iso(),
@@ -102,9 +109,15 @@ class LiQuote(LitFormat):
     
     def get_by_page(self, page: int) -> List[Quote]:
         """Gibt alle Zitate von einer Seite zurück"""
-        return [q for q in self.quotes 
-                if q.page == page or 
-                (q.page and q.page_end and q.page <= page <= q.page_end)]
+        results = []
+        for q in self.quotes:
+            if q.page == page:
+                results.append(q)
+            elif q.page is not None and q.page_end is not None:
+                start, end = sorted((q.page, q.page_end))
+                if start <= page <= end:
+                    results.append(q)
+        return results
     
     def get_by_tag(self, tag: str) -> List[Quote]:
         """Gibt alle Zitate mit einem Tag zurück"""

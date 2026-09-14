@@ -7,7 +7,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QListWidgetItem,
     QPushButton, QTextEdit, QSpinBox, QLabel, QDialog, QDialogButtonBox,
-    QLineEdit, QComboBox, QCheckBox, QApplication, QSplitter
+    QLineEdit, QComboBox, QApplication, QSplitter
 )
 
 from core import LitSource, SourceManager
@@ -89,7 +89,7 @@ class QuotesTab(QWidget):
             icons = {"direct": "📌", "indirect": "📎", "paraphrase": "📝"}
             icon = icons.get(quote.type, "💬")
             
-            page_str = f"[S. {quote.page_range}] " if quote.page else ""
+            page_str = f"[S. {quote.page_range}] " if quote.page_range else ""
             preview = quote.text[:80].replace("\n", " ")
             if len(quote.text) > 80:
                 preview += "..."
@@ -114,9 +114,10 @@ class QuotesTab(QWidget):
             self.quotes.add(
                 text=data["text"],
                 page=data["page"],
+                page_end=data["page_end"],
                 quote_type=data["type"],
                 comment=data["comment"],
-                tags=data["tags"]
+                tags=data["tags"],
             )
             self.source_manager.save_quotes(self.source, self.quotes)
             self._refresh()
@@ -290,11 +291,16 @@ class QuoteDialog(QDialog):
         type_map = {0: "direct", 1: "indirect", 2: "paraphrase"}
         tags_text = self.tags_input.text()
         
+        page = self.page_spin.value() if self.page_spin.value() > 0 else None
+        page_end = self.page_end_spin.value() if self.page_end_spin.value() > 0 else None
+        if page is not None and page_end is not None and page_end < page:
+            page, page_end = page_end, page
+
         return {
             "text": self.text_edit.toPlainText(),
             "type": type_map[self.type_combo.currentIndex()],
-            "page": self.page_spin.value() if self.page_spin.value() > 0 else None,
-            "page_end": self.page_end_spin.value() if self.page_end_spin.value() > 0 else None,
+            "page": page,
+            "page_end": page_end,
             "comment": self.comment_edit.toPlainText() or None,
-            "tags": [t.strip() for t in tags_text.split(",") if t.strip()]
+            "tags": [t.strip() for t in tags_text.split(",") if t.strip()],
         }
