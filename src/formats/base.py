@@ -1,12 +1,15 @@
 """
 LitZentrum - Base class for all file formats.
 """
+import json
+import os
+import uuid
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Type, TypeVar
-import json
+
 import jsonschema
 
 from app_paths import base_dir
@@ -85,12 +88,43 @@ class LitFormat(ABC):
         
         path.parent.mkdir(parents=True, exist_ok=True)
 
-        # Bugsweep 27: atomar schreiben (tmp + replace), sonst Datenverlust bei Crash/OneDrive-Lock
-        # mitten im json.dump (truncate-then-write hinterliesse eine leere/halbe .li*-Datei).
-        tmp = path.with_name(path.name + ".tmp")
-        with open(tmp, 'w', encoding='utf-8') as f:
-            json.dump(self.to_dict(), f, ensure_ascii=False, indent=2, default=str)
-        tmp.replace(path)
+        # Write beside the destination, then publish only after the handle is closed.
+        # Exclusive creation gives concurrent saves independent temporary files.
+        flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+        if hasattr(os, "O_BINARY"):
+            flags |= os.O_BINARY
+
+        tmp = None
+        fd = None
+        try:
+            for _ in range(10):
+                candidate = path.with_name(f".litzentrum-{uuid.uuid4().hex}.tmp")
+                try:
+                    fd = os.open(candidate, flags, 0o666)
+                    tmp = candidate
+                    break
+                except FileExistsError:
+                    continue
+            if tmp is None:
+                raise FileExistsError(f"Temporäre Datei konnte nicht angelegt werden: {path}")
+
+            with os.fdopen(fd, "w", encoding="utf-8") as f:
+                fd = None
+                json.dump(self.to_dict(), f, ensure_ascii=False, indent=2, default=str)
+            tmp.replace(path)
+            tmp = None
+        except BaseException:
+            if fd is not None:
+                try:
+                    os.close(fd)
+                except OSError:
+                    pass
+            if tmp is not None:
+                try:
+                    tmp.unlink()
+                except OSError:
+                    pass
+            raise
     
     @classmethod
     def load(cls: Type[T], path: Path) -> T:

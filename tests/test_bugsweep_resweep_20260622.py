@@ -69,7 +69,7 @@ def test_b1b2_no_bare_list_default():
 
 
 def test_b5_base_atomic_static():
-    assert has("formats/base.py", "tmp.replace(path)") and has("formats/base.py", '+ ".tmp"'), "base atomar fehlt"
+    assert has("formats/base.py", "tmp.replace(path)"), "base atomar fehlt"
 
 
 def test_b6_base_from_dict_wrapped():
