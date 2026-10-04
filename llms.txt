@@ -55,4 +55,4 @@ Privacy and scope:
 ## Verification
 
 - Last checked: 2026-08-16
-- 67 Python tests, the platform source smoke, and 25 Web Companion tests passed.
+- 74 Python tests, the platform source smoke, and 25 Web Companion tests passed.

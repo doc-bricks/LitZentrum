@@ -5,7 +5,7 @@
 **[Deutsch](README_de.md)** · English
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-purple.svg)](LICENSE)
-[![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://python.org)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://python.org)
 [![Platform: Windows](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://github.com/doc-bricks/LitZentrum)
 [![Version](https://img.shields.io/badge/Version-1.0.0-purple.svg)](CHANGELOG.md)
 
@@ -57,7 +57,7 @@ python src/main.py
 
 ## Requirements
 
-- Python 3.10+
+- Python 3.11+
 - PySide6
 - PyMuPDF
 - bibtexparser
@@ -143,7 +143,7 @@ node --test web_companion/tests/mobile-pwa.test.mjs
 node --check web_companion/sw.js
 ```
 
-Verified on 2026-08-16: 67 Python tests, the platform source smoke, and 25
+Verified on 2026-10-04: 74 Python tests, the platform source smoke, and 25
 Web Companion tests passed.
 
 ## Web/PWA Companion
