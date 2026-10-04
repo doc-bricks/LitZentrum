@@ -219,7 +219,7 @@ def test_restore_backup_success(tmp_path):
     assert (project / "wichtig.txt").read_text(encoding="utf-8") == "BACKUP-DATEN"
     # Keine Staging-/Temp-Reste.
     assert not (tmp_path / "projekt_restore_staging").exists()
-    assert not (tmp_path / "projekt_before_restore").exists()
+    assert not list(tmp_path.glob("projekt_before_restore*"))
 
 
 # --- Bug 4: source_manager None-Hardening -----------------------------------
@@ -241,3 +241,43 @@ def test_search_sources_handles_none_title(tmp_path):
     mgr.get_all_sources = lambda: [src]  # type: ignore
     # Darf nicht crashen (vor dem Fix: AttributeError bei None.lower()):
     assert mgr.search_sources("xyz") == []
+
+
+def test_restore_backup_never_deletes_leftover_before_restore(tmp_path):
+    """Reste eines frueheren Restores (evtl. einzige Kopie) bleiben erhalten."""
+    from modules.sync import BackupManager
+
+    project = tmp_path / "projekt"
+    project.mkdir()
+    (project / "live.txt").write_text("live", encoding="utf-8")
+    backup = tmp_path / "backup"
+    backup.mkdir()
+    (backup / "alt.txt").write_text("backup", encoding="utf-8")
+    leftover = tmp_path / "projekt_before_restore"
+    leftover.mkdir()
+    (leftover / "einzige_kopie.txt").write_text("wichtig", encoding="utf-8")
+
+    mgr = BackupManager(project)
+    assert mgr.restore_backup(backup) is True
+
+    assert (leftover / "einzige_kopie.txt").read_text(encoding="utf-8") == "wichtig"
+    assert (project / "alt.txt").exists()
+    assert not list(tmp_path.glob("projekt_before_restore_*"))
+
+
+def test_restore_backup_aborts_when_project_missing_and_leftover_exists(tmp_path):
+    from modules.sync import BackupManager
+
+    project = tmp_path / "projekt"  # fehlt: Live-Projekt liegt nur noch im Rest
+    backup = tmp_path / "backup"
+    backup.mkdir()
+    (backup / "alt.txt").write_text("backup", encoding="utf-8")
+    leftover = tmp_path / "projekt_before_restore_20260101-000000"
+    leftover.mkdir()
+    (leftover / "einzige_kopie.txt").write_text("wichtig", encoding="utf-8")
+
+    assert BackupManager(project).restore_backup(backup) is False
+
+    assert (leftover / "einzige_kopie.txt").exists()
+    assert not project.exists()
+

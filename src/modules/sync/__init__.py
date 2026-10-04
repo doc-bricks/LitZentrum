@@ -196,8 +196,27 @@ class BackupManager:
         if not backup_path.exists():
             return False
 
-        staging = self.project_path.parent / f"{self.project_path.name}_restore_staging"
-        old_tmp = self.project_path.parent / f"{self.project_path.name}_before_restore"
+        parent = self.project_path.parent
+        name = self.project_path.name
+
+        # Liegengebliebene Sicherungen frueherer, fehlgeschlagener Restores sind unter
+        # Umstaenden die EINZIGE Kopie des Projekts: nie loeschen, nie ueberschreiben.
+        leftovers = sorted(parent.glob(f"{name}_before_restore*"))
+        if not self.project_path.exists() and leftovers:
+            logging.error(
+                "Restore abgebrochen: Projektordner fehlt, aber es gibt Reste eines "
+                f"frueheren Restores ({', '.join(p.name for p in leftovers)}). "
+                "Bitte zuerst manuell wiederherstellen."
+            )
+            return False
+
+        staging = parent / f"{name}_restore_staging"
+        stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+        old_tmp = parent / f"{name}_before_restore_{stamp}"
+        counter = 1
+        while old_tmp.exists():
+            counter += 1
+            old_tmp = parent / f"{name}_before_restore_{stamp}-{counter}"
 
         # Schritt 1: Backup in Staging kopieren (Live-Projekt bleibt unberuehrt).
         try:
@@ -211,8 +230,6 @@ class BackupManager:
 
         # Schritt 2: Live-Projekt gegen Staging austauschen (zwei Renames).
         try:
-            if old_tmp.exists():
-                shutil.rmtree(old_tmp)
             self.project_path.rename(old_tmp)
             staging.rename(self.project_path)
             shutil.rmtree(old_tmp, ignore_errors=True)
