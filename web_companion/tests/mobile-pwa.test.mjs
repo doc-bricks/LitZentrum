@@ -18,7 +18,10 @@ test("manifest ist als Android-/iOS-PWA installierbar", async () => {
   assert.ok(manifest.theme_color);
   assert.ok(manifest.background_color);
   assert.ok(Array.isArray(manifest.icons));
-  assert.equal(manifest.icons.length, 4, "manifest.icons muss genau 4 Einträge haben (any-192, any-512, maskable-192, maskable-512)");
+  assert.ok(manifest.icons.length >= 4, "manifest.icons braucht mindestens any-192, any-512, maskable-192, maskable-512");
+  for (const src of ["icons/Icon-192.png", "icons/Icon-512.png", "icons/Icon-maskable-192.png", "icons/Icon-maskable-512.png"]) {
+    assert.ok(manifest.icons.some(i => i.src === src), `manifest.icons enthält ${src} nicht`);
+  }
   const anyIcons = manifest.icons.filter(i => !i.purpose || i.purpose === "any");
   assert.ok(anyIcons.length >= 2, "mind. 2 Icons müssen purpose:'any' haben");
   const maskableIcons = manifest.icons.filter(i => i.purpose === "maskable");
