@@ -158,6 +158,50 @@ class LitFormat(ABC):
             raise LitFormatError(f"Datei konnte nicht interpretiert werden: {path}: {e}")
 
 
+def to_optional_year(value: Any) -> Optional[int]:
+    """Konvertiert Jahresangaben sicher zu int oder None.
+
+    Erweitert to_optional_int um Float-String-Unterstützung ("2023.0" -> 2023),
+    die bei manuell bearbeiteten oder aus Tabellentools importierten JSON-Dateien
+    auftreten kann.
+
+    Disambiguierungs-Suffixe ("2023a") liefern None — kein verifizierter Bedarf;
+    der CAVEAT in AUFGABEN.txt bleibt aktiv bis ein konkreter Einsatz gemeldet wird.
+    Bekannte "kein Datum"-Marker ("n.d.", "o.J." usw.) liefern ebenfalls None.
+    """
+    if value is None or value == "":
+        return None
+    # Direkte int-Konvertierung (native int / float wie 2023.0)
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        pass
+    # Float-String: "2023.0" -> 2023
+    try:
+        return int(float(str(value).strip()))
+    except (TypeError, ValueError):
+        pass
+    # Alle anderen Strings (inkl. "n.d.", "o.J.", "2023a") -> None
+    return None
+
+
+def to_optional_int(value: Any) -> Optional[int]:
+    """Konvertiert einen Wert sicher zu int oder None.
+
+    Bugsweep (2026-06-23): Integer-Felder (z.B. page, page_end, year) wurden in
+    from_dict() ungeprueft uebernommen. Eine alte/handeditierte/importierte Datei
+    mit "page": "10" (String) liess from_dict sauber durchlaufen, crashte aber
+    spaeter bei Seitenvergleichen ("10" <= 7 -> TypeError). Hier wird robust
+    konvertiert.
+    """
+    if value is None or value == "":
+        return None
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def generate_id(prefix: str = "") -> str:
     """Generates a unique timestamp-based ID with an optional prefix."""
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")

@@ -34,9 +34,24 @@ class TestBibTeXExport(unittest.TestCase):
             self.assertTrue(expected_path.exists())
 
             content = expected_path.read_text(encoding="utf-8")
-            self.assertIn(f"@article{{{meta.citation_key},", content)
+            self.assertIn(f"@article{{{meta.bibtex_key},", content)
             self.assertIn("title = {Test Article}", content)
             self.assertIn("author = {Doe, Jane}", content)
+
+    def test_bibtex_entry_key_uses_sanitized_bibtex_key(self):
+        from formats import LiMeta
+        from modules.bibliography.bibtex import BibTeXGenerator
+
+        meta = LiMeta(
+            title="Research Platforms",
+            authors=["AT&T Research"],
+            year=2024,
+        )
+
+        entry = BibTeXGenerator().generate_entry(meta)
+
+        self.assertTrue(entry.startswith("@article{attresearch_2024_research,"))
+        self.assertNotIn("@article{AT&T2024,", entry)
 
 
 if __name__ == "__main__":
