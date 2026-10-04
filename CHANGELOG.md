@@ -5,6 +5,8 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-04
+
 ### Behoben / Fixed (2026-08-24)
 - **Quellenlöschung außerhalb des geöffneten Projekts verhindert:** `SourceManager.delete_source()` akzeptierte bislang jeden `LitSource`-Pfad und konnte deshalb bei einem konstruierten Objekt einen fremden Ordner rekursiv entfernen. Die Methode akzeptiert jetzt ausschließlich direkte Unterordner des konfigurierten Quellen-Ordners; abweichende oder über Symlinks aufgelöste Pfade werden mit `ValueError` abgewiesen. Ein Regressionstest sichert, dass eine fremde Datei erhalten bleibt.
 
@@ -65,9 +67,7 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 - TODO-Stellen in detail_panel.py und summaries_tab.py aufgeräumt
 - BibTeX-Export legt Zielordner jetzt an und ergänzt fehlende `.bib`-Suffixe
 
-## [1.0.0] - 2026-01-01
-
-### Hinzugefügt / Added
+### Basisfunktionen / Core features
 - Erstveröffentlichung / Initial release
 - Ordnerbasiertes Literaturverwaltungssystem
 - Eigene Dateiformate: .liproj, .limeta, .linote, .liquote, .litask, .lisum
