@@ -2,7 +2,7 @@
 
 # LitZen
 
-Deutsch · **[English](README.md)**
+[English](README.md) · **Deutsch** · [Español](README_es.md) · [中文](README_zh.md) · [日本語](README_ja.md) · [Русский](README_ru.md)
 
 [![Lizenz: AGPL v3](https://img.shields.io/badge/Lizenz-AGPL_v3-purple.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://python.org)
