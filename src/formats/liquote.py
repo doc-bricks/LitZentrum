@@ -5,7 +5,7 @@ Zitate aus Literaturquellen
 from dataclasses import dataclass, field
 from typing import List, Optional
 
-from .base import LitFormat, generate_id, now_iso
+from .base import LitFormat, generate_id, now_iso, to_optional_int
 
 
 @dataclass
@@ -40,8 +40,8 @@ class Quote:
             id=data.get("id", generate_id("q_")),
             type=data.get("type", "direct"),
             text=data.get("text", ""),
-            page=data.get("page"),
-            page_end=data.get("page_end"),
+            page=to_optional_int(data.get("page")),
+            page_end=to_optional_int(data.get("page_end")),
             comment=data.get("comment"),
             tags=data.get("tags") or [],
             used_in=data.get("used_in") or [],

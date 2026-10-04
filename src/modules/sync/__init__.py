@@ -165,7 +165,7 @@ class BackupManager:
             )
             return backup_path
         except Exception as e:
-            print(f"Backup-Fehler: {e}")
+            logging.error(f"Backup-Fehler: {e}")
             return None
     
     def list_backups(self) -> List[Path]:
@@ -184,27 +184,65 @@ class BackupManager:
         return backups
     
     def restore_backup(self, backup_path: Path) -> bool:
-        """Stellt Backup wieder her"""
+        """Stellt Backup wieder her.
+
+        Bugsweep (2026-06-23): Vorher wurde das Live-Projekt ZUERST umbenannt und
+        dann das Backup per copytree hineinkopiert. Schlug copytree fehl (Disk voll,
+        OneDrive-Lock, Permissions), war das Live-Projekt weg und es gab kein Rollback.
+        Jetzt: erst in einen Staging-Ordner kopieren (der fehleranfaellige Schritt),
+        und nur bei Erfolg in zwei nahezu atomaren Renames austauschen. Bei einem
+        Fehler bleibt das Live-Projekt unangetastet bzw. wird zurueckgerollt.
+        """
         if not backup_path.exists():
             return False
-        
+
+        parent = self.project_path.parent
+        name = self.project_path.name
+
+        # Liegengebliebene Sicherungen frueherer, fehlgeschlagener Restores sind unter
+        # Umstaenden die EINZIGE Kopie des Projekts: nie loeschen, nie ueberschreiben.
+        leftovers = sorted(parent.glob(f"{name}_before_restore*"))
+        if not self.project_path.exists() and leftovers:
+            logging.error(
+                "Restore abgebrochen: Projektordner fehlt, aber es gibt Reste eines "
+                f"frueheren Restores ({', '.join(p.name for p in leftovers)}). "
+                "Bitte zuerst manuell wiederherstellen."
+            )
+            return False
+
+        staging = parent / f"{name}_restore_staging"
+        stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+        old_tmp = parent / f"{name}_before_restore_{stamp}"
+        counter = 1
+        while old_tmp.exists():
+            counter += 1
+            old_tmp = parent / f"{name}_before_restore_{stamp}-{counter}"
+
+        # Schritt 1: Backup in Staging kopieren (Live-Projekt bleibt unberuehrt).
         try:
-            # Aktuelles Projekt sichern
-            temp_backup = self.project_path.parent / f"{self.project_path.name}_before_restore"
-            if temp_backup.exists():
-                shutil.rmtree(temp_backup)
-            
-            self.project_path.rename(temp_backup)
-            
-            # Backup wiederherstellen
-            shutil.copytree(backup_path, self.project_path)
-            
-            # Temporäres Backup löschen
-            shutil.rmtree(temp_backup)
-            
+            if staging.exists():
+                shutil.rmtree(staging)
+            shutil.copytree(backup_path, staging)
+        except (OSError, shutil.Error) as e:
+            logging.error(f"Restore-Fehler (Staging-Kopie): {e}")
+            shutil.rmtree(staging, ignore_errors=True)
+            return False
+
+        # Schritt 2: Live-Projekt gegen Staging austauschen (zwei Renames).
+        try:
+            self.project_path.rename(old_tmp)
+            staging.rename(self.project_path)
+            shutil.rmtree(old_tmp, ignore_errors=True)
             return True
-        except Exception as e:
-            print(f"Restore-Fehler: {e}")
+        except OSError as e:
+            logging.error(f"Restore-Fehler (Austausch): {e}")
+            # Rollback: falls das Live-Projekt bereits weg ist, zuruecksetzen.
+            if not self.project_path.exists() and old_tmp.exists():
+                try:
+                    old_tmp.rename(self.project_path)
+                except OSError as rollback_err:
+                    logging.error(f"Restore-Rollback fehlgeschlagen: {rollback_err}")
+            shutil.rmtree(staging, ignore_errors=True)
             return False
     
     def delete_backup(self, backup_path: Path) -> bool:
